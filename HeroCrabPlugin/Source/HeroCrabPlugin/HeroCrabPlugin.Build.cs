@@ -1,3 +1,4 @@
+using System.IO;
 using Flax.Build;
 using Flax.Build.NativeCpp;
 
@@ -21,5 +22,7 @@ public class HeroCrabPlugin : GameModule
         // To reference another module use: options.PublicDependencies.Add("Audio");
         // To add C++ define use: options.PublicDefinitions.Add("COMPILE_WITH_FLAX");
         // To learn more see scripting documentation.
+        options.DependencyFiles.Add(Path.Combine(FolderPath, "..", "..", "Lib", "enet.dll"));
+        options.ScriptingAPI.FileReferences.Add(Path.Combine(FolderPath, "..", "..", "Lib", "ENet-CSharp.dll"));
     }
 }

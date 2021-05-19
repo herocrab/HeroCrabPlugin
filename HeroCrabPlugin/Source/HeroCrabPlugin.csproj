@@ -228,14 +228,68 @@
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
+    <Reference Include="ENet-CSharp">
+      <HintPath>HeroCrabPlugin\..\..\Lib\ENet-CSharp.dll</HintPath>
+    </Reference>
     <ProjectReference Include="..\..\..\Cache\Projects\FlaxEngine.csproj">
-      <Project>{AB3853BE-09D4-4128-8181-08513156A20A}</Project>
+      <Project>{40B4E955-4CDE-4065-AF89-A945D76B44D3}</Project>
       <Name>FlaxEngine</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HeroCrabPlugin.Gen.cs" />
+    <Compile Include="HeroCrabPlugin\Core\INetClient.cs" />
+    <Compile Include="HeroCrabPlugin\Core\INetHost.cs" />
+    <Compile Include="HeroCrabPlugin\Core\INetLogger.cs" />
+    <Compile Include="HeroCrabPlugin\Core\INetServer.cs" />
+    <Compile Include="HeroCrabPlugin\Core\INetSublayer.cs" />
+    <Compile Include="HeroCrabPlugin\Core\NetBootConfig.cs" />
+    <Compile Include="HeroCrabPlugin\Core\NetBootStrap.cs" />
+    <Compile Include="HeroCrabPlugin\Core\NetByteQueue.cs" />
+    <Compile Include="HeroCrabPlugin\Core\NetConfig.cs" />
+    <Compile Include="HeroCrabPlugin\Core\NetLogger.cs" />
+    <Compile Include="HeroCrabPlugin\Core\NetLoggerBuffer.cs" />
+    <Compile Include="HeroCrabPlugin\Core\NetObject.cs" />
+    <Compile Include="HeroCrabPlugin\Core\NetServices.cs" />
+    <Compile Include="HeroCrabPlugin\Element\INetElement.cs" />
+    <Compile Include="HeroCrabPlugin\Element\NetElement.cs" />
+    <Compile Include="HeroCrabPlugin\Element\NetElementDesc.cs" />
+    <Compile Include="HeroCrabPlugin\Element\NetElementFilter.cs" />
+    <Compile Include="HeroCrabPlugin\Field\INetFieldByte.cs" />
+    <Compile Include="HeroCrabPlugin\Field\INetFieldBytes.cs" />
+    <Compile Include="HeroCrabPlugin\Field\INetFieldFloat.cs" />
+    <Compile Include="HeroCrabPlugin\Field\INetFieldInt.cs" />
+    <Compile Include="HeroCrabPlugin\Field\INetFieldLong.cs" />
+    <Compile Include="HeroCrabPlugin\Field\INetFieldString.cs" />
+    <Compile Include="HeroCrabPlugin\Field\INetFieldUInt.cs" />
+    <Compile Include="HeroCrabPlugin\Field\INetFieldUShort.cs" />
+    <Compile Include="HeroCrabPlugin\Field\NetField.cs" />
+    <Compile Include="HeroCrabPlugin\Field\NetFieldBuffer.cs" />
+    <Compile Include="HeroCrabPlugin\Field\NetFieldByte.cs" />
+    <Compile Include="HeroCrabPlugin\Field\NetFieldBytes.cs" />
+    <Compile Include="HeroCrabPlugin\Field\NetFieldDesc.cs" />
+    <Compile Include="HeroCrabPlugin\Field\NetFieldFloat.cs" />
+    <Compile Include="HeroCrabPlugin\Field\NetFieldInt.cs" />
+    <Compile Include="HeroCrabPlugin\Field\NetFieldLong.cs" />
+    <Compile Include="HeroCrabPlugin\Field\NetFieldString.cs" />
+    <Compile Include="HeroCrabPlugin\Field\NetFieldUInt.cs" />
+    <Compile Include="HeroCrabPlugin\Field\NetFieldUShort.cs" />
     <Compile Include="HeroCrabPlugin\MyHeroCrabPlugin.cs" />
+    <Compile Include="HeroCrabPlugin\Session\INetSession.cs" />
+    <Compile Include="HeroCrabPlugin\Session\NetSession.cs" />
+    <Compile Include="HeroCrabPlugin\Session\NetSessionClient.cs" />
+    <Compile Include="HeroCrabPlugin\Session\NetSessionServer.cs" />
+    <Compile Include="HeroCrabPlugin\Stream\INetStream.cs" />
+    <Compile Include="HeroCrabPlugin\Stream\INetStreamClient.cs" />
+    <Compile Include="HeroCrabPlugin\Stream\INetStreamServer.cs" />
+    <Compile Include="HeroCrabPlugin\Stream\NetStream.cs" />
+    <Compile Include="HeroCrabPlugin\Stream\NetStreamClient.cs" />
+    <Compile Include="HeroCrabPlugin\Stream\NetStreamGroup.cs" />
+    <Compile Include="HeroCrabPlugin\Stream\NetStreamServer.cs" />
+    <Compile Include="HeroCrabPlugin\Sublayer\Udp\NetClient.cs" />
+    <Compile Include="HeroCrabPlugin\Sublayer\Udp\NetHost.cs" />
+    <Compile Include="HeroCrabPlugin\Sublayer\Udp\NetServer.cs" />
+    <Compile Include="HeroCrabPlugin\Sublayer\Udp\NetSublayer.cs" />
     <Compile Visible="false" Include ="C:\Projects\Flax\FlaxWars\Plugins\HeroCrabPlugin\Cache/Intermediate\HeroCrabPluginEditorTarget\Windows\x64\Debug\HeroCrabPlugin\HeroCrabPlugin.Bindings.Gen.cs" />
     <Compile Visible="false" Include ="C:\Projects\Flax\FlaxWars\Plugins\HeroCrabPlugin\Cache/Intermediate\HeroCrabPluginEditorTarget\Windows\x64\Development\HeroCrabPlugin\HeroCrabPlugin.Bindings.Gen.cs" />
     <Compile Visible="false" Include ="C:\Projects\Flax\FlaxWars\Plugins\HeroCrabPlugin\Cache/Intermediate\HeroCrabPluginEditorTarget\Windows\x64\Release\HeroCrabPlugin\HeroCrabPlugin.Bindings.Gen.cs" />
