@@ -1,3 +1,7 @@
+using System;
+using FlaxEngine;
+// ReSharper disable CheckNamespace
+
 public class MyHeroCrabPlugin : GamePlugin
 {
     /// <inheritdoc />
