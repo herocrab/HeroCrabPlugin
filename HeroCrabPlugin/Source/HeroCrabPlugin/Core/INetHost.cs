@@ -1,10 +1,13 @@
 ﻿using System;
-// ReSharper disable once CheckNamespace
+using HeroCrabPlugin.Sublayer.Udp;
 
-public interface INetHost : IDisposable
+namespace HeroCrabPlugin.Core
 {
-    event NetHost.NetLogWriteHandler LogWrite;
-    void Start(string ipAddress, ushort port);
-    void Stop();
-    void Process(float time);
+    public interface INetHost : IDisposable
+    {
+        event NetHost.NetLogWriteHandler LogWrite;
+        void Start(string ipAddress, ushort port);
+        void Stop();
+        void Process(float time);
+    }
 }

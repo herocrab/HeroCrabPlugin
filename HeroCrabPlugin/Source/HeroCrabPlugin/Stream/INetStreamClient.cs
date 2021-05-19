@@ -1,7 +1,11 @@
-﻿// ReSharper disable once CheckNamespace
+﻿using HeroCrabPlugin.Core;
+using HeroCrabPlugin.Session;
 
-public interface INetStreamClient : INetStream
+namespace HeroCrabPlugin.Stream
 {
-    NetSessionClient CreateSession(INetSublayer netSublayer);
-    bool FindSession(out INetSession session);
+    public interface INetStreamClient : INetStream
+    {
+        NetSessionClient CreateSession(INetSublayer netSublayer);
+        bool FindSession(out INetSession session);
+    }
 }

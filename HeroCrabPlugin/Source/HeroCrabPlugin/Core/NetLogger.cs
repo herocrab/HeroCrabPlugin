@@ -1,68 +1,70 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-// ReSharper disable once CheckNamespace
 
-public class NetLogger
+namespace HeroCrabPlugin.Core
 {
-    public LoggingGroup Mask { get; set; }
-
-    public delegate void NetLoggerWriteHandler(object sender, string message);
-    public event NetLoggerWriteHandler LogWrite;
-
-    [Flags]
-    public enum LoggingGroup
+    public class NetLogger
     {
-        Status = 1,
-        Error = 2,
-        Session = 4,
-        Element = 8,
-        Field = 16,
-        Custom = 32,
-    }
+        public LoggingGroup Mask { get; set; }
 
-    public int Count => _networkLoggers.Count;
+        public delegate void NetLoggerWriteHandler(object sender, string message);
+        public event NetLoggerWriteHandler LogWrite;
 
-    private readonly List<INetLogger> _networkLoggers = new List<INetLogger>();
-
-    public NetLogger(INetLogger netLogger)
-    {
-        _networkLoggers.Add(netLogger);
-
-        Mask = LoggingGroup.Status | LoggingGroup.Error | LoggingGroup.Session;
-    }
-
-    public void Add(INetLogger netLogger)
-    {
-        if (_networkLoggers.Contains(netLogger)) {
-            _networkLoggers.Remove(netLogger);
+        [Flags]
+        public enum LoggingGroup
+        {
+            Status = 1,
+            Error = 2,
+            Session = 4,
+            Element = 8,
+            Field = 16,
+            Custom = 32,
         }
 
-        _networkLoggers.Add(netLogger);
-    }
+        public int Count => _networkLoggers.Count;
 
-    public void Remove(INetLogger netLogger)
-    {
-        if (_networkLoggers.Contains(netLogger)) {
-            _networkLoggers.Remove(netLogger);
-        }
-    }
+        private readonly List<INetLogger> _networkLoggers = new List<INetLogger>();
 
-    public void Write(LoggingGroup group, object sender, string message)
-    {
-        if ((Mask & group) != group) {
-            return;
+        public NetLogger(INetLogger netLogger)
+        {
+            _networkLoggers.Add(netLogger);
+
+            Mask = LoggingGroup.Status | LoggingGroup.Error | LoggingGroup.Session;
         }
 
-        foreach (var networkLogger in _networkLoggers) {
-            networkLogger.Write(sender, message);
+        public void Add(INetLogger netLogger)
+        {
+            if (_networkLoggers.Contains(netLogger)) {
+                _networkLoggers.Remove(netLogger);
+            }
+
+            _networkLoggers.Add(netLogger);
         }
 
-        var senderName = sender?.ToString()?.Split('.').Last();
-        if (string.IsNullOrEmpty(senderName)) {
-            senderName = "Null";
+        public void Remove(INetLogger netLogger)
+        {
+            if (_networkLoggers.Contains(netLogger)) {
+                _networkLoggers.Remove(netLogger);
+            }
         }
 
-        LogWrite?.Invoke(senderName, " " + message);
+        public void Write(LoggingGroup group, object sender, string message)
+        {
+            if ((Mask & group) != group) {
+                return;
+            }
+
+            foreach (var networkLogger in _networkLoggers) {
+                networkLogger.Write(sender, message);
+            }
+
+            var senderName = sender?.ToString()?.Split('.').Last();
+            if (string.IsNullOrEmpty(senderName)) {
+                senderName = "Null";
+            }
+
+            LogWrite?.Invoke(senderName, " " + message);
+        }
     }
 }

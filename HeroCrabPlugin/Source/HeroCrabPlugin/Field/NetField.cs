@@ -1,8 +1,9 @@
 ﻿using System;
-// ReSharper disable once CheckNamespace
+using HeroCrabPlugin.Core;
 
-
-public abstract class NetField : NetObject
+namespace HeroCrabPlugin.Field
+{
+    public abstract class NetField : NetObject
     {
         public NetFieldDesc Description { get; protected set; }
         public bool IsReliable { get; protected set; }
@@ -72,3 +73,4 @@ public abstract class NetField : NetObject
             TxQueue.Clear();
         }
     }
+}

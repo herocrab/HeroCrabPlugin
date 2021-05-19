@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Linq;
 using ENet;
-// ReSharper disable once CheckNamespace
+using HeroCrabPlugin.Core;
 
-public class NetSublayer : NetObject, INetSublayer
+namespace HeroCrabPlugin.Sublayer.Udp
+{
+    public class NetSublayer : NetObject, INetSublayer
     {
         public uint Id { get; set; }
         public string Ip => _peer.IP;
@@ -125,3 +127,4 @@ public class NetSublayer : NetObject, INetSublayer
             SendId(id);
         }
     }
+}

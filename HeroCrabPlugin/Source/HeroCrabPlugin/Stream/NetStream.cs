@@ -1,8 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-// ReSharper disable once CheckNamespace
+using HeroCrabPlugin.Core;
+using HeroCrabPlugin.Element;
+using HeroCrabPlugin.Session;
 
-public abstract class NetStream : NetObject
+namespace HeroCrabPlugin.Stream
+{
+    public abstract class NetStream : NetObject
     {
         public delegate void SessionConnectedHandler(INetSession netSession);
         public delegate void SessionDisconnectedHandler(INetSession netSession);
@@ -116,3 +120,4 @@ public abstract class NetStream : NetObject
             }
         }
     }
+}

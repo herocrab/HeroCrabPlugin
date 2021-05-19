@@ -1,19 +1,21 @@
 ﻿using System;
-// ReSharper disable once CheckNamespace
 
-public static class NetBootStrap
+namespace HeroCrabPlugin.Core
 {
-    public static NetBootConfig Config { get; private set; }
-
-    public static bool Initialize(string filename)
+    public static class NetBootStrap
     {
-        try {
-            Config = NetBootConfig.Read(filename);
-            return true;
-        }
-        catch (Exception) {
-            Config = new NetBootConfig();
-            return false;
+        public static NetBootConfig Config { get; private set; }
+
+        public static bool Initialize(string filename)
+        {
+            try {
+                Config = NetBootConfig.Read(filename);
+                return true;
+            }
+            catch (Exception) {
+                Config = new NetBootConfig();
+                return false;
+            }
         }
     }
 }

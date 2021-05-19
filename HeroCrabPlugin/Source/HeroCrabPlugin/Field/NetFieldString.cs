@@ -1,56 +1,59 @@
 ﻿using System;
-// ReSharper disable once CheckNamespace
+using HeroCrabPlugin.Core;
 
-public class NetFieldString : NetField, INetFieldString
+namespace HeroCrabPlugin.Field
 {
-    internal Action<string> Receive { get; set; }
-
-    private readonly NetFieldBuffer<string> _buffer;
-
-    public NetFieldString(byte index, string name, bool isReliable, Action<string> callback)
+    public class NetFieldString : NetField, INetFieldString
     {
-        IsReliable = isReliable;
-        Description = new NetFieldDesc(index, name, isReliable, NetFieldDesc.TypeCode.String);
+        internal Action<string> Receive { get; set; }
 
-        Receive = callback;
-        var bufferSize = IsReliable ? NetConfig.ReliableBufferDepth : NetConfig.UnreliableBufferDepth;
-        _buffer = new NetFieldBuffer<string>(bufferSize);
-    }
+        private readonly NetFieldBuffer<string> _buffer;
 
-    public NetFieldString(NetFieldDesc description, Action<string> callback)
-    {
-        IsReliable = description.IsReliable;
-        Description = description;
+        public NetFieldString(byte index, string name, bool isReliable, Action<string> callback)
+        {
+            IsReliable = isReliable;
+            Description = new NetFieldDesc(index, name, isReliable, NetFieldDesc.TypeCode.String);
 
-        Receive = callback;
-        var bufferSize = IsReliable ? NetConfig.ReliableBufferDepth : NetConfig.UnreliableBufferDepth;
-        _buffer = new NetFieldBuffer<string>(bufferSize);
-    }
-
-    public void Set(string value)
-    {
-        _buffer.Add(value);
-        TxQueue.WriteString(value);
-        IsUpdated = true;
-
-        LastQueue.Clear();
-        LastQueue.WriteString(value);
-    }
-
-    public override void Process()
-    {
-        // Only process one buffered item per tick
-        if (_buffer.Any()) {
-            Receive?.Invoke(_buffer.Read());
+            Receive = callback;
+            var bufferSize = IsReliable ? NetConfig.ReliableBufferDepth : NetConfig.UnreliableBufferDepth;
+            _buffer = new NetFieldBuffer<string>(bufferSize);
         }
-    }
 
-    public override void Deserialize(NetByteQueue rxQueue)
-    {
-        var count = rxQueue.ReadByte();
+        public NetFieldString(NetFieldDesc description, Action<string> callback)
+        {
+            IsReliable = description.IsReliable;
+            Description = description;
 
-        for (var i = 0; i < count; i++) {
-            _buffer.Add(rxQueue.ReadString());
+            Receive = callback;
+            var bufferSize = IsReliable ? NetConfig.ReliableBufferDepth : NetConfig.UnreliableBufferDepth;
+            _buffer = new NetFieldBuffer<string>(bufferSize);
+        }
+
+        public void Set(string value)
+        {
+            _buffer.Add(value);
+            TxQueue.WriteString(value);
+            IsUpdated = true;
+
+            LastQueue.Clear();
+            LastQueue.WriteString(value);
+        }
+
+        public override void Process()
+        {
+            // Only process one buffered item per tick
+            if (_buffer.Any()) {
+                Receive?.Invoke(_buffer.Read());
+            }
+        }
+
+        public override void Deserialize(NetByteQueue rxQueue)
+        {
+            var count = rxQueue.ReadByte();
+
+            for (var i = 0; i < count; i++) {
+                _buffer.Add(rxQueue.ReadString());
+            }
         }
     }
 }

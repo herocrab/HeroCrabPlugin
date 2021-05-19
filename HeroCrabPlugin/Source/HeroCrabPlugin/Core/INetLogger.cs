@@ -1,5 +1,7 @@
-﻿// ReSharper disable once CheckNamespace
-public interface INetLogger
+﻿namespace HeroCrabPlugin.Core
 {
-    void Write(object sender, string message);
+    public interface INetLogger
+    {
+        void Write(object sender, string message);
+    }
 }

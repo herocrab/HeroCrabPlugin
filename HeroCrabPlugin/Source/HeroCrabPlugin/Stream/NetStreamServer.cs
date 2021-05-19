@@ -1,9 +1,15 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-// ReSharper disable once CheckNamespace
-// ReSharper disable SuggestBaseTypeForParameter
+﻿// ReSharper disable SuggestBaseTypeForParameter
 
-public class NetStreamServer : NetStream, INetStreamServer
+using System.Collections.Generic;
+using System.Linq;
+using HeroCrabPlugin.Core;
+using HeroCrabPlugin.Element;
+using HeroCrabPlugin.Session;
+using HeroCrabPlugin.Stream;
+
+namespace HeroCrab.Network.Stream
+{
+    public class NetStreamServer : NetStream, INetStreamServer
     {
         public event ElementCreatedHandler ElementCreated;
         public event ElementDeletedHandler ElementDeleted;
@@ -154,3 +160,4 @@ public class NetStreamServer : NetStream, INetStreamServer
             return true;
         }
     }
+}

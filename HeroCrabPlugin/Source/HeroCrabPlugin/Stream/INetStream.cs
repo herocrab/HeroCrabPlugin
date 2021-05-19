@@ -1,16 +1,19 @@
-﻿// ReSharper disable once CheckNamespace
+﻿using HeroCrabPlugin.Core;
 
-public interface INetStream
+namespace HeroCrabPlugin.Stream
 {
-    event NetStream.SessionConnectedHandler SessionConnected;
-    event NetStream.SessionDisconnectedHandler SessionDisconnected;
+    public interface INetStream
+    {
+        event NetStream.SessionConnectedHandler SessionConnected;
+        event NetStream.SessionDisconnectedHandler SessionDisconnected;
 
-    event NetStream.ElementCreatedHandler ElementCreated;
-    event NetStream.ElementDeletedHandler ElementDeleted;
+        event NetStream.ElementCreatedHandler ElementCreated;
+        event NetStream.ElementDeletedHandler ElementDeleted;
 
-    int ElementCount { get; }
-    int SessionCount { get; }
-    void DeleteSession(INetSublayer netSublayer);
-    void Process(float time);
-    void Clear();
+        int ElementCount { get; }
+        int SessionCount { get; }
+        void DeleteSession(INetSublayer netSublayer);
+        void Process(float time);
+        void Clear();
+    }
 }

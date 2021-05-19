@@ -1,7 +1,9 @@
 ﻿using System;
-// ReSharper disable once CheckNamespace
+using HeroCrabPlugin.Core;
 
-public class NetFieldLong : NetField, INetFieldLong
+namespace HeroCrabPlugin.Field
+{
+    public class NetFieldLong : NetField, INetFieldLong
     {
         internal Action<long> Receive { get; set; }
 
@@ -54,3 +56,4 @@ public class NetFieldLong : NetField, INetFieldLong
             }
         }
     }
+}

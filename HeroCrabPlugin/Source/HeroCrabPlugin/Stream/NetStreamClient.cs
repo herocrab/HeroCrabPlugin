@@ -1,43 +1,48 @@
 ﻿using System.Linq;
-// ReSharper disable once CheckNamespace
+using HeroCrabPlugin.Core;
+using HeroCrabPlugin.Session;
+using HeroCrabPlugin.Stream;
 
-public class NetStreamClient : NetStream, INetStreamClient
+namespace HeroCrab.Network.Stream
 {
-    public event ElementCreatedHandler ElementCreated;
-    public event ElementDeletedHandler ElementDeleted;
-
-    public NetStreamClient()
+    public class NetStreamClient : NetStream, INetStreamClient
     {
-        PacketInterval = (int) NetConfig.GameTickRate / (int) NetConfig.ClientPps;
-    }
+        public event ElementCreatedHandler ElementCreated;
+        public event ElementDeletedHandler ElementDeleted;
 
-    protected override void SendElements()
-    {
-        foreach (var session in Sessions.Values) {
-            session.Send();
-        }
-    }
-
-    public NetSessionClient CreateSession(INetSublayer netSublayer)
-    {
-        var session = new NetSessionClient(netSublayer, Elements)
+        public NetStreamClient()
         {
-            ElementCreated = createdElement => ElementCreated?.Invoke(createdElement),
-            ElementDeleted = deletedElement => ElementDeleted?.Invoke(deletedElement)
-        };
-        session.SessionCreated += AddSession;
-        session.SessionDeleted += DeleteSession;
-        return session;
-    }
-
-    public bool FindSession(out INetSession session)
-    {
-        if (!Sessions.Any()) {
-            session = null;
-            return false;
+            PacketInterval = (int) NetConfig.GameTickRate / (int) NetConfig.ClientPps;
         }
 
-        session = Sessions.First().Value;
-        return true;
+        protected override void SendElements()
+        {
+            foreach (var session in Sessions.Values) {
+                session.Send();
+            }
+        }
+
+        public NetSessionClient CreateSession(INetSublayer netSublayer)
+        {
+            var session = new NetSessionClient(netSublayer, Elements)
+            {
+                ElementCreated = createdElement => ElementCreated?.Invoke(createdElement),
+                ElementDeleted = deletedElement => ElementDeleted?.Invoke(deletedElement)
+            };
+            session.SessionCreated += AddSession;
+            session.SessionDeleted += DeleteSession;
+            return session;
+        }
+
+        public bool FindSession(out INetSession session)
+        {
+            if (!Sessions.Any()) {
+                session = null;
+                return false;
+            }
+
+            session = Sessions.First().Value;
+            return true;
+        }
     }
 }

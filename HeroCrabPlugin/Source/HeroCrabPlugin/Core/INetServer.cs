@@ -1,6 +1,10 @@
-﻿// ReSharper disable once CheckNamespace
-public interface INetServer : INetHost
+﻿using HeroCrabPlugin.Stream;
+
+namespace HeroCrabPlugin.Core
 {
-    INetStreamServer Stream { get; }
-    void KickAll();
+    public interface INetServer : INetHost
+    {
+        INetStreamServer Stream { get; }
+        void KickAll();
+    }
 }

@@ -1,6 +1,7 @@
-﻿// ReSharper disable once CheckNamespace
-
-public interface INetFieldUShort
+﻿namespace HeroCrabPlugin.Field
 {
-    void Set(ushort value);
+    public interface INetFieldUShort
+    {
+        void Set(ushort value);
+    }
 }

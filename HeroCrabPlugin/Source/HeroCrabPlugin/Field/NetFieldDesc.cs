@@ -1,55 +1,57 @@
 ﻿using System;
-// ReSharper disable once CheckNamespace
+using HeroCrabPlugin.Core;
 
-
-public class NetFieldDesc : NetObject
+namespace HeroCrabPlugin.Field
 {
-    public byte Index { get; }
-    public string Name { get; }
-    public bool IsReliable { get; }
-    public TypeCode Type { get; }
-
-    private readonly NetByteQueue _byteQueue;
-
-    public enum TypeCode : byte
+    public class NetFieldDesc : NetObject
     {
-        Unknown,
-        Byte,
-        ByteArray,
-        Float,
-        Int,
-        Long,
-        String,
-        UInt,
-        UShort,
-    }
+        public byte Index { get; }
+        public string Name { get; }
+        public bool IsReliable { get; }
+        public TypeCode Type { get; }
 
-    public NetFieldDesc(byte index, string name, bool isReliable, TypeCode typeCode)
-    {
-        Index = index;
-        Name = name;
-        IsReliable = isReliable;
-        Type = typeCode;
+        private readonly NetByteQueue _byteQueue;
 
-        _byteQueue = new NetByteQueue();
-        _byteQueue.WriteByte(Index);
-        _byteQueue.WriteString(name);
-        _byteQueue.WriteByte(Convert.ToByte(IsReliable));
-        _byteQueue.WriteByte(Convert.ToByte(Type));
-    }
+        public enum TypeCode : byte
+        {
+            Unknown,
+            Byte,
+            ByteArray,
+            Float,
+            Int,
+            Long,
+            String,
+            UInt,
+            UShort,
+        }
 
-    public byte[] Serialize()
-    {
-        return _byteQueue.ToBytes();
-    }
+        public NetFieldDesc(byte index, string name, bool isReliable, TypeCode typeCode)
+        {
+            Index = index;
+            Name = name;
+            IsReliable = isReliable;
+            Type = typeCode;
 
-    public static NetFieldDesc Deserialize(NetByteQueue rxQueue)
-    {
-        var index = rxQueue.ReadByte();
-        var name = rxQueue.ReadString();
-        var isReliable = Convert.ToBoolean(rxQueue.ReadByte());
-        var typeCode = (TypeCode) rxQueue.ReadByte();
+            _byteQueue = new NetByteQueue();
+            _byteQueue.WriteByte(Index);
+            _byteQueue.WriteString(name);
+            _byteQueue.WriteByte(Convert.ToByte(IsReliable));
+            _byteQueue.WriteByte(Convert.ToByte(Type));
+        }
 
-        return new NetFieldDesc(index, name, isReliable, typeCode);
+        public byte[] Serialize()
+        {
+            return _byteQueue.ToBytes();
+        }
+
+        public static NetFieldDesc Deserialize(NetByteQueue rxQueue)
+        {
+            var index = rxQueue.ReadByte();
+            var name = rxQueue.ReadString();
+            var isReliable = Convert.ToBoolean(rxQueue.ReadByte());
+            var typeCode = (TypeCode) rxQueue.ReadByte();
+
+            return new NetFieldDesc(index, name, isReliable, typeCode);
+        }
     }
 }

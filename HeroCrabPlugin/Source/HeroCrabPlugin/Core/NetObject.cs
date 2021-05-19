@@ -1,12 +1,14 @@
-﻿// ReSharper disable once CheckNamespace
-public class NetObject
+﻿namespace HeroCrabPlugin.Core
 {
-    protected readonly NetConfig NetConfig;
-    protected readonly NetLogger NetLogger;
-
-    protected NetObject()
+    public class NetObject
     {
-        NetConfig = NetServices.Registry.Get<NetConfig>();
-        NetLogger = NetServices.Registry.Get<NetLogger>();
+        protected readonly NetConfig NetConfig;
+        protected readonly NetLogger NetLogger;
+
+        protected NetObject()
+        {
+            NetConfig = NetServices.Registry.Get<NetConfig>();
+            NetLogger = NetServices.Registry.Get<NetLogger>();
+        }
     }
 }

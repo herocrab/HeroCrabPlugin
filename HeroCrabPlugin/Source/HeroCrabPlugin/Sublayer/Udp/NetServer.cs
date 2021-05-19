@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using ENet;
-// ReSharper disable once CheckNamespace
+using HeroCrab.Network.Stream;
+using HeroCrabPlugin.Core;
+using HeroCrabPlugin.Stream;
 
-public class NetServer : NetHost, INetServer
+namespace HeroCrabPlugin.Sublayer.Udp
+{
+    public class NetServer : NetHost, INetServer
     {
         public INetStreamServer Stream { get; }
 
@@ -180,3 +184,4 @@ public class NetServer : NetHost, INetServer
             _server?.Dispose();
         }
     }
+}

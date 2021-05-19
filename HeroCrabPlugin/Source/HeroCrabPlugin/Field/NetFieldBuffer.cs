@@ -1,8 +1,9 @@
 ﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-// ReSharper disable once CheckNamespace
 
+namespace HeroCrabPlugin.Field
+{
     public class NetFieldBuffer<T>
     {
         public int Count => _queue.Count;
@@ -75,3 +76,4 @@ using System.Linq;
             while (_queue.TryDequeue(out _)){}
         }
     }
+}

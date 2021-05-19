@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-// ReSharper disable once CheckNamespace
+using HeroCrabPlugin.Core;
+using HeroCrabPlugin.Element;
 
-public class NetSessionServer : NetSession
+namespace HeroCrabPlugin.Session
+{
+    public class NetSessionServer : NetSession
     {
         private readonly SortedDictionary<uint, NetElement> _candidateElements;
         private readonly SortedDictionary<uint, NetElement> _createdElements;
@@ -246,3 +249,4 @@ public class NetSessionServer : NetSession
             }
         }
     }
+}
