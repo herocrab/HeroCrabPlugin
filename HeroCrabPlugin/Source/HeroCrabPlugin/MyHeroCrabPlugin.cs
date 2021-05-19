@@ -10,7 +10,7 @@ public class MyHeroCrabPlugin : GamePlugin
         Name = "HeroCrab Plugin",
         Category = "Network",
         Description = "HeroCrab Network Plugin for Flax.",
-        Author = "Someone Inc.",
+        Author = "HeroCrab Ltd.",
 		AuthorUrl = "https://github.com/herocrab",
         HomepageUrl = "https://herocrab.com",
         RepositoryUrl = "https://github.com/herocrab/HeroCrabPlugin",
