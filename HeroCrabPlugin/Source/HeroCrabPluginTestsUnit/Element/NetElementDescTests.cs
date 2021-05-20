@@ -1,6 +1,8 @@
-﻿using NUnit.Framework;
+﻿using HeroCrabPlugin.Core;
+using HeroCrabPlugin.Element;
+using NUnit.Framework;
 
-namespace HeroCrabPlugin.Tests.Unit.Element
+namespace HeroCrabPluginTestsUnit.Element
 {
     [TestFixture]
     public class NetElementDescTests

@@ -1,7 +1,12 @@
-﻿using Moq;
+﻿using HeroCrab.Network.Stream;
+using HeroCrabPlugin.Core;
+using HeroCrabPlugin.Element;
+using HeroCrabPlugin.Session;
+using HeroCrabPlugin.Stream;
+using Moq;
 using NUnit.Framework;
 
-namespace HeroCrabPlugin.Tests.Unit.Stream
+namespace HeroCrabPluginTestsUnit.Stream
 {
     [TestFixture]
     public class NetStreamServerTests

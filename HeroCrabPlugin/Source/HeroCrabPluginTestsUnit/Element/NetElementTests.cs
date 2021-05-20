@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using HeroCrab.Network.Stream;
+using HeroCrabPlugin.Core;
+using HeroCrabPlugin.Element;
+using HeroCrabPlugin.Field;
 using NUnit.Framework; // ReSharper disable ObjectCreationAsStatement
 
-namespace HeroCrabPlugin.Tests.Unit.Element
+namespace HeroCrabPluginTestsUnit.Element
 {
     [TestFixture]
     public class NetElementTests

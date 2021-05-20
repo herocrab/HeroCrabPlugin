@@ -1,6 +1,8 @@
-﻿using NUnit.Framework;
+﻿using HeroCrabPlugin.Core;
+using HeroCrabPlugin.Field;
+using NUnit.Framework;
 
-namespace HeroCrabPlugin.Tests.Unit.Field
+namespace HeroCrabPluginTestsUnit.Field
 {
     [TestFixture]
     public class NetFieldIntTests

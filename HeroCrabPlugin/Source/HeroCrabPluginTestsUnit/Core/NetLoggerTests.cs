@@ -1,7 +1,8 @@
-﻿using Moq;
+﻿using HeroCrabPlugin.Core;
+using Moq;
 using NUnit.Framework;
 
-namespace HeroCrabPlugin.Tests.Unit.Core
+namespace HeroCrabPluginTestsUnit.Core
 {
     [TestFixture]
     public class NetLoggerTests

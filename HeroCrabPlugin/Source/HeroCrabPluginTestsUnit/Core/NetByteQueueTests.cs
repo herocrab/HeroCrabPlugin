@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using HeroCrabPlugin.Core;
 using NUnit.Framework;
 
 namespace HeroCrabPlugin.Tests.Unit.Core

@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
+using HeroCrabPlugin.Core;
+using HeroCrabPlugin.Element;
+using HeroCrabPlugin.Session;
 using Moq;
 using NUnit.Framework;
 
-namespace HeroCrabPlugin.Tests.Unit.Session
+namespace HeroCrabPluginTestsUnit.Session
 {
     [TestFixture]
     public class NetSessionTests

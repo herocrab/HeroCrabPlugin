@@ -1,6 +1,7 @@
-﻿using NUnit.Framework;
+﻿using HeroCrabPlugin.Core;
+using NUnit.Framework;
 
-namespace HeroCrabPlugin.Tests.Unit.Core
+namespace HeroCrabPluginTestsUnit.Core
 {
     [TestFixture]
     public class NetConfigurationTests

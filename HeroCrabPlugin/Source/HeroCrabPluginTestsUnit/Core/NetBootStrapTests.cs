@@ -1,17 +1,20 @@
-﻿using NUnit.Framework;
+﻿using HeroCrabPlugin.Core;
+using NUnit.Framework;
 
-namespace HeroCrabPlugin.Tests.Unit.Core
+namespace HeroCrabPluginTestsUnit.Core
 {
     [TestFixture]
     public class NetBootStrapTests
     {
         [Test]
-        public void Initialize_WithGoodFilePath_VerifyTrueIsReturnedAndConfigIsServer()
+        public void Initialize_WithGoodFilePath_VerifyTrueIsReturnedAndConfigIsClient()
         {
+            NetBootConfig.Write("client.json");
+
             //File.WriteAllText("test-file.txt","Test");
-            var isAvailable = NetBootStrap.Initialize("server.json");
+            var isAvailable = NetBootStrap.Initialize("client.json");
             Assert.That(isAvailable, Is.True);
-            Assert.That(NetBootStrap.Config.Role == "server");
+            Assert.That(NetBootStrap.Config.Role == "client");
         }
 
         [Test]

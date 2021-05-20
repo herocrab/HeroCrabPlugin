@@ -1,9 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using HeroCrab.Network.Stream;
+using HeroCrabPlugin.Core;
+using HeroCrabPlugin.Element;
+using HeroCrabPlugin.Session;
 using Moq;
 using NUnit.Framework; // ReSharper disable UnusedVariable
 
-namespace HeroCrabPlugin.Tests.Unit.Session
+namespace HeroCrabPluginTestsUnit.Session
 {
     [TestFixture]
     public class NetSessionServerTests
