@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using HeroCrab.Network.Stream;
 using HeroCrabPlugin.Core;
 using HeroCrabPlugin.Element;
 using HeroCrabPlugin.Field;
+using HeroCrabPlugin.Stream;
 using NUnit.Framework; // ReSharper disable ObjectCreationAsStatement
 
 namespace HeroCrabPluginTestsUnit.Element

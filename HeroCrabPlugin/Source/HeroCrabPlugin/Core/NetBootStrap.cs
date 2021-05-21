@@ -19,13 +19,16 @@ namespace HeroCrabPlugin.Core
         /// <returns></returns>
         public static bool Initialize(string filePath)
         {
+            Config = new NetBootConfig();
+
             try {
-                NetBootConfig.Read(filePath, out var config);
-                Config = config;
-                return true;
+                var isAvailable = NetBootConfig.Read(filePath, out var config);
+                if (isAvailable) {
+                    Config = config;
+                }
+                return isAvailable;
             }
             catch (Exception) {
-                Config = new NetBootConfig();
                 return false;
             }
         }

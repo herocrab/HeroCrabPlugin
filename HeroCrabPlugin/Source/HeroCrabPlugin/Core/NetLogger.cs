@@ -100,7 +100,7 @@ namespace HeroCrabPlugin.Core
                 networkLogger.Write(sender, message);
             }
 
-            var senderName = sender?.ToString()?.Split('.').Last();
+            var senderName = sender?.ToString().Split('.').Last();
             if (string.IsNullOrEmpty(senderName)) {
                 senderName = "Null";
             }

@@ -3,12 +3,16 @@ using HeroCrabPlugin.Core;
 
 namespace HeroCrabPlugin.Field
 {
+    /// <summary>
+    /// Network uint field.
+    /// </summary>
     public class NetFieldUInt: NetField, INetFieldUInt
     {
         internal Action<uint> Receive { get; set; }
 
         private readonly NetFieldBuffer<uint> _buffer;
 
+        /// <inheritdoc />
         public NetFieldUInt(byte index, string name, bool isReliable, Action<uint> callback)
         {
             IsReliable = isReliable;
@@ -19,6 +23,7 @@ namespace HeroCrabPlugin.Field
             _buffer = new NetFieldBuffer<uint>(bufferSize);
         }
 
+        /// <inheritdoc />
         public NetFieldUInt(NetFieldDesc description, Action<uint> callback)
         {
             IsReliable = description.IsReliable;
@@ -29,6 +34,7 @@ namespace HeroCrabPlugin.Field
             _buffer = new NetFieldBuffer<uint>(bufferSize);
         }
 
+        /// <inheritdoc />
         public void Set(uint value)
         {
             _buffer.Add(value);
@@ -39,6 +45,7 @@ namespace HeroCrabPlugin.Field
             LastQueue.WriteUInt(value);
         }
 
+        /// <inheritdoc />
         public override void Process()
         {
             // Only process one buffered item per tick
@@ -47,6 +54,7 @@ namespace HeroCrabPlugin.Field
             }
         }
 
+        /// <inheritdoc />
         public override void Deserialize(NetByteQueue rxQueue)
         {
             var count = rxQueue.ReadByte();

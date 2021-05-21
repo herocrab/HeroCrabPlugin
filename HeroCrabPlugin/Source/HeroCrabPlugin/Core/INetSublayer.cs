@@ -1,4 +1,5 @@
 ﻿using System;
+using ENet;
 
 namespace HeroCrabPlugin.Core
 {
@@ -28,6 +29,11 @@ namespace HeroCrabPlugin.Core
         Action<uint> ReceiveIdCallback { get; set; }
 
         /// <summary>
+        /// Disconnect call back; this method is invoked when a sublayer is disconnected.
+        /// </summary>
+        Action<Peer> DisconnectCallback { get; set; }
+
+        /// <summary>
         /// Disconnect the sub-layer.
         /// </summary>
         void Disconnect();
@@ -42,7 +48,7 @@ namespace HeroCrabPlugin.Core
         /// <summary>
         /// Send a session id over this sublayer; Id's are assigned to the sub-layer when a session is created.
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">Session id</param>
         void SendId(uint id);
     }
 }

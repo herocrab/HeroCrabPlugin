@@ -14,7 +14,7 @@ namespace HeroCrabPlugin.Core
         /// <summary>
         /// Client role.
         /// </summary>
-        Client,
+        Client
     }
 
     /// <summary>
@@ -30,7 +30,7 @@ namespace HeroCrabPlugin.Core
         /// <summary>
         /// Game logic update rate is 60 hertz.
         /// </summary>
-        Hz60 = 60,
+        Hz60 = 60
     }
 
     /// <summary>
@@ -46,7 +46,7 @@ namespace HeroCrabPlugin.Core
         /// <summary>
         /// Target rate of 30 packets per second.
         /// </summary>
-        Hz30 = 30,
+        Hz30 = 30
     }
 
     /// <summary>

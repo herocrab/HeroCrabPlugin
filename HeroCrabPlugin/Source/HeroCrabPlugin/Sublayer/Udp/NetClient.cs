@@ -1,14 +1,17 @@
 ﻿using System;
 using ENet;
-using HeroCrab.Network.Stream;
 using HeroCrabPlugin.Core;
 using HeroCrabPlugin.Session;
 using HeroCrabPlugin.Stream;
 
 namespace HeroCrabPlugin.Sublayer.Udp
 {
+    /// <summary>
+    /// Network client (UDP).
+    /// </summary>
     public class NetClient : NetHost, INetClient
     {
+        /// <inheritdoc />
         public INetStreamClient Stream { get; }
 
         private readonly Host _client;
@@ -18,6 +21,11 @@ namespace HeroCrabPlugin.Sublayer.Udp
         private Event _netEvent;
         private bool _polled;
 
+        /// <summary>
+        /// Create a new network client (UDP) given the configuration.
+        /// </summary>
+        /// <param name="netConfig">NetworkConfiguration</param>
+        /// <returns></returns>
         public static INetClient Create(NetConfig netConfig )
         {
             if (netConfig == null) {
@@ -36,6 +44,7 @@ namespace HeroCrabPlugin.Sublayer.Udp
             Stream = new NetStreamClient();
         }
 
+        /// <inheritdoc />
         public void Process(float time)
         {
             if (!_client.IsSet) {
@@ -82,6 +91,7 @@ namespace HeroCrabPlugin.Sublayer.Udp
             Stream.Process(time);
         }
 
+        /// <inheritdoc />
         public void Start(string ipAddress, ushort port)
         {
             try {
@@ -90,7 +100,7 @@ namespace HeroCrabPlugin.Sublayer.Udp
                 address.Port = port;
 
                 if (_client.IsSet) {
-                    NetLogger.Write(NetLogger.LoggingGroup.Status, this, $"Client is already running..." );
+                    NetLogger.Write(NetLogger.LoggingGroup.Status, this, "Client is already running..." );
                     return;
                 }
 
@@ -103,13 +113,14 @@ namespace HeroCrabPlugin.Sublayer.Udp
             }
         }
 
+        /// <inheritdoc />
         public void Stop()
         {
             if (!_client.IsSet) {
                 return;
             }
 
-            NetLogger.Write(NetLogger.LoggingGroup.Status, this, $"[STOP] Client is stopping..." );
+            NetLogger.Write(NetLogger.LoggingGroup.Status, this, "[STOP] Client is stopping..." );
 
             _session?.Disconnect();
             _client?.Flush();
@@ -135,6 +146,7 @@ namespace HeroCrabPlugin.Sublayer.Udp
             _session = Stream.CreateSession(_sublayer);
         }
 
+        /// <inheritdoc />
         public void Dispose()
         {
             Library.Deinitialize();

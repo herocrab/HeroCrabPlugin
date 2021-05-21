@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using ENet;
-using HeroCrab.Network.Stream;
 using HeroCrabPlugin.Core;
 using HeroCrabPlugin.Stream;
 
 namespace HeroCrabPlugin.Sublayer.Udp
 {
+    /// <summary>
+    /// Network server (UDP).
+    /// </summary>
     public class NetServer : NetHost, INetServer
     {
+        /// <inheritdoc />
         public INetStreamServer Stream { get; }
 
         private readonly Host _server;
@@ -19,6 +22,11 @@ namespace HeroCrabPlugin.Sublayer.Udp
         private bool _polled;
         private ushort _port;
 
+        /// <summary>
+        /// Create a new network server (UDP) given the network configuration.
+        /// </summary>
+        /// <param name="netConfig"></param>
+        /// <returns></returns>
         public static INetServer Create(NetConfig netConfig)
         {
             if (netConfig == null) {
@@ -39,6 +47,10 @@ namespace HeroCrabPlugin.Sublayer.Udp
             Stream = new NetStreamServer();
         }
 
+        /// <summary>
+        /// Process the network server.
+        /// </summary>
+        /// <param name="time"></param>
         public void Process(float time)
         {
             if (!_server.IsSet) {
@@ -86,6 +98,7 @@ namespace HeroCrabPlugin.Sublayer.Udp
             Stream.Process(time);
         }
 
+        /// <inheritdoc />
         public void Start(string ipAddress, ushort port)
         {
             try {
@@ -109,6 +122,7 @@ namespace HeroCrabPlugin.Sublayer.Udp
             }
         }
 
+        /// <inheritdoc />
         public void Stop()
         {
             if (!_server.IsSet) {
@@ -125,6 +139,7 @@ namespace HeroCrabPlugin.Sublayer.Udp
             _server?.Dispose();
         }
 
+        /// <inheritdoc />
         public void KickAll()
         {
             foreach (var sublayer in _connections.Values.ToArray()) {
@@ -178,6 +193,7 @@ namespace HeroCrabPlugin.Sublayer.Udp
             netEvent.Packet.Dispose();
         }
 
+        /// <inheritdoc />
         public void Dispose()
         {
             Library.Deinitialize();

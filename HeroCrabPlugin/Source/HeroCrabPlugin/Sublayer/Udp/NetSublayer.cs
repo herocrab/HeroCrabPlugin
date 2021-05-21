@@ -5,18 +5,30 @@ using HeroCrabPlugin.Core;
 
 namespace HeroCrabPlugin.Sublayer.Udp
 {
+    /// <summary>
+    /// Network sublayer for UDP.
+    /// </summary>
     public class NetSublayer : NetObject, INetSublayer
     {
+        /// <inheritdoc />
         public uint Id { get; set; }
+
+        /// <inheritdoc />
         public string Ip => _peer.IP;
+
+        /// <inheritdoc />
         public Action<byte[]> ReceiveDataCallback { get; set; }
+
+        /// <inheritdoc />
         public Action<uint> ReceiveIdCallback { get; set; }
+
+        /// <inheritdoc />
         public Action<Peer> DisconnectCallback { get; set; }
 
         private enum Channels : byte
         {
             Control,
-            Data,
+            Data
         }
 
         private Peer _peer;
@@ -27,6 +39,11 @@ namespace HeroCrabPlugin.Sublayer.Udp
 
         private const ushort MaximumPacketLength = 1456;
 
+        /// <summary>
+        /// Create a sublayer (UDP) from an enet peer.
+        /// </summary>
+        /// <param name="peer"></param>
+        /// <returns></returns>
         public static NetSublayer Create(Peer peer)
         {
             return new NetSublayer(peer);
@@ -40,12 +57,18 @@ namespace HeroCrabPlugin.Sublayer.Udp
             _rxBuffer = new byte[MaximumPacketLength];
         }
 
+        /// <inheritdoc />
         public void Disconnect()
         {
             _peer.DisconnectNow(0);
             DisconnectCallback?.Invoke(_peer);
         }
 
+        /// <summary>
+        /// Receive a packet from a host given the channel and packet.
+        /// </summary>
+        /// <param name="channel"></param>
+        /// <param name="packet"></param>
         public void ReceivePacket(byte channel, Packet packet)
         {
             switch (channel) {
@@ -58,6 +81,7 @@ namespace HeroCrabPlugin.Sublayer.Udp
             }
         }
 
+        /// <inheritdoc />
         public void Send(byte[] data, bool isReliable)
         {
             if (data.Length > MaximumPacketLength) {
@@ -81,6 +105,7 @@ namespace HeroCrabPlugin.Sublayer.Udp
             packet.Dispose();
         }
 
+        /// <inheritdoc />
         public void SendId(uint id)
         {
             Id = id;

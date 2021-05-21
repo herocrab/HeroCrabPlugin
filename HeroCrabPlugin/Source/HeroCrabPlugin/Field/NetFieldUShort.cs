@@ -3,12 +3,16 @@ using HeroCrabPlugin.Core;
 
 namespace HeroCrabPlugin.Field
 {
+    /// <summary>
+    /// Network ushort field.
+    /// </summary>
     public class NetFieldUShort : NetField, INetFieldUShort
     {
         internal Action<ushort> Receive { get; set; }
 
         private readonly NetFieldBuffer<ushort> _buffer;
 
+        /// <inheritdoc />
         public NetFieldUShort(byte index, string name, bool isReliable, Action<ushort> callback)
         {
             IsReliable = isReliable;
@@ -19,6 +23,7 @@ namespace HeroCrabPlugin.Field
             _buffer = new NetFieldBuffer<ushort>(bufferSize);
         }
 
+        /// <inheritdoc />
         public NetFieldUShort(NetFieldDesc description, Action<ushort> callback)
         {
             IsReliable = description.IsReliable;
@@ -29,6 +34,7 @@ namespace HeroCrabPlugin.Field
             _buffer = new NetFieldBuffer<ushort>(bufferSize);
         }
 
+        /// <inheritdoc />
         public void Set(ushort value)
         {
             _buffer.Add(value);
@@ -39,6 +45,7 @@ namespace HeroCrabPlugin.Field
             LastQueue.WriteUShort(value);
         }
 
+        /// <inheritdoc />
         public override void Process()
         {
             // Only process one buffered item per tick
@@ -47,6 +54,7 @@ namespace HeroCrabPlugin.Field
             }
         }
 
+        /// <inheritdoc />
         public override void Deserialize(NetByteQueue rxQueue)
         {
             var count = rxQueue.ReadByte();

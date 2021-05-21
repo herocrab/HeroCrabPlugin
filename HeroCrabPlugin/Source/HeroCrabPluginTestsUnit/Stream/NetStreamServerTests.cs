@@ -1,5 +1,4 @@
-﻿using HeroCrab.Network.Stream;
-using HeroCrabPlugin.Core;
+﻿using HeroCrabPlugin.Core;
 using HeroCrabPlugin.Element;
 using HeroCrabPlugin.Session;
 using HeroCrabPlugin.Stream;

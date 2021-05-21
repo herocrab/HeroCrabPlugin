@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using HeroCrabPlugin.Core;
 using HeroCrabPlugin.Field;
+// ReSharper disable NotResolvedInText
 
 namespace HeroCrabPlugin.Element
 {
@@ -504,7 +505,7 @@ namespace HeroCrabPlugin.Element
 
                     case NetFieldDesc.TypeCode.Unknown:
                         NetLogger.Write(NetLogger.LoggingGroup.Error,this,"[ERROR] Attempted to create field with unknown type code." );
-                        throw new ArgumentOutOfRangeException($"[ERROR] Attempted to create field with unknown type code.");
+                        throw new ArgumentOutOfRangeException("[ERROR] Attempted to create field with unknown type code.");
                 }
             }
         }

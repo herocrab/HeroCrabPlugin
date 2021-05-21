@@ -12,7 +12,7 @@ namespace HeroCrabPlugin.Stream
         /// <summary>
         /// Create a session, called by sublayer upon connecting to create higher-level session.
         /// </summary>
-        /// <param name="netSublayer">Sublayer connection</param>
+        /// <param name="netSublayer">Sublayer to create as a session</param>
         /// <returns></returns>
         NetSessionClient CreateSession(INetSublayer netSublayer);
 

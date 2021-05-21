@@ -78,7 +78,7 @@ namespace HeroCrabPlugin.Core
             string registerAddress = "127.0.0.1",
             string catalogAddress = "127.0.0.1",
             string serverAddress = "127.0.0.1",
-            string serverName = "HeroCrab.Network GameServer",
+            string serverName = "HeroCrabPlugin Network GameServer",
             string serverMap = "DemoMap",
             ushort registerPort = 42056,
             ushort catalogPort = 42057,

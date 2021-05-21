@@ -7,6 +7,7 @@ using HeroCrabPlugin.Element;
 
 namespace HeroCrabPlugin.Session
 {
+    /// <inheritdoc />
     public class NetSessionServer : NetSession
     {
         private readonly SortedDictionary<uint, NetElement> _candidateElements;
@@ -28,6 +29,7 @@ namespace HeroCrabPlugin.Session
         private const ushort MaximumRxLength = 1456;
         private const byte MaximumPpsPadding = 5;
 
+        /// <inheritdoc />
         public NetSessionServer(INetSublayer sublayer, SortedDictionary<uint, List<NetElement>> sendElements,
             SortedDictionary<uint, List<NetElement>> excludeElements) : base(sublayer)
         {
@@ -44,11 +46,16 @@ namespace HeroCrabPlugin.Session
             _maximumPacketRate = (byte)(NetConfig.ClientPps + MaximumPpsPadding);
         }
 
+        /// <summary>
+        /// Process the network session.
+        /// </summary>
+        /// <param name="time"></param>
         public void Process(float time)
         {
             ProcessPacketRate(time);
         }
 
+        /// <inheritdoc />
         public override void Send()
         {
             IsPacketReliable = false;
@@ -61,6 +68,7 @@ namespace HeroCrabPlugin.Session
             SendPacket(TxQueue.ToBytes(), IsPacketReliable);
         }
 
+        /// <inheritdoc />
         protected override void SendPacket(byte[] packet, bool isReliable)
         {
             if (packet.Length <= MinimumTxLength) {
@@ -70,6 +78,7 @@ namespace HeroCrabPlugin.Session
             base.SendPacket(packet, isReliable);
         }
 
+        /// <inheritdoc />
         protected override void OnReceivePacket(byte[] packet)
         {
             if (packet.Length >= MaximumRxLength) {

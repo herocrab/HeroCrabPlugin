@@ -5,13 +5,18 @@ using System.Linq;
 using HeroCrabPlugin.Core;
 using HeroCrabPlugin.Element;
 using HeroCrabPlugin.Session;
-using HeroCrabPlugin.Stream;
 
-namespace HeroCrab.Network.Stream
+namespace HeroCrabPlugin.Stream
 {
+    /// <summary>
+    /// Network server stream.
+    /// </summary>
     public class NetStreamServer : NetStream, INetStreamServer
     {
+        /// <inheritdoc />
         public event ElementCreatedHandler ElementCreated;
+
+        /// <inheritdoc />
         public event ElementDeletedHandler ElementDeleted;
 
         private readonly SortedDictionary<uint, List<NetElement>> _send;
@@ -20,6 +25,7 @@ namespace HeroCrab.Network.Stream
         private uint _elementIndex;
         private uint _sessionId;
 
+        /// <inheritdoc />
         public NetStreamServer()
         {
             PacketInterval = (int)NetConfig.GameTickRate / (int)NetConfig.ClientPps;
@@ -28,6 +34,7 @@ namespace HeroCrab.Network.Stream
             _exclude = new SortedDictionary<uint, List<NetElement>> {{0, new List<NetElement>()}};
         }
 
+        /// <inheritdoc />
         protected override void SendElements()
         {
             // This method prepares elements for sending using an optimized dictionary approach to reduce iteration
@@ -81,6 +88,7 @@ namespace HeroCrab.Network.Stream
             }
         }
 
+        /// <inheritdoc />
         protected override void AddSession(NetSession session)
         {
             _send.Add(session.Id, new List<NetElement>());
@@ -88,6 +96,10 @@ namespace HeroCrab.Network.Stream
             base.AddSession(session);
         }
 
+        /// <summary>
+        /// Delete a session from this stream given a sublayer.
+        /// </summary>
+        /// <param name="netSublayer"></param>
         public override void DeleteSession(INetSublayer netSublayer)
         {
             _send.Remove(netSublayer.Id);
@@ -95,6 +107,7 @@ namespace HeroCrab.Network.Stream
             base.DeleteSession(netSublayer);
         }
 
+        /// <inheritdoc />
         public NetSessionServer CreateSession(INetSublayer netSublayer)
         {
             var session = new NetSessionServer(netSublayer, _send, _exclude)
@@ -116,6 +129,7 @@ namespace HeroCrab.Network.Stream
             return session;
         }
 
+        /// <inheritdoc />
         public INetElement CreateElement(string name, uint assetId, uint authorId = 0, bool isEnabled = true)
         {
             var elementDesc = new NetElementDesc(_elementIndex, name, authorId, assetId);
@@ -133,6 +147,7 @@ namespace HeroCrab.Network.Stream
             return element;
         }
 
+        /// <inheritdoc />
         public void DeleteElement(INetElement element)
         {
             if (!Elements.ContainsKey(element.Description.Id)) {
@@ -143,12 +158,16 @@ namespace HeroCrab.Network.Stream
             ElementDeleted?.Invoke(element);
         }
 
+        /// <summary>
+        /// Set the maximum session id; used in unit testing.
+        /// </summary>
         public void SetMaxSessionId()
         {
             // This is here for unit test, testing roll over of session Ids
             _sessionId = uint.MaxValue;
         }
 
+        /// <inheritdoc />
         public bool FindSession(uint id, out INetSession session)
         {
             if (!Sessions.ContainsKey(id)) {

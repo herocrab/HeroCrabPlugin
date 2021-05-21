@@ -3,12 +3,16 @@ using HeroCrabPlugin.Core;
 
 namespace HeroCrabPlugin.Field
 {
+    /// <summary>
+    /// Network byte field.
+    /// </summary>
     public class NetFieldByte : NetField, INetFieldByte
     {
         internal Action<byte> Receive { get; set; }
 
         private readonly NetFieldBuffer<byte> _buffer;
 
+        /// <inheritdoc />
         public NetFieldByte(byte index, string name, bool isReliable, Action<byte> callback)
         {
             IsReliable = isReliable;
@@ -19,6 +23,7 @@ namespace HeroCrabPlugin.Field
             _buffer = new NetFieldBuffer<byte>(bufferSize);
         }
 
+        /// <inheritdoc />
         public NetFieldByte(NetFieldDesc description, Action<byte> callback)
         {
             IsReliable = description.IsReliable;
@@ -29,6 +34,7 @@ namespace HeroCrabPlugin.Field
             _buffer = new NetFieldBuffer<byte>(bufferSize);
         }
 
+        /// <inheritdoc />
         public void Set(byte value)
         {
             _buffer.Add(value);
@@ -39,6 +45,7 @@ namespace HeroCrabPlugin.Field
             LastQueue.WriteByte(value);
         }
 
+        /// <inheritdoc />
         public override void Process()
         {
             // Only process one buffered item per tick
@@ -47,6 +54,7 @@ namespace HeroCrabPlugin.Field
             }
         }
 
+        /// <inheritdoc />
         public override void Deserialize(NetByteQueue rxQueue)
         {
             var count = rxQueue.ReadByte();

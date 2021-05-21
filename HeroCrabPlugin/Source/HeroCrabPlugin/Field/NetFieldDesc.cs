@@ -3,17 +3,39 @@ using HeroCrabPlugin.Core;
 
 namespace HeroCrabPlugin.Field
 {
+    /// <summary>
+    /// Network field description.
+    /// </summary>
     public class NetFieldDesc : NetObject
     {
+        /// <summary>
+        /// Network field index value.
+        /// </summary>
         public byte Index { get; }
+
+        /// <summary>
+        /// Network field name.
+        /// </summary>
         public string Name { get; }
+
+        /// <summary>
+        /// IsReliable is true if this field is to be sent reliably.
+        /// </summary>
         public bool IsReliable { get; }
+
+        /// <summary>
+        /// Network field type code indicates value type on creation.
+        /// </summary>
         public TypeCode Type { get; }
 
         private readonly NetByteQueue _byteQueue;
 
+        /// <summary>
+        /// Network field type code enum.
+        /// </summary>
         public enum TypeCode : byte
         {
+            #pragma warning disable 1591
             Unknown,
             Byte,
             ByteArray,
@@ -23,8 +45,10 @@ namespace HeroCrabPlugin.Field
             String,
             UInt,
             UShort,
+            #pragma warning restore 1591
         }
 
+        /// <inheritdoc />
         public NetFieldDesc(byte index, string name, bool isReliable, TypeCode typeCode)
         {
             Index = index;
@@ -39,11 +63,20 @@ namespace HeroCrabPlugin.Field
             _byteQueue.WriteByte(Convert.ToByte(Type));
         }
 
+        /// <summary>
+        /// Serialize this network field description.
+        /// </summary>
+        /// <returns></returns>
         public byte[] Serialize()
         {
             return _byteQueue.ToBytes();
         }
 
+        /// <summary>
+        /// Deserialize this network field description given the receive queue.
+        /// </summary>
+        /// <param name="rxQueue"></param>
+        /// <returns></returns>
         public static NetFieldDesc Deserialize(NetByteQueue rxQueue)
         {
             var index = rxQueue.ReadByte();

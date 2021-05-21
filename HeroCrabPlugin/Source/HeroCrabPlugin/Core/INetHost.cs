@@ -1,5 +1,6 @@
 ﻿using System;
 using HeroCrabPlugin.Sublayer.Udp;
+// ReSharper disable UnusedMemberInSuper.Global
 
 namespace HeroCrabPlugin.Core
 {

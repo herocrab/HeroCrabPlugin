@@ -3,18 +3,39 @@ using HeroCrabPlugin.Core;
 
 namespace HeroCrabPlugin.Field
 {
+    /// <inheritdoc />
     public abstract class NetField : NetObject
     {
+        /// <summary>
+        /// Network field description.
+        /// </summary>
         public NetFieldDesc Description { get; protected set; }
+
+        /// <summary>
+        /// IsReliable is true if this field is set to be sent reliably.
+        /// </summary>
         public bool IsReliable { get; protected set; }
+
+        /// <summary>
+        /// IsUpdated is true if this field has been updated and is queued for transmission.
+        /// </summary>
         public bool IsUpdated { get; protected set; }
 
+        /// <summary>
+        /// Transmit queue.
+        /// </summary>
         protected readonly NetByteQueue TxQueue;
+
+        /// <summary>
+        /// Queue containing the last known value for this field.
+        /// </summary>
         protected readonly NetByteQueue LastQueue;
+
         private readonly NetByteQueue _serializeQueue;
 
         private const int MaxFieldDepth = 256;
 
+        /// <inheritdoc />
         protected NetField()
         {
             TxQueue = new NetByteQueue();
@@ -22,6 +43,9 @@ namespace HeroCrabPlugin.Field
             _serializeQueue = new NetByteQueue();
         }
 
+        /// <summary>
+        /// Clear the net field transmit queue and set IsUpdated to false.
+        /// </summary>
         public void Clear()
         {
             TxQueue.Clear();
@@ -30,8 +54,16 @@ namespace HeroCrabPlugin.Field
             IsUpdated = false;
         }
 
+        /// <summary>
+        /// Process this network field.
+        /// </summary>
         public abstract void Process();
 
+        /// <summary>
+        /// Serialize network field for transmission.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="NotSupportedException"></exception>
         public byte[] Serialize()
         {
             _serializeQueue.Clear();
@@ -51,6 +83,10 @@ namespace HeroCrabPlugin.Field
             return _serializeQueue.ToBytes();
         }
 
+        /// <summary>
+        /// Serialize the last known value for this field.
+        /// </summary>
+        /// <returns></returns>
         public byte[] SerializeLast()
         {
             _serializeQueue.Clear();
@@ -65,8 +101,15 @@ namespace HeroCrabPlugin.Field
             return _serializeQueue.ToBytes();
         }
 
+        /// <summary>
+        /// Deserialize a byte queue into this network field.
+        /// </summary>
+        /// <param name="rxQueue"></param>
         public abstract void Deserialize(NetByteQueue rxQueue);
 
+        /// <summary>
+        /// Reset this field by clearing the transmit queue and setting IsUpdated to false.
+        /// </summary>
         public void Reset()
         {
             IsUpdated = false;

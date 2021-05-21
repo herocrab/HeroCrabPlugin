@@ -1,5 +1,6 @@
 ﻿using System;
 using HeroCrabPlugin.Field;
+// ReSharper disable UnusedMemberInSuper.Global
 
 namespace HeroCrabPlugin.Element
 {

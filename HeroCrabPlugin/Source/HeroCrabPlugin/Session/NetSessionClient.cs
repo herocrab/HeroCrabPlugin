@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using HeroCrabPlugin.Core;
 using HeroCrabPlugin.Element;
+// ReSharper disable NotResolvedInText
 
 namespace HeroCrabPlugin.Session
 {
+    /// <summary>
+    /// Network client session.
+    /// </summary>
     public class NetSessionClient : NetSession
     {
         private readonly SortedDictionary<uint, NetElement> _inputElements;
@@ -13,6 +17,7 @@ namespace HeroCrabPlugin.Session
 
         private const byte MinimumTxLength = 5;
 
+        /// <inheritdoc />
         public NetSessionClient(INetSublayer sublayer, SortedDictionary<uint, NetElement> elements) : base(sublayer)
         {
             sublayer.ReceiveIdCallback = OnReceiveId;
@@ -20,6 +25,7 @@ namespace HeroCrabPlugin.Session
             _elements = elements;
         }
 
+        /// <inheritdoc />
         public override void Send()
         {
             IsPacketReliable = false;
@@ -29,6 +35,7 @@ namespace HeroCrabPlugin.Session
             SendPacket(TxQueue.ToBytes(), IsPacketReliable);
         }
 
+        /// <inheritdoc />
         protected override void SendPacket(byte[] packet, bool isReliable)
         {
             if (packet.Length <= MinimumTxLength) {
@@ -38,6 +45,7 @@ namespace HeroCrabPlugin.Session
             base.SendPacket(packet, isReliable);
         }
 
+        /// <inheritdoc />
         protected override void OnReceivePacket(byte[] packet)
         {
             RxCount++;
@@ -46,7 +54,7 @@ namespace HeroCrabPlugin.Session
 
             if (packet.Length < 1) {
                 NetLogger.Write(NetLogger.LoggingGroup.Error,this, "[ERROR] Zero byte packet received by session.");
-                throw new ArgumentOutOfRangeException($"[ERROR] Zero byte packet received by session.");
+                throw new ArgumentOutOfRangeException("[ERROR] Zero byte packet received by session.");
             }
 
             ApplyDelete();
