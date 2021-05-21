@@ -5,18 +5,42 @@ using HeroCrabPlugin.Field;
 
 namespace HeroCrabPlugin.Element
 {
+    /// <inheritdoc />
     public class NetElementDesc : NetObject
     {
+        /// <summary>
+        /// Unique network element id value, assigned by stream.
+        /// </summary>
         public uint Id { get; }
+
+        /// <summary>
+        /// Network element name.
+        /// </summary>
         public string Name { get; }
+
+        /// <summary>
+        /// Author id is the id of the session which created this element.
+        /// </summary>
         public uint AuthorId { get; }
+
+        /// <summary>
+        /// Asset id is a unique id assigned by game logic, which references a prefab or actor.
+        /// </summary>
         public uint AssetId { get; }
+
+        /// <summary>
+        /// HasFields is true if this element has any network fields added to it.
+        /// </summary>
         public bool HasFields => Ledger.Any();
 
+        /// <summary>
+        /// Ledger for this element; contains ids for network fields and is used in field creation.
+        /// </summary>
         public SortedDictionary<byte, NetFieldDesc> Ledger;
 
         private readonly NetByteQueue _txQueue;
 
+        /// <inheritdoc />
         public NetElementDesc(uint id, string name, uint authorId, uint assetId)
         {
             Id = id;
@@ -44,8 +68,17 @@ namespace HeroCrabPlugin.Element
             }
         }
 
+        /// <summary>
+        /// Serialize this network element description.
+        /// </summary>
+        /// <returns></returns>
         public byte[] Serialize() => _txQueue.ToBytes();
 
+        /// <summary>
+        /// Deserialize this element description from a byte queue.
+        /// </summary>
+        /// <param name="rxQueue"></param>
+        /// <returns></returns>
         public static NetElementDesc Deserialize(NetByteQueue rxQueue)
         {
             var index = rxQueue.ReadUInt();
@@ -66,6 +99,10 @@ namespace HeroCrabPlugin.Element
             return elementDesc;
         }
 
+        /// <summary>
+        /// Write the ledger for this network element.
+        /// </summary>
+        /// <param name="ledger"></param>
         public void WriteLedger(SortedDictionary<byte, NetFieldDesc> ledger)
         {
             Ledger = ledger;

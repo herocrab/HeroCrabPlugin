@@ -6,15 +6,35 @@ using HeroCrabPlugin.Field;
 
 namespace HeroCrabPlugin.Element
 {
+    /// <summary>
+    /// Network element contains network fields (RPC endpoints).
+    /// </summary>
     public class NetElement : NetObject, INetElement
     {
+        /// <inheritdoc />
         public NetElementDesc Description { get; }
+
+        /// <inheritdoc />
         public NetElementFilter Filter { get; }
+
+        /// <inheritdoc />
         public bool Enabled { get; set; }
+
+        /// <inheritdoc />
         public bool IsServer { get; internal set; }
+
+        /// <inheritdoc />
         public bool IsClient { get; internal set; }
+
+        /// <inheritdoc />
         public bool IsReliable => _fields.Values.Any(a => a.IsReliable);
+
+        /// <summary>
+        /// IsUpdated is true if this element has any fields which have been updated.
+        /// </summary>
         public bool IsUpdated => _fields.Values.Any(a => a.IsUpdated);
+
+        /// <inheritdoc />
         public int FieldCount => _fields.Count;
 
         private readonly SortedDictionary<byte, NetFieldDesc> _ledger;
@@ -26,6 +46,7 @@ namespace HeroCrabPlugin.Element
 
         private byte _fieldIndex;
 
+        /// <inheritdoc />
         public NetElement(NetElementDesc description)
         {
             Description = description;
@@ -43,6 +64,7 @@ namespace HeroCrabPlugin.Element
             }
         }
 
+        /// <inheritdoc />
         public INetFieldByte AddByte(string name, bool isReliable, Action<byte> callback)
         {
             ResolveDuplicate(name);
@@ -54,6 +76,7 @@ namespace HeroCrabPlugin.Element
             return field;
         }
 
+        /// <inheritdoc />
         public INetFieldBytes AddBytes(string name, bool isReliable, Action<byte[]> callback)
         {
             ResolveDuplicate(name);
@@ -65,6 +88,7 @@ namespace HeroCrabPlugin.Element
             return field;
         }
 
+        /// <inheritdoc />
         public INetFieldFloat AddFloat(string name, bool isReliable, Action<float> callback)
         {
             ResolveDuplicate(name);
@@ -76,6 +100,7 @@ namespace HeroCrabPlugin.Element
             return field;
         }
 
+        /// <inheritdoc />
         public INetFieldInt AddInt(string name, bool isReliable, Action<int> callback)
         {
             ResolveDuplicate(name);
@@ -87,6 +112,7 @@ namespace HeroCrabPlugin.Element
             return field;
         }
 
+        /// <inheritdoc />
         public INetFieldLong AddLong(string name, bool isReliable, Action<long> callback)
         {
             ResolveDuplicate(name);
@@ -98,6 +124,7 @@ namespace HeroCrabPlugin.Element
             return field;
         }
 
+        /// <inheritdoc />
         public INetFieldString AddString(string name, bool isReliable, Action<string> callback)
         {
             ResolveDuplicate(name);
@@ -109,6 +136,7 @@ namespace HeroCrabPlugin.Element
             return field;
         }
 
+        /// <inheritdoc />
         public INetFieldUInt AddUInt(string name, bool isReliable, Action<uint> callback)
         {
             ResolveDuplicate(name);
@@ -120,6 +148,7 @@ namespace HeroCrabPlugin.Element
             return field;
         }
 
+        /// <inheritdoc />
         public INetFieldUShort AddUShort(string name, bool isReliable, Action<ushort> callback)
         {
             ResolveDuplicate(name);
@@ -131,6 +160,7 @@ namespace HeroCrabPlugin.Element
             return field;
         }
 
+        /// <inheritdoc />
         public INetFieldByte GetByte(string name)
         {
             if (_fields.ContainsKey(name) && _fields[name] is INetFieldByte) {
@@ -140,6 +170,7 @@ namespace HeroCrabPlugin.Element
             return null;
         }
 
+        /// <inheritdoc />
         public INetFieldBytes GetBytes(string name)
         {
             if (_fields.ContainsKey(name) && _fields[name] is INetFieldBytes) {
@@ -149,6 +180,7 @@ namespace HeroCrabPlugin.Element
             return null;
         }
 
+        /// <inheritdoc />
         public INetFieldFloat GetFloat(string name)
         {
             if (_fields.ContainsKey(name) && _fields[name] is INetFieldFloat) {
@@ -158,6 +190,7 @@ namespace HeroCrabPlugin.Element
             return null;
         }
 
+        /// <inheritdoc />
         public INetFieldInt GetInt(string name)
         {
             if (_fields.ContainsKey(name) && _fields[name] is INetFieldInt) {
@@ -167,6 +200,7 @@ namespace HeroCrabPlugin.Element
             return null;
         }
 
+        /// <inheritdoc />
         public INetFieldLong GetLong(string name)
         {
             if (_fields.ContainsKey(name) && _fields[name] is INetFieldLong) {
@@ -176,6 +210,7 @@ namespace HeroCrabPlugin.Element
             return null;
         }
 
+        /// <inheritdoc />
         public INetFieldString GetString(string name)
         {
             if (_fields.ContainsKey(name) && _fields[name] is INetFieldString) {
@@ -185,6 +220,7 @@ namespace HeroCrabPlugin.Element
             return null;
         }
 
+        /// <inheritdoc />
         public INetFieldUInt GetUInt(string name)
         {
             if (_fields.ContainsKey(name) && _fields[name] is INetFieldUInt) {
@@ -194,6 +230,7 @@ namespace HeroCrabPlugin.Element
             return null;
         }
 
+        /// <inheritdoc />
         public INetFieldUShort GetUShort(string name)
         {
             if (_fields.ContainsKey(name) && _fields[name] is INetFieldUShort) {
@@ -203,6 +240,7 @@ namespace HeroCrabPlugin.Element
             return null;
         }
 
+        /// <inheritdoc />
         public bool SetActionByte(string name, Action<byte> callback)
         {
             if (!_fields.ContainsKey(name)) {
@@ -217,6 +255,7 @@ namespace HeroCrabPlugin.Element
             return true;
         }
 
+        /// <inheritdoc />
         public bool SetActionBytes(string name, Action<byte[]> callback)
         {
             if (!_fields.ContainsKey(name)) {
@@ -231,6 +270,7 @@ namespace HeroCrabPlugin.Element
             return true;
         }
 
+        /// <inheritdoc />
         public bool SetActionFloat(string name, Action<float> callback)
         {
             if (!_fields.ContainsKey(name)) {
@@ -245,6 +285,7 @@ namespace HeroCrabPlugin.Element
             return true;
         }
 
+        /// <inheritdoc />
         public bool SetActionInt(string name, Action<int> callback)
         {
             if (!_fields.ContainsKey(name)) {
@@ -259,6 +300,7 @@ namespace HeroCrabPlugin.Element
             return true;
         }
 
+        /// <inheritdoc />
         public bool SetActionLong(string name, Action<long> callback)
         {
             if (!_fields.ContainsKey(name)) {
@@ -273,6 +315,7 @@ namespace HeroCrabPlugin.Element
             return true;
         }
 
+        /// <inheritdoc />
         public bool SetActionString(string name, Action<string> callback)
         {
             if (!_fields.ContainsKey(name)) {
@@ -287,6 +330,7 @@ namespace HeroCrabPlugin.Element
             return true;
         }
 
+        /// <inheritdoc />
         public bool SetActionUInt(string name, Action<uint> callback)
         {
             if (!_fields.ContainsKey(name)) {
@@ -301,6 +345,7 @@ namespace HeroCrabPlugin.Element
             return true;
         }
 
+        /// <inheritdoc />
         public bool SetActionUShort(string name, Action<ushort> callback)
         {
             if (!_fields.ContainsKey(name)) {
@@ -315,6 +360,9 @@ namespace HeroCrabPlugin.Element
             return true;
         }
 
+        /// <summary>
+        /// Process each of the fields in this element, called by host.
+        /// </summary>
         public void Process()
         {
             foreach (var field in _fields.Values.ToArray()) {
@@ -322,6 +370,9 @@ namespace HeroCrabPlugin.Element
             }
         }
 
+        /// <summary>
+        /// Prepare delta changes by serializing only updated fields for this element.
+        /// </summary>
         public void PrepareDelta()
         {
             var updatedFields = _fields.Values.Where(a => a.IsUpdated)
@@ -340,6 +391,10 @@ namespace HeroCrabPlugin.Element
             _txQueue.WriteBytes(_prepQueue.ToBytes());
         }
 
+        /// <summary>
+        /// Serialize the last field values, used on initial sending of an element.
+        /// </summary>
+        /// <returns></returns>
         public byte[] SerializeLast()
         {
             _prepQueue.Clear();
@@ -356,6 +411,10 @@ namespace HeroCrabPlugin.Element
             return _fullQueue.ToBytes();
         }
 
+        /// <summary>
+        /// Receive an update and apply it to network fields.
+        /// </summary>
+        /// <param name="rxQueue">Receive queue</param>
         public void Apply(NetByteQueue rxQueue)
         {
             _applyQueue.Clear();
@@ -377,8 +436,15 @@ namespace HeroCrabPlugin.Element
             }
         }
 
+        /// <summary>
+        /// Serialize the transmit queue.
+        /// </summary>
+        /// <returns>Bytes</returns>
         public byte[] Serialize() =>_txQueue.ToBytes();
 
+        /// <summary>
+        /// Reset all fields IsUpdated values and clear transmit queue.
+        /// </summary>
         public void ResetFields()
         {
             foreach (var field in _fields.Values) {

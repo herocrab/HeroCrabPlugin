@@ -3,15 +3,33 @@
 
 namespace HeroCrabPlugin.Core
 {
+    /// <summary>
+    /// Network services container for registry singleton.
+    /// </summary>
     public class NetServices
     {
+        /// <summary>
+        /// Count of registered network services.
+        /// </summary>
         public int Count => Services.Count;
+
+        /// <summary>
+        /// Registry of classes.
+        /// </summary>
         public static readonly NetServices Registry = new NetServices();
 
         private static readonly Dictionary<string, object> Services = new Dictionary<string, object>();
 
+        /// <summary>
+        /// Clear network services.
+        /// </summary>
         public void Clear() => Services.Clear();
 
+        /// <summary>
+        /// Get a network service from the singleton.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public T Get<T>()
         {
             var key = typeof(T).Name;
@@ -22,6 +40,11 @@ namespace HeroCrabPlugin.Core
             return (T) Services[key];
         }
 
+        /// <summary>
+        /// Add a network service to the singleton.
+        /// </summary>
+        /// <param name="service"></param>
+        /// <typeparam name="T"></typeparam>
         public void Add<T>(T service)
         {
             var key = service.GetType().Name;
@@ -32,6 +55,10 @@ namespace HeroCrabPlugin.Core
             Services.Add(key, service);
         }
 
+        /// <summary>
+        /// Remove a network service from the singleton.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
         public void Remove<T>()
         {
             var key = typeof(T).Name;

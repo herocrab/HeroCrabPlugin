@@ -5,9 +5,19 @@ using System.Text;
 
 namespace HeroCrabPlugin.Core
 {
+    /// <summary>
+    /// Flexible byte queue serializer for common value types.
+    /// </summary>
     public class NetByteQueue
     {
+        /// <summary>
+        /// Byte length of queue (number of bytes serialized).
+        /// </summary>
         public int Length => _byteQueue.Count;
+
+        /// <summary>
+        /// Depth or count of fields that have been added to this queue.
+        /// </summary>
         public int Depth => _depth;
 
         private const int MaxBytesLength = 512;
@@ -19,21 +29,35 @@ namespace HeroCrabPlugin.Core
         private readonly byte[] _shortReadArray = new byte[8];
         private readonly StringBuilder _stringBuilder = new StringBuilder();
 
+        /// <summary>
+        /// Flexible byte queue serializer for common value types.
+        /// </summary>
         public NetByteQueue() {
             _byteQueue = new Queue<byte>();
         }
 
+        /// <summary>
+        /// Clear the queue of all contents.
+        /// </summary>
         public void Clear()
         {
             _byteQueue.Clear();
             _depth = 0;
         }
 
+        /// <summary>
+        /// Queue contents in bytes.
+        /// </summary>
+        /// <returns></returns>
         public byte[] ToBytes()
         {
             return _byteQueue.ToArray();
         }
 
+        /// <summary>
+        /// Add a series of bytes to the queue to be retrieved with ReadBytes.
+        /// </summary>
+        /// <param name="bytes">Bytes</param>
         public void WriteBytes(byte[] bytes)
         {
             if (bytes.Length > MaxBytesLength) {
@@ -53,6 +77,10 @@ namespace HeroCrabPlugin.Core
         }
 
         // ReSharper disable once ParameterTypeCanBeEnumerable.Global
+        /// <summary>
+        /// Add a series of raw bytes to this queue.
+        /// </summary>
+        /// <param name="bytes">Raw bytes</param>
         public void WriteRaw(byte[] bytes)
         {
             foreach (var b in bytes) {
@@ -61,66 +89,94 @@ namespace HeroCrabPlugin.Core
             _depth++;
         }
 
+        /// <summary>
+        /// Add a byte to this queue.
+        /// </summary>
+        /// <param name="value">Single byte</param>
         public void WriteByte(byte value) {
             _byteQueue.Enqueue(value);
             _depth++;
         }
 
-        public void WriteString(string stringValue)
+        /// <summary>
+        /// Add a string to this queue.
+        /// </summary>
+        /// <param name="value">String</param>
+        public void WriteString(string value)
         {
-            if (stringValue.Length > ushort.MaxValue) {
-                stringValue = stringValue.Substring(0, ushort.MaxValue);
+            if (value.Length > ushort.MaxValue) {
+                value = value.Substring(0, ushort.MaxValue);
             }
 
-            var length = Convert.ToUInt16(stringValue.Length);
+            var length = Convert.ToUInt16(value.Length);
 
             var stringLength = BitConverter.GetBytes(length);
             foreach (var a in stringLength) {
                 _byteQueue.Enqueue(a);
             }
 
-            foreach (var c in stringValue) {
+            foreach (var c in value) {
                 _byteQueue.Enqueue(Convert.ToByte(c));
             }
             _depth++;
         }
 
-        public void WriteUShort(ushort ushortValue)
+        /// <summary>
+        /// Add a ushort (UInt16) to this queue.
+        /// </summary>
+        /// <param name="value">UInt16</param>
+        public void WriteUShort(ushort value)
         {
-            var bytes = BitConverter.GetBytes(ushortValue);
+            var bytes = BitConverter.GetBytes(value);
             foreach (var b in bytes) {
                 _byteQueue.Enqueue(b);
             }
             _depth++;
         }
 
-        public void WriteUInt(uint uintValue)
+        /// <summary>
+        /// Add a uint (UInt32) to this queue.
+        /// </summary>
+        /// <param name="value">UInt32</param>
+        public void WriteUInt(uint value)
         {
-            var bytes = BitConverter.GetBytes(uintValue);
+            var bytes = BitConverter.GetBytes(value);
             foreach (var b in bytes) {
                 _byteQueue.Enqueue(b);
             }
             _depth++;
         }
 
-        public void WriteInt(int intValue)
+        /// <summary>
+        /// Add an int (Int32) to this queue.
+        /// </summary>
+        /// <param name="value">Int32</param>
+        public void WriteInt(int value)
         {
-            var bytes = BitConverter.GetBytes(intValue);
+            var bytes = BitConverter.GetBytes(value);
             foreach (var b in bytes) {
                 _byteQueue.Enqueue(b);
             }
             _depth++;
         }
 
-        public void WriteLong(long longValue)
+        /// <summary>
+        /// Add a long (Int64) to this queue.
+        /// </summary>
+        /// <param name="value">Int64</param>
+        public void WriteLong(long value)
         {
-            var bytes = BitConverter.GetBytes(longValue);
+            var bytes = BitConverter.GetBytes(value);
             foreach (var b in bytes) {
                 _byteQueue.Enqueue(b);
             }
             _depth++;
         }
 
+        /// <summary>
+        /// Add a float to this queue.
+        /// </summary>
+        /// <param name="floatValue">Float</param>
         public void WriteFloat(float floatValue)
         {
             var bytes = BitConverter.GetBytes(floatValue);
@@ -130,6 +186,10 @@ namespace HeroCrabPlugin.Core
             _depth++;
         }
 
+        /// <summary>
+        /// Read a string from this queue.
+        /// </summary>
+        /// <returns>String</returns>
         public string ReadString()
         {
             var length = ReadUShort();
@@ -142,6 +202,10 @@ namespace HeroCrabPlugin.Core
             return _stringBuilder.ToString();
         }
 
+        /// <summary>
+        /// Read a long from this queue.
+        /// </summary>
+        /// <returns>Long</returns>
         public long ReadLong()
         {
             for (var i = 0; i < 8; i++) {
@@ -151,11 +215,19 @@ namespace HeroCrabPlugin.Core
             return BitConverter.ToInt64(_shortReadArray, 0);
         }
 
+        /// <summary>
+        /// Read a single byte from this queue.
+        /// </summary>
+        /// <returns>Byte</returns>
         public byte ReadByte()
         {
             return _byteQueue.Dequeue();
         }
 
+        /// <summary>
+        /// Read a ushort (UInt16) from this queue.
+        /// </summary>
+        /// <returns>UInt16</returns>
         public ushort ReadUShort()
         {
             for (var i = 0; i < 2; i++) {
@@ -165,6 +237,10 @@ namespace HeroCrabPlugin.Core
             return BitConverter.ToUInt16(_shortReadArray, 0);
         }
 
+        /// <summary>
+        /// Read a int (Int32) from this queue.
+        /// </summary>
+        /// <returns>Int32</returns>
         public int ReadInt()
         {
             for (var i = 0; i < 4; i++) {
@@ -174,6 +250,10 @@ namespace HeroCrabPlugin.Core
             return BitConverter.ToInt32(_shortReadArray, 0);
         }
 
+        /// <summary>
+        /// Read a uint (Int64) from this queue.
+        /// </summary>
+        /// <returns>Int64</returns>
         public uint ReadUInt()
         {
             for (var i = 0; i < 4; i++) {
@@ -183,6 +263,10 @@ namespace HeroCrabPlugin.Core
             return BitConverter.ToUInt32(_shortReadArray, 0);
         }
 
+        /// <summary>
+        /// Read a float from this queue.
+        /// </summary>
+        /// <returns>Float</returns>
         public float ReadFloat()
         {
             for (var i = 0; i < 4; i++) {
@@ -192,6 +276,10 @@ namespace HeroCrabPlugin.Core
             return BitConverter.ToSingle(_shortReadArray, 0);
         }
 
+        /// <summary>
+        /// Read a series of bytes from this queue, includes length.
+        /// </summary>
+        /// <returns></returns>
         public byte[] ReadBytes()
         {
             var length = ReadInt();
@@ -207,11 +295,19 @@ namespace HeroCrabPlugin.Core
             return _longReadArray.Take(length).ToArray();
         }
 
+        /// <summary>
+        /// Peek the next byte.
+        /// </summary>
+        /// <returns>The next byte</returns>
         public byte PeekByte()
         {
             return _byteQueue.Peek();
         }
 
+        /// <summary>
+        /// Returns true if there are bytes in the queue.
+        /// </summary>
+        /// <returns>Bool</returns>
         public bool Any() => _byteQueue.Any();
     }
 }

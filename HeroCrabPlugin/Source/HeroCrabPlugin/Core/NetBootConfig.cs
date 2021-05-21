@@ -5,21 +5,74 @@ using FlaxEngine.Json;
 
 namespace HeroCrabPlugin.Core
 {
+    /// <summary>
+    /// Network boot configuration; this is the launch .json configuration as an object.
+    /// </summary>
     public class NetBootConfig
     {
+        /// <summary>
+        /// Role of the host.
+        /// </summary>
         public string Role { get; set; }
+
+        /// <summary>
+        /// Registration server ip address used as listener for registering a game server.
+        /// </summary>
         public string RegisterAddress { get; set; }
+
+        /// <summary>
+        /// Catalog server ip address used as listener for retrieving a list of game servers.
+        /// </summary>
         public string CatalogAddress { get; set; }
+
+        /// <summary>
+        /// Server ip address used as listener for joining a game server.
+        /// </summary>
         public string ServerAddress { get; set; }
+
+        /// <summary>
+        /// Server name used to advertise a game server.
+        /// </summary>
         public string ServerName { get; set; }
+
+        /// <summary>
+        /// Server map, this is typically a world, level, terrain, or environment designation.
+        /// </summary>
         public string ServerMap { get; set; }
+
+        /// <summary>
+        /// Registration server port used as listener for registering a game server.
+        /// </summary>
         public ushort RegisterPort { get; set; }
+
+        /// <summary>
+        /// Catalog server port used as listener for retrieving a list of game servers.
+        /// </summary>
         public ushort CatalogPort { get; set; }
+
+        /// <summary>
+        /// Server port used as listener for joining a game.
+        /// </summary>
         public ushort ServerPort { get; set; }
+
+        /// <summary>
+        /// Maximum number of connections allowed on this server instance.
+        /// </summary>
         public ushort MaxConnections { get; set; }
+
+        /// <summary>
+        /// Maximum number of catalog entries allowed on this server instance.
+        /// </summary>
         public ushort MaxCatalogSize { get; set; }
+
+        /// <summary>
+        /// Maximum number of log entries to maintain in the logging buffer.
+        /// </summary>
         public ushort MaxLogSize { get; set; }
 
+        /// <summary>
+        /// Network boot configuration; this is the launch .json configuration as an object.
+        /// </summary>
         public NetBootConfig(
             string role = "client",
             string registerAddress = "127.0.0.1",
@@ -48,18 +101,44 @@ namespace HeroCrabPlugin.Core
             ServerMap = serverMap;
         }
 
-        public static void Write(string filename)
+        /// <summary>
+        /// Write a default boot configuration.
+        /// </summary>
+        /// <param name="filename">Destination file name</param>
+        public static bool Write(string filename)
         {
-            var config = new NetBootConfig();
-            var jsonString = JsonSerializer.Serialize(config, true);
-            File.WriteAllText(filename, jsonString);
+            try
+            {
+                var config = new NetBootConfig();
+                var jsonString = JsonSerializer.Serialize(config, true);
+                File.WriteAllText(filename, jsonString);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
-        public static NetBootConfig Read(string filename)
+        /// <summary>
+        /// Reads a boot configuration from disk.
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <param name="config">Boot configuration retrieved from disk</param>
+        /// <returns></returns>
+        public static bool Read(string filePath, out NetBootConfig config)
         {
-            var jsonString = File.ReadAllText(filename);
-            var config = JsonSerializer.Deserialize<NetBootConfig>(jsonString);
-            return config;
+            try
+            {
+                var jsonString = File.ReadAllText(filePath);
+                config = JsonSerializer.Deserialize<NetBootConfig>(jsonString);
+                return true;
+            }
+            catch
+            {
+                config = null;
+                return false;
+            }
         }
     }
 }

@@ -1,7 +1,11 @@
 using System;
 using FlaxEngine;
 // ReSharper disable CheckNamespace
+// ReSharper disable UnusedMember.Global
 
+/// <summary>
+/// HeroCrab Plugin export properties, for Editor UI.
+/// </summary>
 public class MyHeroCrabPlugin : GamePlugin
 {
     /// <inheritdoc />
@@ -16,7 +20,7 @@ public class MyHeroCrabPlugin : GamePlugin
         RepositoryUrl = "https://github.com/herocrab/HeroCrabPlugin",
         Version = new Version(1, 0),
         IsAlpha = true,
-        IsBeta = false,
+        IsBeta = false
     };
 
     /// <inheritdoc />
