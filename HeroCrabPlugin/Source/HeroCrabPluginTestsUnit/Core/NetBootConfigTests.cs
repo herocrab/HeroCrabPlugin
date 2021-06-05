@@ -10,9 +10,9 @@ namespace HeroCrabPluginTestsUnit.Core
         public void Write_DefaultNetBootConfigAndRead_VerifyFileExists()
         {
             NetBootConfig.Write("default.json");
-            // NetBootConfig.Write("catalog.json");
-            // NetBootConfig.Write("server.json");
-            // NetBootConfig.Write("client.json");
+            NetBootConfig.Write("catalog.json");
+            NetBootConfig.Write("server.json");
+            NetBootConfig.Write("client.json");
 
             var isAvailable = NetBootStrap.Initialize("default.json");
             Assert.That(isAvailable, Is.True);

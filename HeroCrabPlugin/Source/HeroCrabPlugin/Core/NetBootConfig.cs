@@ -11,6 +11,11 @@ namespace HeroCrabPlugin.Core
     public class NetBootConfig
     {
         /// <summary>
+        /// Version of the game.
+        /// </summary>
+        public string Version { get; set; }
+
+        /// <summary>
         /// Role of the host.
         /// </summary>
         public string Role { get; set; }
@@ -74,6 +79,7 @@ namespace HeroCrabPlugin.Core
         /// Network boot configuration; this is the launch .json configuration as an object.
         /// </summary>
         public NetBootConfig(
+            string version = "0.01",
             string role = "client",
             string registerAddress = "127.0.0.1",
             string catalogAddress = "127.0.0.1",
@@ -87,6 +93,7 @@ namespace HeroCrabPlugin.Core
             ushort maxCatalogSize = 100,
             ushort maxLogSize = 1000)
         {
+            Version = version;
             Role = role;
             RegisterPort = registerPort;
             CatalogPort = catalogPort;

@@ -1,4 +1,5 @@
 using Flax.Build;
+// ReSharper disable CheckNamespace
 
 /// <summary>
 /// HeroCrabPluginTestsIntegration project build configuration.
