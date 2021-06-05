@@ -35,9 +35,9 @@ namespace HeroCrabPluginTestsIntegration
         [SetUp]
         public void Setup()
         {
-            _server = NetServer.Create(new NetConfig(NetRole.Server));
-            _clientA = NetClient.Create(new NetConfig(NetRole.Client));
-            _clientB = NetClient.Create(new NetConfig(NetRole.Client));
+            _server = NetServer.Create(new NetSettings(NetRole.Server));
+            _clientA = NetClient.Create(new NetSettings(NetRole.Client));
+            _clientB = NetClient.Create(new NetSettings(NetRole.Client));
         }
 
         private void StartServer()
@@ -277,7 +277,7 @@ namespace HeroCrabPluginTestsIntegration
         [Test, Apartment(ApartmentState.STA)]
         public void MaxConnectionTest()
         {
-            _server = NetServer.Create(new NetConfig(NetRole.Server, maxConnections:1));
+            _server = NetServer.Create(new NetSettings(NetRole.Server, maxConnections:1));
 
             StartServer();
             Process(100);

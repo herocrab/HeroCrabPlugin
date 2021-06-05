@@ -232,7 +232,7 @@
       <HintPath>HeroCrabPlugin\..\..\Lib\ENet-CSharp.dll</HintPath>
     </Reference>
     <ProjectReference Include="..\..\..\Cache\Projects\FlaxEngine.csproj">
-      <Project>{40B4E955-4CDE-4065-AF89-A945D76B44D3}</Project>
+      <Project>{6A4B4343-9CED-4B20-8DE3-E8F23132B4EB}</Project>
       <Name>FlaxEngine</Name>
     </ProjectReference>
   </ItemGroup>
@@ -243,7 +243,6 @@
     <Compile Include="HeroCrabPlugin\Core\INetLogger.cs" />
     <Compile Include="HeroCrabPlugin\Core\INetServer.cs" />
     <Compile Include="HeroCrabPlugin\Core\INetSublayer.cs" />
-    <Compile Include="HeroCrabPlugin\Core\NetBootConfig.cs" />
     <Compile Include="HeroCrabPlugin\Core\NetBootStrap.cs" />
     <Compile Include="HeroCrabPlugin\Core\NetByteQueue.cs" />
     <Compile Include="HeroCrabPlugin\Core\NetConfig.cs" />
@@ -251,6 +250,7 @@
     <Compile Include="HeroCrabPlugin\Core\NetLoggerBuffer.cs" />
     <Compile Include="HeroCrabPlugin\Core\NetObject.cs" />
     <Compile Include="HeroCrabPlugin\Core\NetServices.cs" />
+    <Compile Include="HeroCrabPlugin\Core\NetSettings.cs" />
     <Compile Include="HeroCrabPlugin\Element\INetElement.cs" />
     <Compile Include="HeroCrabPlugin\Element\NetElement.cs" />
     <Compile Include="HeroCrabPlugin\Element\NetElementDesc.cs" />

@@ -42,8 +42,8 @@ namespace HeroCrabPlugin.Session
             _sessionElements = new SortedDictionary<uint, NetElement>();
             _applyInputCounter = new SortedDictionary<uint, byte>();
 
-            _maximumApplyPerElement = NetConfig.ClientBufferDepth;
-            _maximumPacketRate = (byte)(NetConfig.ClientPps + MaximumPpsPadding);
+            _maximumApplyPerElement = NetSettings.ClientBufferDepth;
+            _maximumPacketRate = (byte)(NetSettings.ClientPps + MaximumPpsPadding);
         }
 
         /// <summary>

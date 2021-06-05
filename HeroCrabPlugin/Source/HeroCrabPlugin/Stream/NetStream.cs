@@ -10,16 +10,16 @@ namespace HeroCrabPlugin.Stream
     public abstract class NetStream : NetObject
     {
         /// <inheritdoc />
-        public delegate void SessionConnectedHandler(INetSession netSession);
+        public delegate void SessionConnectedHandler(INetSession session);
 
         /// <inheritdoc />
-        public delegate void SessionDisconnectedHandler(INetSession netSession);
+        public delegate void SessionDisconnectedHandler(INetSession session);
 
         /// <inheritdoc />
-        public delegate void ElementCreatedHandler(INetElement netElement);
+        public delegate void ElementCreatedHandler(INetElement element);
 
         /// <inheritdoc />
-        public delegate void ElementDeletedHandler(INetElement netElement);
+        public delegate void ElementDeletedHandler(INetElement element);
 
         /// <summary>
         /// Event is invoked when a session is connected.
@@ -91,15 +91,15 @@ namespace HeroCrabPlugin.Stream
         /// <summary>
         /// Delete a session from this stream.
         /// </summary>
-        /// <param name="netSublayer">Network sublayer</param>
-        public virtual void DeleteSession(INetSublayer netSublayer)
+        /// <param name="sublayer">Network sublayer</param>
+        public virtual void DeleteSession(INetSublayer sublayer)
         {
-            if (!Sessions.ContainsKey(netSublayer.Id)) {
+            if (!Sessions.ContainsKey(sublayer.Id)) {
                 return;
             }
 
-            var session = Sessions[netSublayer.Id];
-            Sessions.Remove(netSublayer.Id);
+            var session = Sessions[sublayer.Id];
+            Sessions.Remove(sublayer.Id);
 
             NetLogger.Write(NetLogger.LoggingGroup.Session,this,
                 $"Session ({session.Id}) has been removed from the stream, there are now {Sessions.Count} total sessions.");

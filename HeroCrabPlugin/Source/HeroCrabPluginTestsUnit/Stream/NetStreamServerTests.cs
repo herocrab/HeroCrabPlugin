@@ -14,14 +14,14 @@ namespace HeroCrabPluginTestsUnit.Stream
         public void SetUp()
         {
             NetServices.Registry.Clear();
-            NetServices.Registry.Add(new NetConfig(NetRole.Server));
+            NetServices.Registry.Add(new NetSettings(NetRole.Server));
             NetServices.Registry.Add(new NetLogger(new NetLoggerBuffer(1000)));
         }
 
         [Test]
         public void Process_ProcessGameTickRateTimes_VerifyTxCountIsCorrect()
         {
-            var netConfiguration = NetServices.Registry.Get<NetConfig>();
+            var netConfiguration = NetServices.Registry.Get<NetSettings>();
 
             var networkStream = new NetStreamServer();
 

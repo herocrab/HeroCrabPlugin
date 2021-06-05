@@ -1,130 +1,151 @@
-﻿// ReSharper disable MemberCanBePrivate.Global
+﻿using System.IO;
+using FlaxEngine.Json;
+
+// ReSharper disable MemberCanBePrivate.Global
+
 namespace HeroCrabPlugin.Core
 {
     /// <summary>
-    /// Role of the network host.
-    /// </summary>
-    public enum NetRole : byte
-    {
-        /// <summary>
-        /// Server role.
-        /// </summary>
-        Server,
-
-        /// <summary>
-        /// Client role.
-        /// </summary>
-        Client
-    }
-
-    /// <summary>
-    /// Game logic update rate.
-    /// </summary>
-    public enum TickRate : byte
-    {
-        /// <summary>
-        /// Game logic update rate is 30 hertz.
-        /// </summary>
-        Hz30 = 30,
-
-        /// <summary>
-        /// Game logic update rate is 60 hertz.
-        /// </summary>
-        Hz60 = 60
-    }
-
-    /// <summary>
-    /// Game packet rate target.
-    /// </summary>
-    public enum HostPps : byte
-    {
-        /// <summary>
-        /// Target rate of 10 packets per second.
-        /// </summary>
-        Hz10 = 10,
-
-        /// <summary>
-        /// Target rate of 30 packets per second.
-        /// </summary>
-        Hz30 = 30
-    }
-
-    /// <summary>
-    /// Network configuration parameters.
+    /// Network boot configuration; this is the launch .json configuration as an object.
     /// </summary>
     public class NetConfig
     {
         /// <summary>
-        /// Role of the network host.
+        /// Version of the game.
         /// </summary>
-        public readonly NetRole NetRole;
+        public string Version { get; set; }
 
         /// <summary>
-        /// Game logic update rate.
+        /// Role of the host.
         /// </summary>
-        public readonly TickRate GameTickRate;
+        public string Role { get; set; }
 
         /// <summary>
-        /// Server packet rate target.
+        /// Registration server ip address used as listener for registering a game server.
         /// </summary>
-        public readonly HostPps ServerPps;
+        public string RegisterAddress { get; set; }
 
         /// <summary>
-        /// Client packet rate target.
+        /// Catalog server ip address used as listener for retrieving a list of game servers.
         /// </summary>
-        public readonly HostPps ClientPps;
+        public string CatalogAddress { get; set; }
 
         /// <summary>
-        /// Buffer depth for reliable fields.
+        /// Server ip address used as listener for joining a game server.
         /// </summary>
-        public readonly byte ReliableBufferDepth;
+        public string ServerAddress { get; set; }
 
         /// <summary>
-        /// Buffer depth for unreliable fields.
+        /// Server name used to advertise a game server.
         /// </summary>
-        public readonly byte UnreliableBufferDepth;
+        public string ServerName { get; set; }
 
         /// <summary>
-        /// Unreliable buffer depth for the server.
+        /// Server map, this is typically a world, level, terrain, or environment designation.
         /// </summary>
-        public readonly byte ServerBufferDepth;
+        public string ServerMap { get; set; }
 
         /// <summary>
-        /// Unreliable buffer depth for the client.
+        /// Registration server port used as listener for registering a game server.
         /// </summary>
-        public readonly byte ClientBufferDepth;
+        public ushort RegisterPort { get; set; }
 
         /// <summary>
-        /// Maximum number of supported connections.
+        /// Catalog server port used as listener for retrieving a list of game servers.
         /// </summary>
-        public readonly ushort MaxConnections;
+        public ushort CatalogPort { get; set; }
 
         /// <summary>
-        /// Network configuration parameters.
+        /// Server port used as listener for joining a game.
         /// </summary>
-        /// <param name="netRole">Role of the network host</param>
-        /// <param name="gameTickRate">Game logic update rate</param>
-        /// <param name="serverPps">Server packet rate target</param>
-        /// <param name="clientPps">Client packet rate target</param>
-        /// <param name="reliableBufferDepth">Reliable buffer depth</param>
-        /// <param name="maxConnections">Maximum number of supported connections</param>
-        public NetConfig(NetRole netRole,
-            TickRate gameTickRate = TickRate.Hz60,
-            HostPps serverPps = HostPps.Hz30,
-            HostPps clientPps = HostPps.Hz30,
-            byte reliableBufferDepth = byte.MaxValue,
-            ushort maxConnections = 160)
+        public ushort ServerPort { get; set; }
+
+        /// <summary>
+        /// Maximum number of connections allowed on this server instance.
+        /// </summary>
+        public ushort MaxConnections { get; set; }
+
+        /// <summary>
+        /// Maximum number of catalog entries allowed on this server instance.
+        /// </summary>
+        public ushort MaxCatalogSize { get; set; }
+
+        /// <summary>
+        /// Maximum number of log entries to maintain in the logging buffer.
+        /// </summary>
+        public ushort MaxLogSize { get; set; }
+
+        /// <summary>
+        /// Network boot configuration; this is the launch .json configuration as an object.
+        /// </summary>
+        public NetConfig(
+            string version = "0.01",
+            string role = "client",
+            string registerAddress = "127.0.0.1",
+            string catalogAddress = "127.0.0.1",
+            string serverAddress = "127.0.0.1",
+            string serverName = "HeroCrabPlugin Network GameServer",
+            string serverMap = "DemoMap",
+            ushort registerPort = 42056,
+            ushort catalogPort = 42057,
+            ushort serverPort = 42058,
+            ushort maxConnections = 100,
+            ushort maxCatalogSize = 100,
+            ushort maxLogSize = 1000)
         {
-            NetRole = netRole;
-            GameTickRate = gameTickRate;
-            ServerPps = serverPps;
-            ClientPps = clientPps;
-            ReliableBufferDepth = reliableBufferDepth;
-            UnreliableBufferDepth = NetRole == NetRole.Server ? ServerBufferDepth : ClientBufferDepth;
+            Version = version;
+            Role = role;
+            RegisterPort = registerPort;
+            CatalogPort = catalogPort;
+            ServerPort = serverPort;
             MaxConnections = maxConnections;
+            MaxCatalogSize = maxCatalogSize;
+            MaxLogSize = maxLogSize;
+            RegisterAddress = registerAddress;
+            CatalogAddress = catalogAddress;
+            ServerAddress = serverAddress;
+            ServerName = serverName;
+            ServerMap = serverMap;
+        }
 
-            ServerBufferDepth = (byte)((int) gameTickRate / (int) serverPps + 1);
-            ClientBufferDepth = (byte)((int) gameTickRate / (int) clientPps + 1);
+        /// <summary>
+        /// Write a default boot configuration.
+        /// </summary>
+        /// <param name="filename">Destination file name</param>
+        public static bool Write(string filename)
+        {
+            try
+            {
+                var config = new NetConfig();
+                var jsonString = JsonSerializer.Serialize(config, true);
+                File.WriteAllText(filename, jsonString);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Reads a boot configuration from disk.
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <param name="config">Boot configuration retrieved from disk</param>
+        /// <returns></returns>
+        public static bool Read(string filePath, out NetConfig config)
+        {
+            try
+            {
+                var jsonString = File.ReadAllText(filePath);
+                config = JsonSerializer.Deserialize<NetConfig>(jsonString);
+                return true;
+            }
+            catch
+            {
+                config = null;
+                return false;
+            }
         }
     }
 }

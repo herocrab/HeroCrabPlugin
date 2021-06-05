@@ -25,17 +25,17 @@ namespace HeroCrabPlugin.Sublayer.Udp
         /// <summary>
         /// Create a new network server (UDP) given the network configuration.
         /// </summary>
-        /// <param name="netConfig"></param>
+        /// <param name="netSettings"></param>
         /// <returns></returns>
-        public static INetServer Create(NetConfig netConfig)
+        public static INetServer Create(NetSettings netSettings)
         {
-            if (netConfig == null) {
-                netConfig = new NetConfig(NetRole.Server);
+            if (netSettings == null) {
+                netSettings = new NetSettings(NetRole.Server);
             }
-            return new NetServer(netConfig);
+            return new NetServer(netSettings);
         }
 
-        private NetServer(NetConfig netConfig) : base (netConfig)
+        private NetServer(NetSettings netSettings) : base (netSettings)
         {
             // Sub-layer
             Library.Initialize();
@@ -114,7 +114,7 @@ namespace HeroCrabPlugin.Sublayer.Udp
                 }
 
                 NetLogger.Write(NetLogger.LoggingGroup.Status, this, $"[START] Server on port {port}..." );
-                _server.Create(address, NetConfig.MaxConnections, 2);
+                _server.Create(address, NetSettings.MaxConnections, 2);
             }
             catch (Exception) {
                 NetLogger.Write(NetLogger.LoggingGroup.Error,this,

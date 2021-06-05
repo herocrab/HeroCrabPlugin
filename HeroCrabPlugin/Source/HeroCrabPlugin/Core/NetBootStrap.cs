@@ -10,7 +10,7 @@ namespace HeroCrabPlugin.Core
         /// <summary>
         /// Network configuration.
         /// </summary>
-        public static NetBootConfig Config { get; private set; }
+        public static NetConfig Config { get; private set; }
 
         /// <summary>
         /// Initialize the network configuration.
@@ -19,10 +19,10 @@ namespace HeroCrabPlugin.Core
         /// <returns></returns>
         public static bool Initialize(string filePath)
         {
-            Config = new NetBootConfig();
+            Config = new NetConfig();
 
             try {
-                var isAvailable = NetBootConfig.Read(filePath, out var config);
+                var isAvailable = NetConfig.Read(filePath, out var config);
                 if (isAvailable) {
                     Config = config;
                 }

@@ -4,15 +4,15 @@ using NUnit.Framework;
 namespace HeroCrabPluginTestsUnit.Core
 {
     [TestFixture]
-    public class NetBootConfigTests
+    public class NetConfigTests
     {
         [Test]
         public void Write_DefaultNetBootConfigAndRead_VerifyFileExists()
         {
-            NetBootConfig.Write("default.json");
-            NetBootConfig.Write("catalog.json");
-            NetBootConfig.Write("server.json");
-            NetBootConfig.Write("client.json");
+            NetConfig.Write("default.json");
+            NetConfig.Write("catalog.json");
+            NetConfig.Write("server.json");
+            NetConfig.Write("client.json");
 
             var isAvailable = NetBootStrap.Initialize("default.json");
             Assert.That(isAvailable, Is.True);

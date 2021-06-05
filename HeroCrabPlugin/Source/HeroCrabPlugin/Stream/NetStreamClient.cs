@@ -24,7 +24,7 @@ namespace HeroCrabPlugin.Stream
         /// </summary>
         public NetStreamClient()
         {
-            PacketInterval = (int) NetConfig.GameTickRate / (int) NetConfig.ClientPps;
+            PacketInterval = (int) NetSettings.GameTickRate / (int) NetSettings.ClientPps;
         }
 
         /// <summary>

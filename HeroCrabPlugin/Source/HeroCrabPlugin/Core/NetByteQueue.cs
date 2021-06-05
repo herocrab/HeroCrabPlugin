@@ -105,6 +105,10 @@ namespace HeroCrabPlugin.Core
         /// <param name="value">String</param>
         public void WriteString(string value)
         {
+            if (value == null) {
+                value = string.Empty;
+            }
+
             if (value.Length > ushort.MaxValue) {
                 value = value.Substring(0, ushort.MaxValue);
             }

@@ -105,7 +105,7 @@ namespace HeroCrabPlugin.Core
                 senderName = "Null";
             }
 
-            LogWrite?.Invoke(senderName, " " + message);
+            LogWrite?.Invoke(" " + senderName, " " + message);
         }
     }
 }

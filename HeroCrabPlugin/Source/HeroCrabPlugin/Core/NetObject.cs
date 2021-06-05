@@ -8,7 +8,7 @@
         /// <summary>
         /// Network configuration.
         /// </summary>
-        protected readonly NetConfig NetConfig;
+        protected readonly NetSettings NetSettings;
 
         /// <summary>
         /// Network logger.
@@ -20,7 +20,7 @@
         /// </summary>
         protected NetObject()
         {
-            NetConfig = NetServices.Registry.Get<NetConfig>();
+            NetSettings = NetServices.Registry.Get<NetSettings>();
             NetLogger = NetServices.Registry.Get<NetLogger>();
         }
     }

@@ -4,13 +4,13 @@ using NUnit.Framework;
 namespace HeroCrabPluginTestsUnit.Core
 {
     [TestFixture]
-    public class NetConfigurationTests
+    public class NetSettingsTests
     {
         [Test]
         public void Constructor_NoArguments_ServerBufferDepthIsThree()
         {
-            var networkConfiguration = new NetConfig(NetRole.Server);
-            Assert.That(networkConfiguration.ServerBufferDepth, Is.EqualTo(3));
+            var netSettings = new NetSettings(NetRole.Server);
+            Assert.That(netSettings.ServerBufferDepth, Is.EqualTo(3));
         }
 
         [Test]
@@ -21,8 +21,8 @@ namespace HeroCrabPluginTestsUnit.Core
         public void Constructor_WithProvidedGameTickRateAndServerPacketRate_ServerBufferDepthIsThree(TickRate gameTickRate,
             HostPps hostPps, byte result)
         {
-            var networkConfiguration = new NetConfig(NetRole.Server, gameTickRate, hostPps);
-            Assert.That(networkConfiguration.ServerBufferDepth, Is.EqualTo(result));
+            var netSettings = new NetSettings(NetRole.Server, gameTickRate, hostPps);
+            Assert.That(netSettings.ServerBufferDepth, Is.EqualTo(result));
         }
 
         [Test]
@@ -33,8 +33,8 @@ namespace HeroCrabPluginTestsUnit.Core
         public void Constructor_WithProvidedGameTickRateAndClientPacketRate_ServerBufferDepthIsThree(TickRate gameTickRate,
             HostPps hostPps, byte result)
         {
-            var networkConfiguration = new NetConfig(NetRole.Server, gameTickRate, clientPps: hostPps);
-            Assert.That(networkConfiguration.ClientBufferDepth, Is.EqualTo(result));
+            var netSettings = new NetSettings(NetRole.Server, gameTickRate, clientPps: hostPps);
+            Assert.That(netSettings.ClientBufferDepth, Is.EqualTo(result));
         }
     }
 }

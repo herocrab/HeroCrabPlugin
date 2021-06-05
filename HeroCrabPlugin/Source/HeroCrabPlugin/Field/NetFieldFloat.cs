@@ -19,7 +19,7 @@ namespace HeroCrabPlugin.Field
             Description = new NetFieldDesc(index, name, isReliable, NetFieldDesc.TypeCode.Float);
 
             Receive = callback;
-            var bufferSize = IsReliable ? NetConfig.ReliableBufferDepth : NetConfig.UnreliableBufferDepth;
+            var bufferSize = IsReliable ? NetSettings.ReliableBufferDepth : NetSettings.UnreliableBufferDepth;
             _buffer = new NetFieldBuffer<float>(bufferSize);
         }
 
@@ -30,7 +30,7 @@ namespace HeroCrabPlugin.Field
             Description = description;
 
             Receive = callback;
-            var bufferSize = IsReliable ? NetConfig.ReliableBufferDepth : NetConfig.UnreliableBufferDepth;
+            var bufferSize = IsReliable ? NetSettings.ReliableBufferDepth : NetSettings.UnreliableBufferDepth;
             _buffer = new NetFieldBuffer<float>(bufferSize);
         }
 

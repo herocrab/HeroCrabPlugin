@@ -21,7 +21,7 @@ namespace HeroCrabPlugin.Sublayer.Udp
         /// <summary>
         /// Host network configuration.
         /// </summary>
-        protected readonly NetConfig NetConfig;
+        protected readonly NetSettings NetSettings;
 
         /// <summary>
         /// Host network logger.
@@ -33,16 +33,16 @@ namespace HeroCrabPlugin.Sublayer.Udp
         /// <summary>
         /// Network host contains the stream and other necessary subsystems.
         /// </summary>
-        /// <param name="netConfig"></param>
-        protected NetHost(NetConfig netConfig)
+        /// <param name="netSettings"></param>
+        protected NetHost(NetSettings netSettings)
         {
             var netLogger = new NetLogger(new NetLoggerBuffer(LogCapacity));
 
-            NetConfig = netConfig;
+            NetSettings = netSettings;
             NetLogger = netLogger;
             NetLogger.LogWrite += OnLogWrite;
 
-            NetServices.Registry.Add(netConfig);
+            NetServices.Registry.Add(netSettings);
             NetServices.Registry.Add(netLogger);
         }
 

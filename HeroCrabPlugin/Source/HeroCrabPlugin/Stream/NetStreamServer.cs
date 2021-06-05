@@ -28,7 +28,7 @@ namespace HeroCrabPlugin.Stream
         /// <inheritdoc />
         public NetStreamServer()
         {
-            PacketInterval = (int)NetConfig.GameTickRate / (int)NetConfig.ClientPps;
+            PacketInterval = (int)NetSettings.GameTickRate / (int)NetSettings.ClientPps;
 
             _send = new SortedDictionary<uint, List<NetElement>> {{0, new List<NetElement>()}};
             _exclude = new SortedDictionary<uint, List<NetElement>> {{0, new List<NetElement>()}};
@@ -99,12 +99,12 @@ namespace HeroCrabPlugin.Stream
         /// <summary>
         /// Delete a session from this stream given a sublayer.
         /// </summary>
-        /// <param name="netSublayer"></param>
-        public override void DeleteSession(INetSublayer netSublayer)
+        /// <param name="sublayer"></param>
+        public override void DeleteSession(INetSublayer sublayer)
         {
-            _send.Remove(netSublayer.Id);
-            _exclude.Remove(netSublayer.Id);
-            base.DeleteSession(netSublayer);
+            _send.Remove(sublayer.Id);
+            _exclude.Remove(sublayer.Id);
+            base.DeleteSession(sublayer);
         }
 
         /// <inheritdoc />

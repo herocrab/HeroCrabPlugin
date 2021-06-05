@@ -24,17 +24,17 @@ namespace HeroCrabPlugin.Sublayer.Udp
         /// <summary>
         /// Create a new network client (UDP) given the configuration.
         /// </summary>
-        /// <param name="netConfig">NetworkConfiguration</param>
+        /// <param name="netSettings">NetworkConfiguration</param>
         /// <returns></returns>
-        public static INetClient Create(NetConfig netConfig )
+        public static INetClient Create(NetSettings netSettings )
         {
-            if (netConfig == null) {
-                netConfig = new NetConfig(NetRole.Client);
+            if (netSettings == null) {
+                netSettings = new NetSettings(NetRole.Client);
             }
-            return new NetClient(netConfig);
+            return new NetClient(netSettings);
         }
 
-        private NetClient(NetConfig netConfig) : base (netConfig)
+        private NetClient(NetSettings netSettings) : base (netSettings)
         {
             // Sub-layer
             Library.Initialize();

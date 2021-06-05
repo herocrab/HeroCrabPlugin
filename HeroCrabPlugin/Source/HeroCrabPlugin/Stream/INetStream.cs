@@ -41,8 +41,8 @@ namespace HeroCrabPlugin.Stream
         /// <summary>
         /// Delete a session from the stream given the sublayer.
         /// </summary>
-        /// <param name="netSublayer">INetSublayer</param>
-        void DeleteSession(INetSublayer netSublayer);
+        /// <param name="sublayer">INetSublayer</param>
+        void DeleteSession(INetSublayer sublayer);
 
         /// <summary>
         /// Process the network stream.
