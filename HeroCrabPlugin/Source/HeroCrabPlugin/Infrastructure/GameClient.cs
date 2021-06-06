@@ -1,4 +1,7 @@
-﻿using FlaxEngine;
+﻿using System;
+using FlaxEngine;
+using FlaxEngine.GUI;
+using HeroCrabPlugin.Core;
 
 namespace HeroCrabPlugin.Infrastructure
 {
@@ -7,10 +10,25 @@ namespace HeroCrabPlugin.Infrastructure
     /// </summary>
     public class GameClient : Script
     {
+        private INetClient _catalogClient;
+        private INetClient _gameClient;
+
         /// <inheritdoc/>
         public override void OnStart()
         {
-            // Here you can add code that needs to be called when script is created, just before the first game update
+            InitializeGameClient();
+            InitializeCatalogClient();
+        }
+
+        private void InitializeCatalogClient()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void InitializeGameClient()
+        {
+            var exitButton = ((UIControl)Actor.FindActor("ExitButton")).Get<Button>();
+            exitButton.ButtonClicked += delegate {Engine.RequestExit();};
         }
 
         /// <inheritdoc/>
@@ -20,15 +38,18 @@ namespace HeroCrabPlugin.Infrastructure
         }
 
         /// <inheritdoc/>
-        public override void OnDisable()
+        public override void OnDestroy()
         {
-            // Here you can add code that needs to be called when script is disabled (eg. unregister from events)
+            _gameClient?.Stop();
+            _catalogClient?.Stop();
         }
 
         /// <inheritdoc/>
-        public override void OnUpdate()
+        public override void OnFixedUpdate()
         {
-            // Here you can add code that needs to be called every frame
+            var time = Time.GameTime;
+            _catalogClient?.Process(time);
+            _gameClient?.Process(time);
         }
     }
 }

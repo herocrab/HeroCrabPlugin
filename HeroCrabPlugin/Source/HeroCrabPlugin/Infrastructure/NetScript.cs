@@ -13,12 +13,14 @@ namespace HeroCrabPlugin.Infrastructure
         /// <summary>
         /// HeroCrabPlugin network server.
         /// </summary>
-        protected INetStreamServer Server { get; set; }
+        [HideInEditor]
+        public INetStreamServer Server { get; set; }
 
         /// <summary>
         /// HeroCrabPlugin network element assigned to this script.
         /// </summary>
-        protected INetElement Element { get; set; }
+        [HideInEditor]
+        public INetElement Element { get; set; }
 
         private Action _start;
         private Action _enable;

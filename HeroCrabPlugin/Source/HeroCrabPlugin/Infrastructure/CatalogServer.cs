@@ -35,8 +35,8 @@ namespace HeroCrabPlugin.Infrastructure
         /// <inheritdoc />
         public override void OnDestroy()
         {
-            _registerServer.Stop();
-            _catalogServer.Stop();
+            _registerServer?.Stop();
+            _catalogServer?.Stop();
         }
 
         private void InitializeRegisterServer()

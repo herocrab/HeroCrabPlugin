@@ -274,14 +274,17 @@
     <Compile Include="HeroCrabPlugin\Field\NetFieldString.cs" />
     <Compile Include="HeroCrabPlugin\Field\NetFieldUInt.cs" />
     <Compile Include="HeroCrabPlugin\Field\NetFieldUShort.cs" />
+    <Compile Include="HeroCrabPlugin\Infrastructure\ActorDb.cs" />
     <Compile Include="HeroCrabPlugin\Infrastructure\CatalogServer.cs" />
     <Compile Include="HeroCrabPlugin\Infrastructure\DefaultScript.cs" />
     <Compile Include="HeroCrabPlugin\Infrastructure\GameClient.cs" />
     <Compile Include="HeroCrabPlugin\Infrastructure\GameServer.cs" />
     <Compile Include="HeroCrabPlugin\Infrastructure\LaunchScript.cs" />
     <Compile Include="HeroCrabPlugin\Infrastructure\NetScript.cs" />
+    <Compile Include="HeroCrabPlugin\Infrastructure\NetSpawner.cs" />
     <Compile Include="HeroCrabPlugin\Infrastructure\ServerAdvertisement.cs" />
     <Compile Include="HeroCrabPlugin\Infrastructure\ServerRegistration.cs" />
+    <Compile Include="HeroCrabPlugin\Infrastructure\VersionChecker.cs" />
     <Compile Include="HeroCrabPlugin\MyHeroCrabPlugin.cs" />
     <Compile Include="HeroCrabPlugin\Session\INetSession.cs" />
     <Compile Include="HeroCrabPlugin\Session\NetSession.cs" />
