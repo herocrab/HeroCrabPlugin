@@ -22,6 +22,9 @@ namespace HeroCrabPlugin.Element
         public bool Enabled { get; set; }
 
         /// <inheritdoc />
+        public INetElement Sibling { get; set; }
+
+        /// <inheritdoc />
         public bool IsServer { get; internal set; }
 
         /// <inheritdoc />

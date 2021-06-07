@@ -24,24 +24,25 @@ namespace HeroCrabPlugin.Stream
         /// <summary>
         /// Create a network element on the server for the stream.
         /// </summary>
-        /// <param name="name">String</param>
-        /// <param name="assetId">UInt</param>
-        /// <param name="authorId">UInt</param>
-        /// <param name="isEnabled">Bool</param>
+        /// <param name="name">Name of this network element</param>
+        /// <param name="assetId">Asset id related to this element</param>
+        /// <param name="authorId">Author id of this element; 0 is server</param>
+        /// <param name="isEnabled">If true, this element will be immediately streamed</param>
+        /// <param name="sibling">Handy sibling element reference; for elements that are related</param>
         /// <returns></returns>
-        INetElement CreateElement(string name, uint assetId, uint authorId, bool isEnabled);
+        INetElement CreateElement(string name, uint assetId, uint authorId = 0, bool isEnabled = true, INetElement sibling = null);
 
         /// <summary>
         /// Delete a network element from the stream on the server.
         /// </summary>
-        /// <param name="element">INetElement</param>
+        /// <param name="element">Element to be deleted</param>
         void DeleteElement(INetElement element);
 
         /// <summary>
         /// Find a session given an id.
         /// </summary>
         /// <param name="id">UInt</param>
-        /// <param name="session">INetSession</param>
+        /// <param name="session">Target session by id</param>
         /// <returns></returns>
         bool FindSession(uint id, out INetSession session);
     }

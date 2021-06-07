@@ -25,12 +25,12 @@ namespace HeroCrabPlugin.Element
         int FieldCount { get; }
 
         /// <summary>
-        /// Enabled; If true this element will be eligible for streaming.
+        /// Server only: If true this element will be eligible for streaming.
         /// </summary>
         bool Enabled { get; set; }
 
         /// <summary>
-        /// Reliable; If true this element will be sent reliably.
+        /// If true this element will be sent reliably.
         /// </summary>
         bool IsReliable { get; }
 
@@ -43,6 +43,11 @@ namespace HeroCrabPlugin.Element
         /// IsClient; If true this is the element on the client.
         /// </summary>
         bool IsClient { get; }
+
+        /// <summary>
+        /// Server only: Handy sibling element reference; for elements that are related.
+        /// </summary>
+        INetElement Sibling { get; set; }
 
         /// <summary>
         /// Add a byte network field to this element.

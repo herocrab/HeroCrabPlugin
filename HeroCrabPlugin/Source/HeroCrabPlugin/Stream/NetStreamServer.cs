@@ -130,12 +130,14 @@ namespace HeroCrabPlugin.Stream
         }
 
         /// <inheritdoc />
-        public INetElement CreateElement(string name, uint assetId, uint authorId = 0, bool isEnabled = true)
+        public INetElement CreateElement(string name, uint assetId, uint authorId = 0, bool isEnabled = true,
+            INetElement sibling = null)
         {
             var elementDesc = new NetElementDesc(_elementIndex, name, authorId, assetId);
             var element = new NetElement(elementDesc)
             {
                 Enabled = isEnabled,
+                Sibling = sibling,
                 IsServer = true,
                 IsClient = false
             };
