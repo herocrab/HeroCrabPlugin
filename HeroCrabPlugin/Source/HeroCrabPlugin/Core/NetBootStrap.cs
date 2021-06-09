@@ -10,7 +10,7 @@ namespace HeroCrabPlugin.Core
         /// <summary>
         /// Network configuration.
         /// </summary>
-        public static NetConfig Config { get; private set; }
+        public static NetConfig Config { get; set; }
 
         /// <summary>
         /// Initialize the network configuration.
