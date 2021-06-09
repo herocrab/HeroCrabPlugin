@@ -16,7 +16,7 @@
         protected readonly NetLogger NetLogger;
 
         /// <summary>
-        /// Network object base class for injection of network configuration and logger.
+        /// Network object base class for injection of configuration and logger.
         /// </summary>
         protected NetObject()
         {
