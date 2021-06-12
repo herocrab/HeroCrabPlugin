@@ -105,7 +105,6 @@ namespace HeroCrabPlugin.Stream
                 $"Session ({session.Id}) has been removed from the stream, there are now {Sessions.Count} total sessions.");
 
             SessionDisconnected?.Invoke(session);
-            DeleteAuthoredElements(session);
         }
 
         /// <summary>
@@ -161,16 +160,6 @@ namespace HeroCrabPlugin.Stream
         {
             foreach (var element in Elements) {
                 element.Value.PrepareDelta();
-            }
-        }
-
-        private void DeleteAuthoredElements(INetSession session)
-        {
-            var authoredElements = Elements.Values.Where(element =>
-                element.Description.AuthorId == session.Id);
-
-            foreach (var element in authoredElements.ToArray()) {
-                Elements.Remove(element.Description.Id);
             }
         }
     }

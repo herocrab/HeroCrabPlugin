@@ -104,6 +104,8 @@ namespace HeroCrabPlugin.Stream
         {
             _send.Remove(sublayer.Id);
             _exclude.Remove(sublayer.Id);
+
+            DeleteAuthoredElements(sublayer.Id);
             base.DeleteSession(sublayer);
         }
 
@@ -179,6 +181,16 @@ namespace HeroCrabPlugin.Stream
 
             session = Sessions[id];
             return true;
+        }
+
+        private void DeleteAuthoredElements(uint authorId)
+        {
+            var authoredElements = Elements.Values.Where(element =>
+                element.Description.AuthorId == authorId);
+
+            foreach (var element in authoredElements.ToArray()) {
+                DeleteElement(element);
+            }
         }
     }
 }
