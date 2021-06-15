@@ -1,5 +1,4 @@
 ![HeroCrabPlugin](HeroCrab.png)
-
 # HeroCrabPlugin
 
 HeroCrabPlugin is an authoritative network messaging framework for use in multi-player games developed with [Flax Engine](https://flaxengine.com/). The framework is unit tested and designed to be simple, flexible, and modular. This README provides an introduction to the core components and general use-case examples.
@@ -376,3 +375,6 @@ If you are in need of additional examples other than what is provided here check
 ### 9. Contributions
 
 I consider myself to be between amateur and advanced though I don't code professionally for my vocation, there will surely be areas for improvement in this code base. If you have recommendations on improving the capability, performance, or unit/integration tests for this plugin please submit a PR and I will review, conributions are welcome.
+
+Hope this can be of service to you. 
+-Jarmo "HeroCrab"
