@@ -138,10 +138,11 @@ namespace HeroCrabPlugin.Stream
             var elementDesc = new NetElementDesc(_elementIndex, name, authorId, assetId);
             var element = new NetElement(elementDesc)
             {
+                DeleteElement = OnDeleteElement,
                 Enabled = isEnabled,
                 Sibling = sibling,
                 IsServer = true,
-                IsClient = false
+                IsClient = false,
             };
 
             Elements.Add(_elementIndex, element);
@@ -149,17 +150,6 @@ namespace HeroCrabPlugin.Stream
 
             ElementCreated?.Invoke(element);
             return element;
-        }
-
-        /// <inheritdoc />
-        public void DeleteElement(INetElement element)
-        {
-            if (!Elements.ContainsKey(element.Description.Id)) {
-                return;
-            }
-
-            Elements.Remove(element.Description.Id);
-            ElementDeleted?.Invoke(element);
         }
 
         /// <summary>
@@ -183,13 +173,23 @@ namespace HeroCrabPlugin.Stream
             return true;
         }
 
+        private void OnDeleteElement(INetElement element)
+        {
+            if (!Elements.ContainsKey(element.Description.Id)) {
+                return;
+            }
+
+            Elements.Remove(element.Description.Id);
+            ElementDeleted?.Invoke(element);
+        }
+
         private void DeleteAuthoredElements(uint authorId)
         {
             var authoredElements = Elements.Values.Where(element =>
                 element.Description.AuthorId == authorId);
 
             foreach (var element in authoredElements.ToArray()) {
-                DeleteElement(element);
+                OnDeleteElement(element);
             }
         }
     }

@@ -1,26 +1,28 @@
-# TODO add logo here
+![HeroCrabPlugin](HeroCrab.png)
 
 # HeroCrabPlugin
 
-HeroCrabPlugin is an authoritative network messaging framework for use in multi-player games developed with Flax Engine. The framework is unit tested and designed to be simple, flexible, and modular. This README provides an introduction to the core components and general use-case examples.
+HeroCrabPlugin is an authoritative network messaging framework for use in multi-player games developed with [Flax Engine](https://flaxengine.com/). The framework is unit tested and designed to be simple, flexible, and modular. This README provides an introduction to the core components and general use-case examples.
 
 ## Components
 
-| Class Name | Description | 
-| :--- | :-------------------------- |
-| NetConfig | Configuration of host network parameters; retrieved from json. |
-| NetSettings | Network specific settings (tick rate, packet rate, buffer depth, etc.).
-| NetBootStrap | Static class for loading and/or storing network configuration. |
-| NetServer | Server implementation using the UDP sublayer. |
-| NetClient | Client implementation using the UDP sublayer. |
-| NetStream | A stream is a collection of Elements and Sessions. |
-| NetStreamGroup | A stream group is a bitmask for filtering elements from sessions. |
-| NetElement | An element contains fields and provides an RPC-like messaging tunnel. This is typically associated to a game script. |
-| NetField | A field is an RPC-end-point (example: byte, int, string, etc.). |
-| NetSession | A session uiniquely identifies the client connection sublayer. | 
-| NetSublayer | Sublayer implementation for UDP. |
+| Class Name     | Description                                                                                                          |
+|:-------------- |:-------------------------------------------------------------------------------------------------------------------- |
+| NetConfig      | Configuration of host network parameters; retrieved from json.                                                       |
+| NetSettings    | Network specific settings (tick rate, packet rate, buffer depth, etc.).                                              |
+| NetBootStrap   | Static class for loading and/or storing network configuration.                                                       |
+| NetServer      | Server implementation using the UDP sublayer.                                                                        |
+| NetClient      | Client implementation using the UDP sublayer.                                                                        |
+| NetStream      | A stream is a collection of Elements and Sessions.                                                                   |
+| NetStreamGroup | A stream group is a bitmask for filtering elements from sessions.                                                    |
+| NetElement     | An element contains fields and provides an RPC-like messaging tunnel. This is typically associated to a game script. |
+| NetField       | A field is an RPC-end-point (example: byte, int, string, etc.).                                                      |
+| NetSession     | A session uiniquely identifies the client connection sublayer.                                                       |
+| NetSublayer    | Sublayer implementation for UDP.                                                                                     |
 
-# TODO add the diagram here
+## Diagram
+
+![Diagram](Diagram.png)
 
 ## Getting Started
 
@@ -44,8 +46,9 @@ Another option is to use the constructor:
 
 ```
 NetBootStrap.Config = new NetConfig(".01", serverAddress:"herocrab.com", 
-	serverPort: 42000);
+    serverPort: 42000);
 ```
+
 There are a number of optional arguments which can be used to specify other information. The default configuration is designed to incorporate three roles; a catalog server, game server, and game client over the _loopback_ address (127.0.0.1).
 
 --
@@ -63,42 +66,44 @@ public NetSettings(NetRole netRole,
     ushort maxConnections = 160)
 {
 ```
+
 To create a server (or client) use the specified factory, provide a role, other network settings, and register for events. 
 
 ```
 private void InitializeServer()
 {
-	var config = NetBootStrap.Config;
-	var settings = new NetSettings(NetRole.Server, maxConnections: config.MaxConnections);
-	
-	Server = NetServer.Create(settings);
-	Server.LogWrite += OnLogWrite;
-	Server.Stream.SessionConnected += OnSessionConnected;
-	Server.Stream.SessionDisconnected += OnSessionDisconnected;
-	Server.Stream.ElementCreated += OnElementCreated;
-	Server.Stream.ElementDeleted += OnElementDeleted;
+    var config = NetBootStrap.Config;
+    var settings = new NetSettings(NetRole.Server, maxConnections: config.MaxConnections);
+
+    Server = NetServer.Create(settings);
+    Server.LogWrite += OnLogWrite;
+    Server.Stream.SessionConnected += OnSessionConnected;
+    Server.Stream.SessionDisconnected += OnSessionDisconnected;
+    Server.Stream.ElementCreated += OnElementCreated;
+    Server.Stream.ElementDeleted += OnElementDeleted;
 }
 
 private void OnSessionConnected (INetSession session)
 {
-	// Do something here
+    // Do something here
 }
 
 private void OnSessionDisconnected (INetSession session)
 {
-	// Do something here
+    // Do something here
 }
 
 private void OnElementCreated (INetElement element)
 {
-	// Do something here
+    // Do something here
 }
 
 private void OnElementDeleted (INetElement element)
 {
-	// Do something here
+    // Do something here
 }
 ```
+
 Be sure to unregister from events in the OnDestroy() method of your server and/or client scripts, or before re-assigning the server and/or client.
 
 --
@@ -135,11 +140,12 @@ private void OnSessionConnected(INetSession session)
 {
     var playerController = Server.Stream.CreateElement("PlayerController",
         (uint)ActorDb.ActorId.PlayerController, session.Id, false);
-        
+
     playerController.Filter.Recipient = session.Id;
     playerController.Filter.StreamGroup = NetStreamGroup.Default;
 }
 ```
+
 This example uses an "actor database" which maps ActorDb.ActorId enum (uint) values to prefabs through a dictionary in the editor.
 
 The stream group is a bitmask set on both the session and element, it can be used to filter elements to a session for different scenes or visibility groups (Lobby or Loading vs. Game).
@@ -149,35 +155,35 @@ Using the above approach the **ElementCreated** event will be invoked on the ser
 ```
 private void OnElementCreated(INetElement element)
 {
-	ActorDb.ActorId actorId;
-	try {
-	    actorId = (ActorDb.ActorId) element.Description.AssetId;
-	}
-	catch {
-	    throw new InvalidCastException($"Asset id could not be cast to actor id.");
-	}
-	
-	Prefab prefab;
-	if (_actorDb.PrefabDb.ContainsKey(actorId)) {
-	    prefab = _actorDb.PrefabDb[actorId];
-	}
-	else {
-	    throw new IndexOutOfRangeException($"Asset id {actorId} not found in ActorDb.");
-	}
-	
-	var stream = element.IsServer ? Server.Stream : null;
-	
-	// Parent set to null to delay spawning
-	var actor = PrefabManager.SpawnPrefab(prefab, null); 
-	actor.Name = element.Description.Name;
-	
-	// 1:1 relationship between element and script
-	var script = actor.GetScript<NetScript>();
-	script.Server = stream;
-	script.Element = element;
-	
-	_actors.Add(element, actor);
-	actor.Parent = Actor;
+    ActorDb.ActorId actorId;
+    try {
+        actorId = (ActorDb.ActorId) element.Description.AssetId;
+    }
+    catch {
+        throw new InvalidCastException($"Asset id could not be cast to actor id.");
+    }
+
+    Prefab prefab;
+    if (_actorDb.PrefabDb.ContainsKey(actorId)) {
+        prefab = _actorDb.PrefabDb[actorId];
+    }
+    else {
+        throw new IndexOutOfRangeException($"Asset id {actorId} not found in ActorDb.");
+    }
+
+    var stream = element.IsServer ? Server.Stream : null;
+
+    // Parent set to null to delay spawning
+    var actor = PrefabManager.SpawnPrefab(prefab, null); 
+    actor.Name = element.Description.Name;
+
+    // 1:1 relationship between element and script
+    var script = actor.GetScript<NetScript>();
+    script.Server = stream;
+    script.Element = element;
+
+    _actors.Add(element, actor);
+    actor.Parent = Actor;
 }
 ```
 
@@ -219,31 +225,31 @@ Once an element has been enabled, you can no longer add fields to it.
 ```
 public override void OnStart()
 {
-	if (Element.IsServer) {
-		Element.AddString("Name", true, OnNameReceived);
-    	Element.AddBytes("Direction", false, OnDirectionReceived);
-    	Element.AddByte("Attack", true, OnAttackReceived);		Element.Filter.StreamGroup = NetStreamGroup.Default;
-    	Element.Enabled = true;
-	} else {
-		_playerName = Element.GetString("Name");
-		_direction = Element.GetBytes("Direction");
-		_attack = Element.GetByte("Attack");
-	}
+    if (Element.IsServer) {
+        Element.AddString("Name", true, OnNameReceived);
+        Element.AddBytes("Direction", false, OnDirectionReceived);
+        Element.AddByte("Attack", true, OnAttackReceived);        Element.Filter.StreamGroup = NetStreamGroup.Default;
+        Element.Enabled = true;
+    } else {
+        _playerName = Element.GetString("Name");
+        _direction = Element.GetBytes("Direction");
+        _attack = Element.GetByte("Attack");
+    }
 }
 
 private void OnNameReceived(string name)
 {
-	// Do something here
+    // Do something here
 }
 
 private void OnDirectionReceived(byte[] bytes)
 {
-	// Do something here
+    // Do something here
 }
 
 private void OnAttackReceived(byte byte)
 {
-	// Do something here
+    // Do something here
 }
 ```
 
@@ -252,32 +258,32 @@ Below is an example of bi-directional communication within the same script used 
 ```
 public override void OnStart()
 {
-	if (Element.IsServer) {
-	    Element.AddString("Version", true, OnVersionReceived);
-	    _status = Element.AddString("Status", true, null);
-	    Element.Enabled = true;	
-	} else {
-	    _version = Element.GetString("Version");
-	    Element.SetActionString("Status", OnStatusReceived);
-	}
+    if (Element.IsServer) {
+        Element.AddString("Version", true, OnVersionReceived);
+        _status = Element.AddString("Status", true, null);
+        Element.Enabled = true;    
+    } else {
+        _version = Element.GetString("Version");
+        Element.SetActionString("Status", OnStatusReceived);
+    }
 }
 
 private void OnVersionReceived(string version)
 {
-	var config = NetBootStrap.Config;
-	if (config.Version == version) {
-		_status.Set("Version is matching!");
-	}
+    var config = NetBootStrap.Config;
+    if (config.Version == version) {
+        _status.Set("Version is matching!");
+    }
 }
 
 private void OnStatusReceived(string status)
 {
-	// Update the UI with status message
+    // Update the UI with status message
 }
 
 private void SetVersion()
 {
-	_version.Set("1.0");
+    _version.Set("1.0");
 }
 ```
 
@@ -321,6 +327,7 @@ public enum NetStreamGroup
     Custom4 = 4096,
 }
 ```
+
 On the server:
 
 ```
@@ -330,23 +337,24 @@ private override void OnSessionConnected(INetSession session)
     // Create the intended element in a disabled state
 }
 ```
+
 On the game object network script:
 
 ```
 public override void OnStart()
 {
-	if (Element.IsServer) {
-		Element.Filter.StreamGroup = NetStreamGroup.Lobby;
-		Element.AddString("Message", true, OnMessageReceived);
-    	Element.Enabled = true;
-	} else {
-		_message = Element.GetString("Message");
-	}
+    if (Element.IsServer) {
+        Element.Filter.StreamGroup = NetStreamGroup.Lobby;
+        Element.AddString("Message", true, OnMessageReceived);
+        Element.Enabled = true;
+    } else {
+        _message = Element.GetString("Message");
+    }
 }
 
 private void SendMessage(string message)
 {
-	_message.Set("Test 1, 2, 3!");
+    _message.Set("Test 1, 2, 3!");
 }
 ```
 
@@ -354,8 +362,9 @@ private void SendMessage(string message)
 
 There are many things not stated in this README. A few important mentions are:
 
-* When a client connects it will receive all elements for it's stream group.
-* When a client transitions to a new stream group all previous elements will have **ElementDeleted** invoked for them and they will continue to exist on the server.
+* When a client session connects it will receive all elements for it's stream group.
+* When a client session disconnects all elements authored by it are deleted.
+* When a client session transitions to a new stream group all previous elements will have **ElementDeleted** invoked for them and they will continue to exist on the server.
 * When an client connects it will receive existing elements for its stream group; those elements will have fields that will be _set_ with the last known field value.
 * Only deltas are streamed, if there is no change in a field nothing is sent.
 * Re-iterate: You cannot add fields to an element after it has been enabled once.

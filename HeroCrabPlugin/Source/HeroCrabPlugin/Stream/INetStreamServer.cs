@@ -33,12 +33,6 @@ namespace HeroCrabPlugin.Stream
         INetElement CreateElement(string name, uint assetId, uint authorId = 0, bool isEnabled = true, INetElement sibling = null);
 
         /// <summary>
-        /// Delete a network element from the stream on the server.
-        /// </summary>
-        /// <param name="element">Element to be deleted</param>
-        void DeleteElement(INetElement element);
-
-        /// <summary>
         /// Find a session given an id.
         /// </summary>
         /// <param name="id">UInt</param>

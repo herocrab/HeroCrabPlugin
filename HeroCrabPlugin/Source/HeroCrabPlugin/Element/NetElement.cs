@@ -30,6 +30,11 @@ namespace HeroCrabPlugin.Element
         /// <inheritdoc />
         public bool IsClient { get; internal set; }
 
+        /// <summary>
+        /// Callback for deleting this element from the server.
+        /// </summary>
+        public Action<INetElement> DeleteElement { get; internal set; }
+
         /// <inheritdoc />
         public bool IsReliable => _fields.Values.Any(a => a.IsReliable);
 
@@ -67,6 +72,9 @@ namespace HeroCrabPlugin.Element
                 CreateFields(description);
             }
         }
+
+        /// <inheritdoc />
+        public void Delete() => DeleteElement?.Invoke(this);
 
         /// <inheritdoc />
         public INetFieldByte AddByte(string name, bool isReliable, Action<byte> callback)

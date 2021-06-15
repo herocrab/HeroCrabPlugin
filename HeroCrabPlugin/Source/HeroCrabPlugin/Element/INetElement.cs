@@ -50,6 +50,11 @@ namespace HeroCrabPlugin.Element
         INetElement Sibling { get; set; }
 
         /// <summary>
+        /// Delete this element from the server; does nothing on client.
+        /// </summary>
+        void Delete();
+
+        /// <summary>
         /// Add a byte network field to this element.
         /// </summary>
         /// <param name="name">Field name</param>
