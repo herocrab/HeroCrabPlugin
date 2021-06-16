@@ -9,14 +9,18 @@ namespace HeroCrabPluginTestsUnit.Core
         [Test]
         public void Write_DefaultNetBootConfigAndRead_VerifyFileExists()
         {
-            NetConfig.Write("default.json");
-            NetConfig.Write("catalog.json");
-            NetConfig.Write("server.json");
-            NetConfig.Write("client.json");
+            var catalog = new NetConfig(role: "catalog");
+            NetConfig.Write("catalog.json", catalog);
 
-            var isAvailable = NetBootStrap.Initialize("default.json");
+            var server = new NetConfig(role: "server");
+            NetConfig.Write("server.json", server);
+
+            var client = new NetConfig(role: "client");
+            NetConfig.Write("client.json", client);
+
+            var isAvailable = NetBootStrap.Initialize("catalog.json");
             Assert.That(isAvailable, Is.True);
-            Assert.That(NetBootStrap.Config.Role == "client");
+            Assert.That(NetBootStrap.Config.Role == "catalog");
         }
     }
 }

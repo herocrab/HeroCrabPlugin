@@ -112,11 +112,11 @@ namespace HeroCrabPlugin.Core
         /// Write a default boot configuration.
         /// </summary>
         /// <param name="filename">Destination file name</param>
-        public static bool Write(string filename)
+        /// <param name="config">Network configuration</param>
+        public static bool Write(string filename, NetConfig config)
         {
             try
             {
-                var config = new NetConfig();
                 var jsonString = JsonSerializer.Serialize(config, true);
                 File.WriteAllText(filename, jsonString);
                 return true;

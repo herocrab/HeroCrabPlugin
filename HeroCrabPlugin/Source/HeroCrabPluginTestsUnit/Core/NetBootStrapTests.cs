@@ -9,7 +9,8 @@ namespace HeroCrabPluginTestsUnit.Core
         [Test]
         public void Initialize_WithGoodFilePath_VerifyTrueIsReturnedAndConfigIsClient()
         {
-            NetConfig.Write("client.json");
+            var config = new NetConfig(role: "client");
+            NetConfig.Write("client.json", config);
 
             //File.WriteAllText("test-file.txt","Test");
             var isAvailable = NetBootStrap.Initialize("client.json");

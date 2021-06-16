@@ -198,7 +198,7 @@ namespace HeroCrabPluginTestsUnit.Stream
             networkStream.CreateElement("ElementB", 1, 2);
             var elementC = networkStream.CreateElement("ElementC", 2, 2);
 
-            networkStream.DeleteElement(elementC);
+            elementC.Delete();
 
             // Emulate game tick
             for (var i = 0; i < 100; i++) {
@@ -214,7 +214,7 @@ namespace HeroCrabPluginTestsUnit.Stream
             var networkStream = new NetStreamServer();
             var nonExistentElement = new NetElement(new NetElementDesc(0, "Test", 0, 0));
 
-            Assert.DoesNotThrow(() => networkStream.DeleteElement(nonExistentElement));
+            Assert.DoesNotThrow(() => nonExistentElement.Delete());
         }
 
         [Test]
@@ -365,8 +365,8 @@ namespace HeroCrabPluginTestsUnit.Stream
                 clientStream.Process(i);
             }
 
-            serverStream.DeleteElement(elementA);
-            serverStream.DeleteElement(elementB);
+            elementA.Delete();
+            elementB.Delete();
 
             // Emulate game tick
             for (var i = 0; i < 100; i++) {
@@ -744,7 +744,7 @@ namespace HeroCrabPluginTestsUnit.Stream
             serverStream.Process(1);
             clientStream.Process(1);
 
-            serverStream.DeleteElement(elementA);
+            elementA.Delete();
 
             serverStream.Process(2);
             clientStream.Process(2);
