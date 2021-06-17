@@ -7,23 +7,9 @@ namespace HeroCrabPluginTestsUnit.Core
     public class NetBootStrapTests
     {
         [Test]
-        public void Initialize_WithGoodFilePath_VerifyTrueIsReturnedAndConfigIsClient()
+        public void Initialize_WithClientRole_VerifyConfigRoleIsClient()
         {
-            var config = new NetConfig(role: "client");
-            NetConfig.Write("client.json", config);
-
-            //File.WriteAllText("test-file.txt","Test");
-            var isAvailable = NetBootStrap.Initialize("client.json");
-            Assert.That(isAvailable, Is.True);
-            Assert.That(NetBootStrap.Config.Role == "client");
-        }
-
-        [Test]
-        public void Initialize_WithBadFilePath_VerifyFalseIsReturnedAndConfigIsClient()
-        {
-            //File.WriteAllText("test-file.txt","Test");
-            var isAvailable = NetBootStrap.Initialize("bad-path.json");
-            Assert.That(isAvailable, Is.False);
+            NetBootStrap.ParseCommandLine("role:client");
             Assert.That(NetBootStrap.Config.Role == "client");
         }
     }
