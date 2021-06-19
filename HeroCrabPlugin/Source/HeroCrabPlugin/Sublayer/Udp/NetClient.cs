@@ -135,6 +135,10 @@ namespace HeroCrabPlugin.Sublayer.Udp
 
         private void OnDisconnectedEvent(Peer _)
         {
+            if (_sublayer == null) {
+                return;
+            }
+
             Stream.DeleteSession(_sublayer);
         }
 

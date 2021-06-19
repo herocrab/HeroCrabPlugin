@@ -231,9 +231,10 @@
     <Reference Include="ENet-CSharp">
       <HintPath>HeroCrabPlugin\..\..\Lib\ENet-CSharp.dll</HintPath>
     </Reference>
-    <Reference Include="FlaxEngine.CSharp">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Flax\Flax_1.1\Binaries/Editor/Win64/Development/FlaxEngine.CSharp.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\..\..\Cache\Projects\FlaxEngine.csproj">
+      <Project>{599ADAFC-5AE7-48F4-A421-8F446802AC56}</Project>
+      <Name>FlaxEngine</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HeroCrabPlugin.Gen.cs" />
