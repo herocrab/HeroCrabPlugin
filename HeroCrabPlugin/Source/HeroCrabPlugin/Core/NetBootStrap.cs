@@ -27,13 +27,13 @@ namespace HeroCrabPlugin.Core
             // If this grows parse into a dictionary and use key-lookup
             var commands = args.Split(' ');
             var helpFlag = commands.Any(a => a == "-h" || a == "--h" || a == "-help");
-            var name = commands.FirstOrDefault(a => a.Contains("name:"))?.Split(':')[1].ToLower();
+            var name = commands.FirstOrDefault(a => a.Contains("name:"))?.Split(':')[1];
             var role = commands.FirstOrDefault(a => a.Contains("role:"))?.Split(':')[1].ToLower();
             var address = commands.FirstOrDefault(a => a.Contains("address:"))?.Split(':')[1].ToLower();
             var portA = commands.FirstOrDefault(a => a.Contains("port-a:"))?.Split(':')[1].ToLower();
             var portB = commands.FirstOrDefault(a => a.Contains("port-b:"))?.Split(':')[1].ToLower();
             var portC = commands.FirstOrDefault(a => a.Contains("port-c:"))?.Split(':')[1].ToLower();
-            var map = commands.FirstOrDefault(a => a.Contains("map:"))?.Split(':')[1].ToLower();
+            var map = commands.FirstOrDefault(a => a.Contains("map:"))?.Split(':')[1];
             var connections = commands.FirstOrDefault(a => a.Contains("connections:"))?.Split(':')[1].ToLower();
             var log = commands.FirstOrDefault(a => a.Contains("log:"))?.Split(':')[1].ToLower();
 

@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using FlaxEngine.Json;
-
+// ReSharper disable UnusedAutoPropertyAccessor.Global
 // ReSharper disable MemberCanBePrivate.Global
 
 namespace HeroCrabPlugin.Core
