@@ -2,11 +2,12 @@
 using System.Linq;
 using ENet;
 using HeroCrabPlugin.Core;
+using HeroCrabPlugin.Crypto;
 
 namespace HeroCrabPlugin.Sublayer.Udp
 {
     /// <summary>
-    /// Network sublayer for UDP.
+    /// Network sublayer for UDP using XXTEA pre-shared keys with Kek and Tek.
     /// </summary>
     public class NetSublayer : NetObject, INetSublayer
     {
@@ -32,6 +33,7 @@ namespace HeroCrabPlugin.Sublayer.Udp
         }
 
         private Peer _peer;
+        private readonly ICryptoModule _cryptoModule;
         private readonly NetByteQueue _txQueue;
         private readonly NetByteQueue _rxQueue;
         private readonly byte[] _rxBuffer;
@@ -54,6 +56,7 @@ namespace HeroCrabPlugin.Sublayer.Udp
         private NetSublayer(Peer peer)
         {
             _peer = peer;
+            _cryptoModule = new XxteaCryptoModule();
             _txQueue = new NetByteQueue();
             _rxQueue = new NetByteQueue();
             _rxBuffer = new byte[MaximumPacketLength];
@@ -92,8 +95,10 @@ namespace HeroCrabPlugin.Sublayer.Udp
                 return;
             }
 
+            var encryptedData = _cryptoModule.Encrypt(data, _xxteaPskTeK);
+
             var packet = default(Packet);
-            packet.Create(data, isReliable
+            packet.Create(encryptedData, isReliable
                 ? PacketFlags.Reliable | PacketFlags.Instant
                 : PacketFlags.None | PacketFlags.Instant);
 
@@ -102,10 +107,12 @@ namespace HeroCrabPlugin.Sublayer.Udp
 
         private void OnReceivePacket(Packet packet)
         {
-            // TODO decrypt the message with the tek
-
             packet.CopyTo(_rxBuffer);
-            ReceiveDataCallback?.Invoke(_rxBuffer.Take(packet.Length).ToArray());
+
+            var data = _rxBuffer.Take(packet.Length).ToArray();
+            var decryptedData = _cryptoModule.Decrypt(data, _xxteaPskTeK);
+
+            ReceiveDataCallback?.Invoke(decryptedData);
             packet.Dispose();
         }
 
@@ -118,10 +125,17 @@ namespace HeroCrabPlugin.Sublayer.Udp
             _txQueue.Clear();
             _txQueue.WriteUInt(Id);
 
-            // TODO entry for sending and setting the GUID
+            if (string.IsNullOrEmpty(_xxteaPskTeK)) {
+                _xxteaPskTeK = Guid.NewGuid().ToString();
+            }
+
+            _txQueue.WriteString(_xxteaPskTeK);
+
+            var data = _txQueue.ToBytes();
+            var encryptedData = _cryptoModule.Encrypt(data, XxteaPskKek);
 
             var packet = default(Packet);
-            packet.Create(_txQueue.ToBytes(), PacketFlags.Reliable | PacketFlags.Instant);
+            packet.Create(encryptedData, PacketFlags.Reliable | PacketFlags.Instant);
             _peer.Send((byte) Channels.Control, ref packet);
         }
 
@@ -132,15 +146,21 @@ namespace HeroCrabPlugin.Sublayer.Udp
             _rxQueue.Clear();
             _rxQueue.WriteRaw(_rxBuffer.Take(packet.Length).ToArray());
 
-            // TODO update packet length
-            if (_rxQueue.Length != 4) {
+            var data = _rxQueue.ToBytes();
+            var decryptedData = _cryptoModule.Decrypt(data, XxteaPskKek);
+
+            if (decryptedData.Length != 42) {
                 NetLogger.Write(NetLogger.LoggingGroup.Error,this,
                     "[ERROR] Client received invalid session ID for assignment.");
                 packet.Dispose();
                 return;
             }
 
+            _rxQueue.Clear();
+            _rxQueue.WriteRaw(decryptedData);
+
             var id = _rxQueue.ReadUInt();
+            var tek = _rxQueue.ReadString();
 
             if (_isAssignedId && id != Id) {
                 NetLogger.Write(NetLogger.LoggingGroup.Error,this,
@@ -149,7 +169,12 @@ namespace HeroCrabPlugin.Sublayer.Udp
                 packet.Dispose();
             }
 
-            // TODO receive the TEK
+            if (_isAssignedId && tek != _xxteaPskTeK) {
+                NetLogger.Write(NetLogger.LoggingGroup.Error, this,
+                    "[ERROR] Traffic encrypting key mis-match.");
+                Disconnect();
+                packet.Dispose();
+            }
 
             ReceiveIdCallback?.Invoke(id);
             packet.Dispose();
@@ -158,6 +183,7 @@ namespace HeroCrabPlugin.Sublayer.Udp
                 return;
             }
 
+            _xxteaPskTeK = tek;
             SendId(id);
         }
     }
