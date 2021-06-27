@@ -59,7 +59,7 @@ There are a number of optional arguments which can be used to specify boot infor
 | connections:200                 | ushort |
 | log:1000                        | ushort |
 
-If there are any issues parsing "help" context will be returned.
+If there are any issues parsing the command line, "help" context will be returned.
 
 --
 
