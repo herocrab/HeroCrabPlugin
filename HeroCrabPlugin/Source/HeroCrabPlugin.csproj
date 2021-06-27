@@ -251,6 +251,8 @@
     <Compile Include="HeroCrabPlugin\Core\NetObject.cs" />
     <Compile Include="HeroCrabPlugin\Core\NetServices.cs" />
     <Compile Include="HeroCrabPlugin\Core\NetSettings.cs" />
+    <Compile Include="HeroCrabPlugin\Crypto\ICryptoModule.cs" />
+    <Compile Include="HeroCrabPlugin\Crypto\XxteaCryptoModule.cs" />
     <Compile Include="HeroCrabPlugin\Element\INetElement.cs" />
     <Compile Include="HeroCrabPlugin\Element\NetElement.cs" />
     <Compile Include="HeroCrabPlugin\Element\NetElementDesc.cs" />

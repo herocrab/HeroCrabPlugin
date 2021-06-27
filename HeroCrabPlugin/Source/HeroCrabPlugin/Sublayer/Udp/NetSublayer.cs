@@ -36,8 +36,10 @@ namespace HeroCrabPlugin.Sublayer.Udp
         private readonly NetByteQueue _rxQueue;
         private readonly byte[] _rxBuffer;
         private bool _isAssignedId;
+        private string _xxteaPskTeK = string.Empty;
 
         private const ushort MaximumPacketLength = 1456;
+        private const string XxteaPskKek = "!!Xxtea_P$K_K3K";
 
         /// <summary>
         /// Create a sublayer (UDP) from an enet peer.
@@ -100,6 +102,8 @@ namespace HeroCrabPlugin.Sublayer.Udp
 
         private void OnReceivePacket(Packet packet)
         {
+            // TODO decrypt the message with the tek
+
             packet.CopyTo(_rxBuffer);
             ReceiveDataCallback?.Invoke(_rxBuffer.Take(packet.Length).ToArray());
             packet.Dispose();
@@ -114,6 +118,8 @@ namespace HeroCrabPlugin.Sublayer.Udp
             _txQueue.Clear();
             _txQueue.WriteUInt(Id);
 
+            // TODO entry for sending and setting the GUID
+
             var packet = default(Packet);
             packet.Create(_txQueue.ToBytes(), PacketFlags.Reliable | PacketFlags.Instant);
             _peer.Send((byte) Channels.Control, ref packet);
@@ -126,6 +132,7 @@ namespace HeroCrabPlugin.Sublayer.Udp
             _rxQueue.Clear();
             _rxQueue.WriteRaw(_rxBuffer.Take(packet.Length).ToArray());
 
+            // TODO update packet length
             if (_rxQueue.Length != 4) {
                 NetLogger.Write(NetLogger.LoggingGroup.Error,this,
                     "[ERROR] Client received invalid session ID for assignment.");
@@ -137,10 +144,12 @@ namespace HeroCrabPlugin.Sublayer.Udp
 
             if (_isAssignedId && id != Id) {
                 NetLogger.Write(NetLogger.LoggingGroup.Error,this,
-                    "[ERROR] Client attempted to change the session Id.");
+                    "[ERROR] Client attempted to modify the assigned session Id.");
                 Disconnect();
                 packet.Dispose();
             }
+
+            // TODO receive the TEK
 
             ReceiveIdCallback?.Invoke(id);
             packet.Dispose();
