@@ -133,7 +133,7 @@ namespace HeroCrabPluginTestsUnit.Core
             networkLogger.LogWrite += OnLogWrite;
             networkLogger.Write(NetLogger.LoggingGroup.Custom,null, "Test message...");
             Assert.That(logWriteCount, Is.EqualTo(1));
-            Assert.That(senderName, Is.EqualTo(" Null"));
+            Assert.That(senderName, Is.EqualTo("Null"));
         }
     }
 }
