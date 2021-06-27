@@ -6,17 +6,17 @@ HeroCrabPlugin is an authoritative network messaging framework for use in multi-
 
 | Class Name     | Description                                                                                                          |
 |:-------------- |:-------------------------------------------------------------------------------------------------------------------- |
-| NetConfig      | Configuration of host network parameters; retrieved from json.                                                       |
+| NetConfig      | Configuration of host network parameters; retrieved by parsing command-line arguments.                               |
 | NetSettings    | Network specific settings (tick rate, packet rate, buffer depth, etc.).                                              |
-| NetBootStrap   | Static class for loading and/or storing network configuration.                                                       |
+| NetBoot        | Static class for loading and/or storing network configuration.                                                       |
 | NetServer      | Server implementation using the UDP sublayer.                                                                        |
 | NetClient      | Client implementation using the UDP sublayer.                                                                        |
 | NetStream      | A stream is a collection of Elements and Sessions.                                                                   |
 | NetStreamGroup | A stream group is a bitmask for filtering elements from sessions.                                                    |
 | NetElement     | An element contains fields and provides an RPC-like messaging tunnel. This is typically associated to a game script. |
 | NetField       | A field is an RPC-end-point (example: byte, int, string, etc.).                                                      |
-| NetSession     | A session uniquely identifies the client connection sublayer.                                                       |
-| NetSublayer    | Sublayer implementation for UDP.                                                                                     |
+| NetSession     | A session uniquely identifies the client connection sublayer.                                                        |
+| NetSublayer    | Sublayer implementation for UDP and provides basic encryption.                                                       |
 
 ## Diagram
 
@@ -26,28 +26,40 @@ HeroCrabPlugin is an authoritative network messaging framework for use in multi-
 
 ### 1. Initialization
 
-The first order of business is determining whether you will initialize the network configuration from .json or constructor. You can write a default configuration file using the following:
+Initialization of the NetConfig occurs through parsing of command-line arguments during game launch:
 
 ```
-NetConfig.Write("client.json");
+NetBoot.ParseCommandLine(Engine.CommandLine);
 ```
 
-To initialize the boot strap configuration use the following:
+Or manually from a game script:
 
 ```
-if (NetBootStrap.Initialize(jsonFilePath)) {
-        Debug.Log($"HeroCrabPlugin configuration .json found: {jsonFilePath}");
-}
+NetBoot.ParseCommandLine("name:HeroCrab_Server address:127.0.0.1 
+    serverPort:12345 map:DemoMap);
 ```
 
 Another option is to use the constructor:
 
 ```
-NetBootStrap.Config = new NetConfig(".01", serverAddress:"herocrab.com", 
-    serverPort: 42000);
+NetBoot.Config = new NetConfig(address:"herocrab.com", serverPort: 42000);
 ```
 
-There are a number of optional arguments which can be used to specify other information. The default configuration is designed to incorporate three roles; a catalog server, game server, and game client over the _loopback_ address (127.0.0.1).
+There are a number of optional arguments which can be used to specify boot information. The default configuration is designed to incorporate three roles; a catalog server, game server, and game client communicating the _loopback_ address (127.0.0.1). Domain names are supported.
+
+| Optional command-line arguments | Type   |
+|:------------------------------- |:------ |
+| name:HeroCrab_Server            | string |
+| role:server                     | string |
+| address:127.0.0.1               | string |
+| registerPort:42056              | ushort |
+| catalogPort:42057               | ushort |
+| serverPort:42058                | ushort |
+| map:DemoMap                     | string |
+| connections:200                 | ushort |
+| log:1000                        | ushort |
+
+If there are any issues parsing "help" context will be returned.
 
 --
 
@@ -56,22 +68,21 @@ There are a number of optional arguments which can be used to specify other info
 The default network settings are listed below:
 
 ```
-public NetSettings(NetRole netRole,
-    TickRate gameTickRate = TickRate.Hz60,
+public NetSettings(TickRate gameTickRate = TickRate.Hz60,
     HostPps serverPps = HostPps.Hz30,
     HostPps clientPps = HostPps.Hz30,
     byte reliableBufferDepth = byte.MaxValue,
-    ushort maxConnections = 160)
+    ushort maxConnections = 100)
 {
 ```
 
-To create a server (or client) use the specified factory, provide a role, other network settings, and register for events. 
+To create a server (or client) use the specified factory, provide network settings, and register for events. 
 
 ```
 private void InitializeServer()
 {
-    var config = NetBootStrap.Config;
-    var settings = new NetSettings(NetRole.Server, maxConnections: config.MaxConnections);
+    var config = NetBoot.Config;
+    var settings = new NetSettings(maxConnections: config.MaxConnections);
 
     Server = NetServer.Create(settings);
     Server.LogWrite += OnLogWrite;
@@ -102,24 +113,24 @@ private void OnElementDeleted (INetElement element)
 }
 ```
 
-Be sure to unregister from events in the OnDestroy() method of your server and/or client scripts, or before re-assigning the server and/or client.
+Ensure you unregister from events in the OnDestroy() method of your server and/or client scripts when destroying or before re-assigning the server and/or client.
 
 --
 
 ### 3. Host Processing
 
-It is required that the game tick loop "pedal" host processing. The frequency of this loop must match what is specified in the network settings, default options are 60 or 30hz. This can be accomplished in the following way:
+It is required that the game tick loop "pedal" host processing. The frequency of this loop must match what is specified in the network settings, default options are 60 (Flax default for FixedUpdate()) or 30hz (Flax default for Update()). This can be accomplished in the following way:
 
 ```
 public override void OnFixedUpdate()
 {
-    Server.Process(Time.GameTime);
+    Server?.Process(Time.GameTime);
 }
 ```
 
 ### 4. Starting the Server/Client
 
-The following will start a game server listening on the locally specified interface (use localhost or 127.0.0.1) and port. A game client can be started in the same manner though when starting a client these arguments refer to the destination server address.
+The following will start a game server listening on the specified interface (use localhost or 127.0.0.1) and port number. A game client can be started in the same manner though when starting a client arguments refer to the destination server address and port number.
 
 ```
 Server.Start(config.ServerAddress, config.ServerPort);
@@ -129,7 +140,11 @@ Server.Start(config.ServerAddress, config.ServerPort);
 
 Once the server is started and a client connects to the server the **SessionConnected** event will be invoked. It is then typical to create a "writable" network element so that the client can send to the server. Elements can only be created on the server and only those where the **AuthorId** match the **session.Id** can be written to by a client. Additionally, elements are streamed to all clients unless they have a non-zero **Recipient** property.
 
-Network elements are RPC-like messaging tunnels which comprise added fields (RPC end-points) and typically have 1:1 parity with game scripts. When creating an element you can do so it _immediately_ or in the _disabled state_. By creating an element in the disabled state you can then take advantage of the **ElementCreated** event on the server and the AssetId field of the element description to spawn a corresponding game prefab, gaining the possibility to use the **OnStart()** method in the instantiated prefab object's script.
+
+
+Network elements are RPC-like messaging tunnels which comprise added fields (RPC end-points) and typically have 1:1 parity with game scripts. When creating an element you can do so it _immediately_ or in the _disabled state_. By creating an element in the disabled state you can then take advantage of the **ElementCreated** event on the server and the AssetId field of the element description to spawn a corresponding game prefab, gaining the possibility to use the **OnStart()** method in the instantiated prefab object's script to declare fields.
+
+
 
 The example below identifies how to spawn a player controller in a disabled state, specify the asset id (ActorId enum), author id, and set a single recipient.
 
@@ -144,11 +159,13 @@ private void OnSessionConnected(INetSession session)
 }
 ```
 
-This example uses an "actor database" which maps ActorDb.ActorId enum (uint) values to prefabs through a dictionary in the editor.
+This example uses an "actor database" which maps ActorDb.ActorId enum (uint) values to prefabs through a dictionary populated in Flax editor.
 
 The stream group is a bitmask set on both the session and element, it can be used to filter elements to a session for different scenes or visibility groups (Lobby or Loading vs. Game).
 
-Using the above approach the **ElementCreated** event will be invoked on the server. Generally, from this point, the server would instantiate a prefab and add the object to the scene. A reference to the **Element** and **Stream** will need to be cached in the script for later use. For this caching one approach is to extend **Script** into **NetScript** and set Element and Server properties.
+
+
+Using the above approach the **ElementCreated** event will be invoked on the server. Generally, from this point, the server would instantiate a prefab and add the object to the scene. A reference to the **Element** and **Stream** is useful to cache in the prefab script for later use. For this caching one approach is to extend **Script** and create a**NetScript** and then set Element and Server properties.
 
 ```
 private void OnElementCreated(INetElement element)
@@ -191,7 +208,7 @@ To delete an element call **.Delete()**, this will invoke ElementDeleted on the 
 Element.Delete();
 ```
 
-This example also tracks the spawned actor in an _actors dictionary which is used to remove all actors later.
+This example also tracks the spawned actor in an _actors dictionary which is used to remove all *network spawned* actors later.
 
 ```
 private void OnElementDeleted(INetElement element)
@@ -208,17 +225,23 @@ private void OnElementDeleted(INetElement element)
 }
 ```
 
-After gaining an understanding of elements, there is a helpful property called **Sibling**. This property can cache a reference on the seerver to a separate element from this stream _or another stream_. This can be leveraged in various design patterns, for coupling different streams together (registration vs advertisement), or for using multiple elements per script. 
+After gaining an understanding of elements, there is one helpful property called **Sibling**. This property can be used to cache a reference on the seerver to a separate element from _this stream or another stream_. This can be leveraged in various design patterns, for coupling different streams together (registration and advertisement). 
 
 ### 6. Fields
 
-By creating elements in a disabled state and caching a reference to them in the script or _network script_ it is then possible to add fields in the **OnStart()** method before the element is streamed to clients. This cleans up element creation.
+By creating elements in a disabled state and caching a reference to them in the script or _network script_ it is then possible to add fields in the **OnStart()** method before the element is streamed to clients. This cleans up element field creation and ensures that all RPC-like functionality is defined within a game script.
 
-It is also possible to create custom logic in your network script to have specific methods for **OnClientStart()** or **OnServerStart()**. The below example accomplishes this in a single script by checking the **IsServer** property on the element before implementing logic, it demonstrates one-way transmission of a writeable element from the client to the server. 
 
-When adding a field you can specify whether the field is to be delivered reliably or unreliably, this equates to the delivery method as well as differing field buffer lengths.
 
-Once an element has been enabled, you can no longer add fields to it.
+The below example differentiates the environment the script is running on by checking the **IsServer** property on the element before implementing logic, it demonstrates one-way transmission of a writeable element from the client to the server. It is also possible to create custom logic in your network script and have specific methods for **OnClientStart()** or **OnServerStart()** established in **OnStart()**.
+
+
+
+When adding a field to an element you can specify whether the field is to be delivered reliably or unreliably, this equates to the delivery method as well as providing relevant field buffer depth. For analog or responsive (predicted) player movements use an unreliable field. For scene control, ui control, or other critical actions which must be invoked and rendered us reliable fields.
+
+
+
+Once an element has been enabled, you can **no longer** add fields to it.
 
 ```
 public override void OnStart()
@@ -226,7 +249,8 @@ public override void OnStart()
     if (Element.IsServer) {
         Element.AddString("Name", true, OnNameReceived);
         Element.AddBytes("Direction", false, OnDirectionReceived);
-        Element.AddByte("Attack", true, OnAttackReceived);        Element.Filter.StreamGroup = NetStreamGroup.Default;
+        Element.AddByte("Attack", true, OnAttackReceived);        
+        Element.Filter.StreamGroup = NetStreamGroup.Default;
         Element.Enabled = true;
     } else {
         _playerName = Element.GetString("Name");
@@ -251,14 +275,14 @@ private void OnAttackReceived(byte byte)
 }
 ```
 
-Below is an example of bi-directional communication within the same script used as a version checker.
+Below is an example of bi-directional communication within the same script. This script is used as a version checker.
 
 ```
 public override void OnStart()
 {
     if (Element.IsServer) {
         Element.AddString("Version", true, OnVersionReceived);
-        _status = Element.AddString("Status", true, null);
+        _status = Element.AddString("Status", true);
         Element.Enabled = true;    
     } else {
         _version = Element.GetString("Version");
@@ -285,7 +309,7 @@ private void SetVersion()
 }
 ```
 
-Fields can be added to elements with a provided callback, retrieved from elements by name to be used as a setter, or updated with a callback. This satisfies all uses cases in various client/server architectures.
+Fields can be added to elements with a provided callback, retrieved from elements by name to be used as a setter, or updated with a callback (i.e "SetAction"). This satisfies all uses cases in various client/server architectures.
 
 ```
 //Typical server creats the field and provides a callback
@@ -303,26 +327,31 @@ Element.SetAction("Test", OnCallBack);
 
 To filter elements from streams there are two options. 
 
+
+
 The first option is to set the **Recipient** of an **Element** to the session.Id of the intended target session. If the **Recipient** is zer, the **Element** will be sent to _all_ clients. 
+
+
 
 The second option is to use the **Element.Filter.StreamGroup** property which is a bitmask of type **NetStreamGroup**. Setting this property on an element provides an efficient and capable means of filtering at a macro level. Below are the default options for setting the stream group and what it looks like to set this on the session.
 
 ```
 public enum NetStreamGroup
 {
-    Default = 1,
+    Default = 1,
     Lobby = 2,
     Load = 4,
-    Game = 8,
-    Conclude = 16,
-    Team1 = 32,
-    Team2 = 64,
-    Team3 = 128,
-    Team4 = 256,
-    Custom1 = 512,
-    Custom2 = 1024,
-    Custom3 = 2048,
-    Custom4 = 4096,
+    Select = 8,
+    Game = 16,
+    Conclude = 32,
+    Team1 = 64,
+    Team2 = 128,
+    Team3 = 256,
+    Team4 = 512,
+    Custom1 = 1024,
+    Custom2 = 2048,
+    Custom3 = 4096,
+    Custom4 = 8192,
 }
 ```
 
@@ -354,26 +383,37 @@ private void SendMessage(string message)
 {
     _message.Set("Test 1, 2, 3!");
 }
+
+private void OnMessageReceived(string message)
+{
+    Debug.Log($"Server recieved this message: {message}")
+}
 ```
 
 ### 8. Advanced
 
 There are many things not stated in this README. A few important mentions are:
 
-* When a client session connects it will receive all elements for it's stream group.
 * When a client session disconnects all elements authored by it are deleted.
 * When a client session transitions to a new stream group all previous elements will have **ElementDeleted** invoked for them and they will continue to exist on the server.
-* When an client connects it will receive existing elements for its stream group; those elements will have fields that will be _set_ with the last known field value.
+* When an client connects it will receive existing elements for its stream group after filtering; those elements will have fields _set_ with the last known field value. This means all _players_ will be populated with their current _positions_.
 * Only deltas are streamed, if there is no change in a field nothing is sent.
-* Re-iterate: You cannot add fields to an element after it has been enabled once.
+* Elements with both reliable and unreliables fields will always be streamed reliably *IF* there are any reliable fields with changes (deltas) queued.
+* Re-iterate: You cannot add fields to an element after it has been enabled the first time. If you require additional fields delete the existing element and create a new one with the extra fields.
+  
+  
 
 The simple components of streams, elements, fields and stream groups can be combined to create very capable, complex architectures. The game type and multiplayer design will infer the logic built around these components. It is possible to build multi-layer client-server architectures.
+
+
 
 If you are in need of additional examples other than what is provided here check the unit or integration tests. If that does not suffice feel free to contact me, _HeroCrab_ on the Flax Engine discord.
 
 ### 9. Contributions
 
-I consider myself to be between amateur and advanced though I don't code professionally for my vocation, there will surely be areas for improvement in this code base. If you have recommendations on improving the capability, performance, or unit/integration tests for this plugin please submit a PR and I will review, conributions are welcome.
+I consider myself to be between an amateur hobbyist developer, I don't code professionally for my vocation. There will surely be areas for improvement in this code base. If you have recommendations on improving the capability, performance, or testing for this plugin please let me konw, submit a PR and I will review--conributions are welcome.
+
+
 
 Hope this can be of service to you. 
 
