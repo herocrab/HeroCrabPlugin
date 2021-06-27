@@ -15,7 +15,7 @@ namespace HeroCrabPluginTestsUnit.Element
         public void SetUp()
         {
             NetServices.Registry.Clear();
-            NetServices.Registry.Add(new NetSettings(NetRole.Server));
+            NetServices.Registry.Add(new NetSettings());
             NetServices.Registry.Add(new NetLogger(new NetLoggerBuffer(1000)));
         }
 
@@ -78,7 +78,7 @@ namespace HeroCrabPluginTestsUnit.Element
         }
 
         [Test]
-        public void Constructor_CreateNetElementAddAFieldSerializeAndDeserialze_VerifyFieldIsUpdated()
+        public void Constructor_CreateNetElementAddAFieldSerializeAndDeserialize_VerifyFieldIsUpdated()
         {
             var count = 0;
             var lastValue = byte.MinValue;
@@ -259,7 +259,7 @@ namespace HeroCrabPluginTestsUnit.Element
         }
 
         [Test]
-        public void Constructor_CreateNetElementAddAFieldSerializeAndDeserialzeIntoWrongElement_VerifyNoDamageIsDone()
+        public void Constructor_CreateNetElementAddAFieldSerializeAndDeserializeIntoWrongElement_VerifyNoDamageIsDone()
         {
             void Callback(byte value) { }
 

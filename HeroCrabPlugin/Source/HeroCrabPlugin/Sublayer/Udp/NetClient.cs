@@ -29,8 +29,10 @@ namespace HeroCrabPlugin.Sublayer.Udp
         public static INetClient Create(NetSettings netSettings )
         {
             if (netSettings == null) {
-                netSettings = new NetSettings(NetRole.Client);
+                netSettings = new NetSettings();
             }
+
+            netSettings.UpdateBufferSettings(NetRole.Client);
             return new NetClient(netSettings);
         }
 

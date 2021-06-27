@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
-using FlaxEditor;
 
 namespace HeroCrabPlugin.Core
 {
     /// <summary>
     /// Boot strap class used to read and store network configuration.
     /// </summary>
-    public static class NetBootStrap
+    public static class NetBoot
     {
         /// <summary>
         /// Network configuration.
@@ -30,12 +29,12 @@ namespace HeroCrabPlugin.Core
             var name = commands.FirstOrDefault(a => a.Contains("name:"))?.Split(':')[1];
             var role = commands.FirstOrDefault(a => a.Contains("role:"))?.Split(':')[1].ToLower();
             var address = commands.FirstOrDefault(a => a.Contains("address:"))?.Split(':')[1].ToLower();
-            var portA = commands.FirstOrDefault(a => a.Contains("port-a:"))?.Split(':')[1].ToLower();
-            var portB = commands.FirstOrDefault(a => a.Contains("port-b:"))?.Split(':')[1].ToLower();
-            var portC = commands.FirstOrDefault(a => a.Contains("port-c:"))?.Split(':')[1].ToLower();
+            var registerPort = commands.FirstOrDefault(a => a.Contains("registerPort:"))?.Split(':')[1];
+            var catalogPort = commands.FirstOrDefault(a => a.Contains("catalogPort:"))?.Split(':')[1];
+            var serverPort = commands.FirstOrDefault(a => a.Contains("serverPort:"))?.Split(':')[1];
             var map = commands.FirstOrDefault(a => a.Contains("map:"))?.Split(':')[1];
-            var connections = commands.FirstOrDefault(a => a.Contains("connections:"))?.Split(':')[1].ToLower();
-            var log = commands.FirstOrDefault(a => a.Contains("log:"))?.Split(':')[1].ToLower();
+            var connections = commands.FirstOrDefault(a => a.Contains("connections:"))?.Split(':')[1];
+            var log = commands.FirstOrDefault(a => a.Contains("log:"))?.Split(':')[1];
 
             if (helpFlag) {
                 Config.Role = "help";
@@ -55,16 +54,16 @@ namespace HeroCrabPlugin.Core
                     Config.Address = address;
                 }
 
-                if (portA != null) {
-                    Config.PortA = Convert.ToUInt16(portA);
+                if (registerPort != null) {
+                    Config.RegisterPort = Convert.ToUInt16(registerPort);
                 }
 
-                if (portB != null) {
-                    Config.PortB = Convert.ToUInt16(portB);
+                if (catalogPort != null) {
+                    Config.CatalogPort = Convert.ToUInt16(catalogPort);
                 }
 
-                if (portC != null) {
-                    Config.PortC = Convert.ToUInt16(portC);
+                if (serverPort != null) {
+                    Config.ServerPort = Convert.ToUInt16(serverPort);
                 }
 
                 if (map != null) {
@@ -85,7 +84,7 @@ namespace HeroCrabPlugin.Core
                 return PrintHelp();
             }
 
-            return "Boot strap initialization complete!";
+            return "Boot initialization complete!";
         }
 
         private static string PrintHelp()
@@ -96,9 +95,9 @@ namespace HeroCrabPlugin.Core
             manual.Append("\t \"role:server\"\n");
             manual.Append("\t \"role:client\"\n");
             manual.Append("\t \"address:127.0.0.1\"\n");
-            manual.Append("\t \"port-a:42056\"\n");
-            manual.Append("\t \"port-b:42057\"\n");
-            manual.Append("\t \"port-c:42058\"\n");
+            manual.Append("\t \"registerPort:42056\"\n");
+            manual.Append("\t \"catalogPort:42057\"\n");
+            manual.Append("\t \"serverPort:42058\"\n");
             manual.Append("\t \"map:DemoMap\"\n");
             manual.Append("\t \"connections:200\"\n");
             manual.Append("\t \"log:1000\"\n\n");

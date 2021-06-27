@@ -33,17 +33,17 @@ namespace HeroCrabPlugin.Core
         /// <summary>
         /// Server listener port.
         /// </summary>
-        public ushort PortA { get; set; }
+        public ushort RegisterPort { get; set; }
 
         /// <summary>
         /// Server listener port.
         /// </summary>
-        public ushort PortB { get; set; }
+        public ushort CatalogPort { get; set; }
 
         /// <summary>
         /// Server listener port.
         /// </summary>
-        public ushort PortC { get; set; }
+        public ushort ServerPort { get; set; }
 
         /// <summary>
         /// Maximum number of connections allowed on this server instance.
@@ -63,16 +63,16 @@ namespace HeroCrabPlugin.Core
             string address = "127.0.0.1",
             string name = "HeroCrabPlugin Network Server",
             string map = "DemoMap",
-            ushort portA = 42056,
-            ushort portB = 42057,
-            ushort portC = 42058,
+            ushort registerPort = 42056,
+            ushort catalogPort = 42057,
+            ushort serverPort = 42058,
             ushort connections = 100,
             ushort log = 1000)
         {
             Role = role;
-            PortA = portA;
-            PortB = portB;
-            PortC = portC;
+            RegisterPort = registerPort;
+            CatalogPort = catalogPort;
+            ServerPort = serverPort;
             Connections = connections;
             Log = log;
             Address = address;

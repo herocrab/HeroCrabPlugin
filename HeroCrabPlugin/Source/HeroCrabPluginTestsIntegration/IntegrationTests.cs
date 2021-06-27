@@ -35,9 +35,13 @@ namespace HeroCrabPluginTestsIntegration
         [SetUp]
         public void Setup()
         {
-            _server = NetServer.Create(new NetSettings(NetRole.Server));
-            _clientA = NetClient.Create(new NetSettings(NetRole.Client));
-            _clientB = NetClient.Create(new NetSettings(NetRole.Client));
+            _server = NetServer.Create(new NetSettings());
+
+            var clientSettings = new NetSettings();
+            clientSettings.UpdateBufferSettings(NetRole.Client);
+
+            _clientA = NetClient.Create(clientSettings);
+            _clientB = NetClient.Create(clientSettings);
         }
 
         private void StartServer()
@@ -115,7 +119,7 @@ namespace HeroCrabPluginTestsIntegration
             }
 
             // This reference is rotary
-            _clientInputElement = _server.Stream.CreateElement($"Client{session.Id}", 0, session.Id, true);
+            _clientInputElement = _server.Stream.CreateElement($"Client{session.Id}", 0, session.Id);
             _clientInputElement.Filter.Recipient = session.Id;
 
             _clientInputElement.AddString("Input", true, OnServerInputElementInputString);
@@ -162,28 +166,28 @@ namespace HeroCrabPluginTestsIntegration
 
         private void AddServerElements()
         {
-            _serverElementA = _server.Stream.CreateElement("ServerElementA", 0, 0, true);
+            _serverElementA = _server.Stream.CreateElement("ServerElementA", 0);
             _serverElementA.AddFloat("SomeFloat", false, null);
 
-            _serverElementB = _server.Stream.CreateElement("ServerElementB", 0, 0, true);
+            _serverElementB = _server.Stream.CreateElement("ServerElementB", 0);
             _serverElementB.AddFloat("SomeFloat", false, null);
 
-            _serverElementC = _server.Stream.CreateElement("ServerElementC", 0, 0, true);
+            _serverElementC = _server.Stream.CreateElement("ServerElementC", 0);
             _serverElementC.AddFloat("SomeFloat", false, null);
 
-            _serverElementD = _server.Stream.CreateElement("ServerElementD", 0, 0, true);
+            _serverElementD = _server.Stream.CreateElement("ServerElementD", 0);
             _serverElementD.AddFloat("SomeFloat", false, null);
             _serverElementD.Filter.Exclude = 2;
         }
 
         private void DeleteServerElementA()
         {
-            _server.Stream.DeleteElement(_serverElementA);
+            _serverElementA.Delete();
         }
 
         private void DeleteLastClientInputElement()
         {
-            _server.Stream.DeleteElement(_clientInputElement);
+            _clientInputElement.Delete();
         }
 
         [Test, Apartment(ApartmentState.STA)]
@@ -277,7 +281,7 @@ namespace HeroCrabPluginTestsIntegration
         [Test, Apartment(ApartmentState.STA)]
         public void MaxConnectionTest()
         {
-            _server = NetServer.Create(new NetSettings(NetRole.Server, maxConnections:1));
+            _server = NetServer.Create(new NetSettings(maxConnections:1));
 
             StartServer();
             Process(100);

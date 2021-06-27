@@ -9,8 +9,8 @@ namespace HeroCrabPluginTestsUnit.Core
         [Test]
         public void Initialize_WithClientRole_VerifyConfigRoleIsClient()
         {
-            NetBootStrap.ParseCommandLine("role:client");
-            Assert.That(NetBootStrap.Config.Role == "client");
+            NetBoot.ParseCommandLine("role:client");
+            Assert.That(NetBoot.Config.Role == "client");
         }
     }
 }

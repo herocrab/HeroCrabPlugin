@@ -57,7 +57,7 @@ namespace HeroCrabPlugin.Core
         /// <summary>
         /// Role of the network host.
         /// </summary>
-        public readonly NetRole NetRole;
+        public NetRole NetRole;
 
         /// <summary>
         /// Game logic update rate.
@@ -82,7 +82,7 @@ namespace HeroCrabPlugin.Core
         /// <summary>
         /// Buffer depth for unreliable fields.
         /// </summary>
-        public readonly byte UnreliableBufferDepth;
+        public byte UnreliableBufferDepth;
 
         /// <summary>
         /// Unreliable buffer depth for the server.
@@ -102,29 +102,38 @@ namespace HeroCrabPlugin.Core
         /// <summary>
         /// Network configuration parameters.
         /// </summary>
-        /// <param name="netRole">Role of the network host</param>
         /// <param name="gameTickRate">Game logic update rate</param>
         /// <param name="serverPps">Server packet rate target</param>
         /// <param name="clientPps">Client packet rate target</param>
         /// <param name="reliableBufferDepth">Reliable buffer depth</param>
         /// <param name="maxConnections">Maximum number of supported connections</param>
-        public NetSettings(NetRole netRole,
+        public NetSettings(
             TickRate gameTickRate = TickRate.Hz60,
             HostPps serverPps = HostPps.Hz30,
             HostPps clientPps = HostPps.Hz30,
             byte reliableBufferDepth = byte.MaxValue,
             ushort maxConnections = 160)
         {
-            NetRole = netRole;
             GameTickRate = gameTickRate;
             ServerPps = serverPps;
             ClientPps = clientPps;
             ReliableBufferDepth = reliableBufferDepth;
-            UnreliableBufferDepth = NetRole == NetRole.Server ? ServerBufferDepth : ClientBufferDepth;
             MaxConnections = maxConnections;
-
             ServerBufferDepth = (byte)((int) gameTickRate / (int) serverPps + 1);
             ClientBufferDepth = (byte)((int) gameTickRate / (int) clientPps + 1);
+
+            // Default role is server, this is called in sublayer and was an oversight.
+            UpdateBufferSettings(NetRole.Server);
+        }
+
+        /// <summary>
+        /// Update buffer depth settings given the host role.
+        /// </summary>
+        /// <param name="role">Role of this host (server or client).</param>
+        public void UpdateBufferSettings(NetRole role)
+        {
+            NetRole = role;
+            UnreliableBufferDepth = NetRole == NetRole.Server ? ServerBufferDepth : ClientBufferDepth;
         }
     }
 }
