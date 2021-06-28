@@ -1,5 +1,5 @@
-﻿using System.IO;
-using FlaxEngine.Json;
+﻿// Copyright (c) Jeremy Buck "Jarmo" - HeroCrab Ltd. (https://github.com/herocrab)
+// Distributed under the MIT license. See the LICENSE.md file in the project root for more information.
 // ReSharper disable UnusedAutoPropertyAccessor.Global
 // ReSharper disable MemberCanBePrivate.Global
 
