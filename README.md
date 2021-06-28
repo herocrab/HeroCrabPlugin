@@ -260,11 +260,15 @@ When adding a field to an element you can specify whether the field is to be del
 Once an element has been enabled, you can **no longer** add fields to it.
 
 ```
+private INetField<string> _playerName;
+private INetField<Vector3> _direction;
+private INetField<byte> _attack;
+
 public override void OnStart()
 {
     if (Element.IsServer) {
         Element.AddString("Name", true, OnNameReceived);
-        Element.AddBytes("Direction", false, OnDirectionReceived);
+        Element.AddVector3("Direction", false, OnDirectionReceived);
         Element.AddByte("Attack", true, OnAttackReceived);        
         Element.Filter.StreamGroup = NetStreamGroup.Default;
         Element.Enabled = true;
@@ -280,7 +284,7 @@ private void OnNameReceived(string name)
     // Do something here
 }
 
-private void OnDirectionReceived(byte[] bytes)
+private void OnDirectionReceived(Vector3 vector)
 {
     // Do something here
 }
@@ -294,6 +298,8 @@ private void OnAttackReceived(byte byte)
 Below is an example of bi-directional communication within the same script. This script is used as a version checker.
 
 ```
+private INetField<string> _status;
+
 public override void OnStart()
 {
     if (Element.IsServer) {

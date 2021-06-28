@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FlaxEngine;
+
 // ReSharper disable ConvertToAutoPropertyWithPrivateSetter
 
 namespace HeroCrabPlugin.Core
@@ -194,6 +196,30 @@ namespace HeroCrabPlugin.Core
         }
 
         /// <summary>
+        /// Add a Vector to this queue.
+        /// </summary>
+        /// <param name="vector">Vector</param>
+        public void WriteVector2(Vector2 vector) => WriteFloatArray(vector.ToArray());
+
+        /// <summary>
+        /// Add a Vector to this queue.
+        /// </summary>
+        /// <param name="vector">Vector</param>
+        public void WriteVector3(Vector3 vector) => WriteFloatArray(vector.ToArray());
+
+        /// <summary>
+        /// Add a Vector to this queue.
+        /// </summary>
+        /// <param name="vector">Vector</param>
+        public void WriteVector4(Vector4 vector) => WriteFloatArray(vector.ToArray());
+
+        /// <summary>
+        /// Add a Quaternion to this queue.
+        /// </summary>
+        /// <param name="quaternion">Quaternion</param>
+        public void WriteQuaternion(Quaternion quaternion) => WriteFloatArray(quaternion.ToArray());
+
+        /// <summary>
         /// Read a string from this queue.
         /// </summary>
         /// <returns>String</returns>
@@ -284,6 +310,30 @@ namespace HeroCrabPlugin.Core
         }
 
         /// <summary>
+        /// Read a vector 2 from this queue.
+        /// </summary>
+        /// <returns></returns>
+        public Vector2 ReadVector2() => new Vector2(ReadFloatArray(2));
+
+        /// <summary>
+        /// Read a vector 2 from this queue.
+        /// </summary>
+        /// <returns></returns>
+        public Vector3 ReadVector3() => new Vector3(ReadFloatArray(3));
+
+        /// <summary>
+        /// Read a vector 2 from this queue.
+        /// </summary>
+        /// <returns></returns>
+        public Vector4 ReadVector4() => new Vector4(ReadFloatArray(4));
+
+        /// <summary>
+        /// Read a vector 2 from this queue.
+        /// </summary>
+        /// <returns></returns>
+        public Quaternion ReadQuaternion() => new Quaternion(ReadFloatArray(4));
+
+        /// <summary>
         /// Read a series of bytes from this queue, includes length.
         /// </summary>
         /// <returns></returns>
@@ -316,5 +366,25 @@ namespace HeroCrabPlugin.Core
         /// </summary>
         /// <returns>Bool</returns>
         public bool Any() => _byteQueue.Any();
+
+        private void WriteFloatArray(IEnumerable<float> floatArray)
+        {
+            foreach (var floatValue in floatArray) {
+                var bytes = BitConverter.GetBytes(floatValue);
+                foreach (var b in bytes) {
+                    _byteQueue.Enqueue(b);
+                }
+            }
+            _depth++;
+        }
+
+        private float[] ReadFloatArray(int length)
+        {
+            var floatArray = new float[length];
+            for (int i = 0; i < length; i++) {
+                floatArray[i] = ReadFloat();
+            }
+            return floatArray;
+        }
     }
 }

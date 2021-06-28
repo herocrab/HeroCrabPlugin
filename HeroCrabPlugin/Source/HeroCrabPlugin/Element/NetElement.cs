@@ -485,38 +485,54 @@ namespace HeroCrabPlugin.Element
                 switch (field.Type) {
 
                     case NetFieldDesc.TypeCode.Byte:
-                        AddField(new NetFieldByte(field.Index, field.Name, field.IsReliable, null));
+                        AddField(new NetFieldByte(field.Index, field.Name, field.IsReliable));
                         break;
 
                     case NetFieldDesc.TypeCode.ByteArray:
-                        AddField(new NetFieldBytes(field.Index, field.Name, field.IsReliable, null));
+                        AddField(new NetFieldBytes(field.Index, field.Name, field.IsReliable));
                         break;
 
                     case NetFieldDesc.TypeCode.Float:
-                        AddField(new NetFieldFloat(field.Index, field.Name, field.IsReliable, null));
+                        AddField(new NetFieldFloat(field.Index, field.Name, field.IsReliable));
                         break;
 
                     case NetFieldDesc.TypeCode.Int:
-                        AddField(new NetFieldInt(field.Index, field.Name, field.IsReliable, null));
+                        AddField(new NetFieldInt(field.Index, field.Name, field.IsReliable));
                         break;
 
                     case NetFieldDesc.TypeCode.Long:
-                        AddField(new NetFieldLong(field.Index, field.Name, field.IsReliable, null));
+                        AddField(new NetFieldLong(field.Index, field.Name, field.IsReliable));
                         break;
 
                     case NetFieldDesc.TypeCode.String:
-                        AddField(new NetFieldString(field.Index, field.Name, field.IsReliable, null));
+                        AddField(new NetFieldString(field.Index, field.Name, field.IsReliable));
                         break;
 
                     case NetFieldDesc.TypeCode.UInt:
-                        AddField(new NetFieldUInt(field.Index, field.Name, field.IsReliable, null));
+                        AddField(new NetFieldUInt(field.Index, field.Name, field.IsReliable));
                         break;
 
                     case NetFieldDesc.TypeCode.UShort:
-                        AddField(new NetFieldUShort(field.Index, field.Name, field.IsReliable, null));
+                        AddField(new NetFieldUShort(field.Index, field.Name, field.IsReliable));
                         break;
 
-                    case NetFieldDesc.TypeCode.Unknown:
+                    case NetFieldDesc.TypeCode.Vector2:
+                        //TODO this
+                        break;
+
+                    case NetFieldDesc.TypeCode.Vector3:
+                        //TODO this
+                        break;
+
+                    case NetFieldDesc.TypeCode.Vector4:
+                        //TODO this
+                        break;
+
+                    case NetFieldDesc.TypeCode.Quaternion:
+                        //TODO this
+                        break;
+
+                    default:
                         NetLogger.Write(NetLogger.LoggingGroup.Error,this,"[ERROR] Attempted to create field with unknown type code." );
                         throw new ArgumentOutOfRangeException("[ERROR] Attempted to create field with unknown type code.");
                 }

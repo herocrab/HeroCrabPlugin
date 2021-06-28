@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using FlaxEngine;
 using HeroCrabPlugin.Core;
 using NUnit.Framework;
 
@@ -235,6 +236,50 @@ namespace HeroCrabPlugin.Tests.Unit.Core
 
             var bytes = byteQueue.ReadBytes();
             Assert.That(bytes.Length, Is.EqualTo(512));
+        }
+
+        [Test]
+        public void WriteVector2_ReadVector2_VerifyContentsAreSame()
+        {
+            var writeVector = new Vector2(1, 2);
+            var byteQueue = new NetByteQueue();
+            byteQueue.WriteVector2(writeVector);
+
+            var readVector = byteQueue.ReadVector2();
+            Assert.That(readVector, Is.EqualTo(writeVector));
+        }
+
+        [Test]
+        public void WriteVector3_ReadVector3_VerifyContentsAreSame()
+        {
+            var writeVector = new Vector3(1, 2, 3);
+            var byteQueue = new NetByteQueue();
+            byteQueue.WriteVector3(writeVector);
+
+            var readVector = byteQueue.ReadVector3();
+            Assert.That(readVector, Is.EqualTo(writeVector));
+        }
+
+        [Test]
+        public void WriteVector4_ReadVector4_VerifyContentsAreSame()
+        {
+            var writeVector = new Vector4(1, 2,3, 4);
+            var byteQueue = new NetByteQueue();
+            byteQueue.WriteVector4(writeVector);
+
+            var readVector = byteQueue.ReadVector4();
+            Assert.That(readVector, Is.EqualTo(writeVector));
+        }
+
+        [Test]
+        public void WriteQuaternion_ReadQuaternion_VerifyContentsAreSame()
+        {
+            var quaternion = new Quaternion(1, 2,3, 4);
+            var byteQueue = new NetByteQueue();
+            byteQueue.WriteQuaternion(quaternion);
+
+            var readQuaternion = byteQueue.ReadQuaternion();
+            Assert.That(readQuaternion, Is.EqualTo(quaternion));
         }
     }
 }

@@ -38,7 +38,6 @@ namespace HeroCrabPlugin.Field
         public enum TypeCode : byte
         {
             #pragma warning disable 1591
-            Unknown,
             Byte,
             ByteArray,
             Float,
@@ -47,6 +46,10 @@ namespace HeroCrabPlugin.Field
             String,
             UInt,
             UShort,
+            Vector2,
+            Vector3,
+            Vector4,
+            Quaternion,
             #pragma warning restore 1591
         }
 

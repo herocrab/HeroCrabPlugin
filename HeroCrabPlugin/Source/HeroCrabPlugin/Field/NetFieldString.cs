@@ -15,25 +15,18 @@ namespace HeroCrabPlugin.Field
         private readonly NetFieldBuffer<string> _buffer;
 
         /// <inheritdoc />
-        public NetFieldString(byte index, string name, bool isReliable, Action<string> callback)
+        public NetFieldString(byte index, string name, bool isReliable, Action<string> callback = null) : base (isReliable)
         {
-            IsReliable = isReliable;
             Description = new NetFieldDesc(index, name, isReliable, NetFieldDesc.TypeCode.String);
-
+            _buffer = new NetFieldBuffer<string>(BufferSize);
             Receive = callback;
-            var bufferSize = IsReliable ? NetSettings.ReliableBufferDepth : NetSettings.UnreliableBufferDepth;
-            _buffer = new NetFieldBuffer<string>(bufferSize);
         }
 
         /// <inheritdoc />
-        public NetFieldString(NetFieldDesc description, Action<string> callback)
+        public NetFieldString(NetFieldDesc description, Action<string> callback = null) : base (description)
         {
-            IsReliable = description.IsReliable;
-            Description = description;
-
+            _buffer = new NetFieldBuffer<string>(BufferSize);
             Receive = callback;
-            var bufferSize = IsReliable ? NetSettings.ReliableBufferDepth : NetSettings.UnreliableBufferDepth;
-            _buffer = new NetFieldBuffer<string>(bufferSize);
         }
 
         /// <inheritdoc />

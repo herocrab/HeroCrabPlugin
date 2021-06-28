@@ -3,14 +3,14 @@
 namespace HeroCrabPlugin.Field
 {
     /// <summary>
-    /// Network byte field.
+    /// Network field.
     /// </summary>
     public interface INetField<in T>
     {
         /// <summary>
-        /// Set the network bye field.
+        /// Set the network field.
         /// </summary>
-        /// <param name="value">value</param>
+        /// <param name="value">Value</param>
         void Set(T value);
     }
 }

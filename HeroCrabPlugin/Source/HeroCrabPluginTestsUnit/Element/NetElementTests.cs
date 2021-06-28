@@ -242,23 +242,6 @@ namespace HeroCrabPluginTestsUnit.Element
         }
 
         [Test]
-        public void Constructor_CreateNetElementWithInvalidTypeCodeForField_ThrowsException()
-        {
-            var brokenLedger = new SortedDictionary<byte, NetFieldDesc>
-            {
-                {byte.MaxValue, new NetFieldDesc(byte.MaxValue, "Fail", false, NetFieldDesc.TypeCode.Unknown)}
-            };
-
-            var elementDesc = new NetElementDesc(uint.MaxValue, "Test", uint.MaxValue, uint.MaxValue);
-            elementDesc.WriteLedger(brokenLedger);
-
-            Assert.Throws<ArgumentOutOfRangeException>(() =>
-            {
-                new NetElement(elementDesc);
-            });
-        }
-
-        [Test]
         public void Constructor_CreateNetElementAddAFieldSerializeAndDeserializeIntoWrongElement_VerifyNoDamageIsDone()
         {
             void Callback(byte value) { }
