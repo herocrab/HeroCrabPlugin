@@ -36,7 +36,7 @@ HeroCrabPlugin is an authoritative network messaging framework for use in multi-
 | NetStream      | A stream is a collection of Elements and Sessions.                                                                   |
 | NetStreamGroup | A stream group is a bitmask for filtering elements from sessions.                                                    |
 | NetElement     | An element contains fields and provides an RPC-like messaging tunnel. This is typically associated to a game script. |
-| NetField       | A field is an RPC-end-point (example: byte, int, string, etc.).                                                      |
+| NetField       | A field is an RPC-end-point (example: bool, byte, int, string, Vector3, etc.).                                       |
 | NetSession     | A session uniquely identifies the client connection sublayer.                                                        |
 | NetSublayer    | Sublayer implementation for UDP and provides basic encryption.                                                       |
 
