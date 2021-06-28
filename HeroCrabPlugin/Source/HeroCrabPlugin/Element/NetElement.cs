@@ -77,7 +77,7 @@ namespace HeroCrabPlugin.Element
         public void Delete() => DeleteElement?.Invoke(this);
 
         /// <inheritdoc />
-        public INetFieldByte AddByte(string name, bool isReliable, Action<byte> callback)
+        public INetFieldByte AddByte(string name, bool isReliable, Action<byte> callback = null)
         {
             ResolveDuplicate(name);
             var field = new NetFieldByte(_fieldIndex, name, isReliable, callback);
@@ -89,7 +89,7 @@ namespace HeroCrabPlugin.Element
         }
 
         /// <inheritdoc />
-        public INetFieldBytes AddBytes(string name, bool isReliable, Action<byte[]> callback)
+        public INetFieldBytes AddBytes(string name, bool isReliable, Action<byte[]> callback = null)
         {
             ResolveDuplicate(name);
             var field = new NetFieldBytes(_fieldIndex, name, isReliable, callback);
@@ -101,7 +101,7 @@ namespace HeroCrabPlugin.Element
         }
 
         /// <inheritdoc />
-        public INetFieldFloat AddFloat(string name, bool isReliable, Action<float> callback)
+        public INetFieldFloat AddFloat(string name, bool isReliable, Action<float> callback = null)
         {
             ResolveDuplicate(name);
             var field = new NetFieldFloat(_fieldIndex, name, isReliable, callback);
@@ -113,7 +113,7 @@ namespace HeroCrabPlugin.Element
         }
 
         /// <inheritdoc />
-        public INetFieldInt AddInt(string name, bool isReliable, Action<int> callback)
+        public INetFieldInt AddInt(string name, bool isReliable, Action<int> callback = null)
         {
             ResolveDuplicate(name);
             var field = new NetFieldInt(_fieldIndex, name, isReliable, callback);
@@ -125,7 +125,7 @@ namespace HeroCrabPlugin.Element
         }
 
         /// <inheritdoc />
-        public INetFieldLong AddLong(string name, bool isReliable, Action<long> callback)
+        public INetFieldLong AddLong(string name, bool isReliable, Action<long> callback = null)
         {
             ResolveDuplicate(name);
             var field = new NetFieldLong(_fieldIndex, name, isReliable, callback);
@@ -137,7 +137,7 @@ namespace HeroCrabPlugin.Element
         }
 
         /// <inheritdoc />
-        public INetFieldString AddString(string name, bool isReliable, Action<string> callback)
+        public INetFieldString AddString(string name, bool isReliable, Action<string> callback = null)
         {
             ResolveDuplicate(name);
             var field = new NetFieldString(_fieldIndex, name, isReliable, callback);
@@ -149,7 +149,7 @@ namespace HeroCrabPlugin.Element
         }
 
         /// <inheritdoc />
-        public INetFieldUInt AddUInt(string name, bool isReliable, Action<uint> callback)
+        public INetFieldUInt AddUInt(string name, bool isReliable, Action<uint> callback = null)
         {
             ResolveDuplicate(name);
             var field = new NetFieldUInt(_fieldIndex, name, isReliable, callback);
@@ -161,7 +161,7 @@ namespace HeroCrabPlugin.Element
         }
 
         /// <inheritdoc />
-        public INetFieldUShort AddUShort(string name, bool isReliable, Action<ushort> callback)
+        public INetFieldUShort AddUShort(string name, bool isReliable, Action<ushort> callback = null)
         {
             ResolveDuplicate(name);
             var field = new NetFieldUShort(_fieldIndex, name, isReliable, callback);

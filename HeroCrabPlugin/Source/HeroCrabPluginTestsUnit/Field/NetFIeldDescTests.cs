@@ -67,8 +67,8 @@ namespace HeroCrabPluginTestsUnit.Field
 
             var initialDesc = new NetElementDesc(uint.MaxValue, "Test", uint.MaxValue, uint.MaxValue);
             var initialElement = new NetElement(initialDesc);
-            initialElement.AddByte("Byte1", false, null);
-            initialElement.AddByte("Byte2", false, null);
+            initialElement.AddByte("Byte1", false);
+            initialElement.AddByte("Byte2", false);
 
             var serializedDesc = initialElement.Description.Serialize();
 

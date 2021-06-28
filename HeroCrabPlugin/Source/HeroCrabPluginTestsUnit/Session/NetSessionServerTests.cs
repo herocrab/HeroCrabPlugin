@@ -102,7 +102,7 @@ namespace HeroCrabPluginTestsUnit.Session
             sessionA.Send();
 
             var testElement = new NetElement(new NetElementDesc(2, "Test3", 0, 0));
-            var testSetter = testElement.AddByte("Byte", true, null);
+            var testSetter = testElement.AddByte("Byte", true);
             elements.Add(2, testElement);
 
             send[0] = elements.Values.ToList();
@@ -169,7 +169,7 @@ namespace HeroCrabPluginTestsUnit.Session
             fakeSublayerA.SetupAllProperties();
 
             var inputElement = new NetElement(new NetElementDesc(0, "Input", 0, 0));
-            inputElement.AddByte("Byte", false, null);
+            inputElement.AddByte("Byte", false);
 
             var send = new SortedDictionary<uint, List<NetElement>>();
             var exclude = new SortedDictionary<uint, List<NetElement>>();

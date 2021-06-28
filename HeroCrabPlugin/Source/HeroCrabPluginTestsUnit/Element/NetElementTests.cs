@@ -91,7 +91,7 @@ namespace HeroCrabPluginTestsUnit.Element
             var elementDesc = new NetElementDesc(uint.MaxValue,"Test", uint.MaxValue, uint.MaxValue);
 
             var sendingElement = new NetElement(elementDesc);
-            var byteField = sendingElement.AddByte("Byte", false, null);
+            var byteField = sendingElement.AddByte("Byte", false);
             byteField.Set(byte.MaxValue);
             byteField.Set(byte.MaxValue / 2);
 
@@ -126,14 +126,14 @@ namespace HeroCrabPluginTestsUnit.Element
             var elementDesc = new NetElementDesc(uint.MaxValue,"Test", uint.MaxValue, uint.MaxValue);
 
             var sendingElement = new NetElement(elementDesc);
-            sendingElement.AddByte("Byte", false, null);
-            sendingElement.AddBytes("Bytes", false, null);
-            sendingElement.AddFloat("Float", false, null);
-            sendingElement.AddInt("Int", false, null);
-            sendingElement.AddLong("Long", false, null);
-            sendingElement.AddString("String", false, null);
-            sendingElement.AddUInt("UInt", false, null);
-            sendingElement.AddUShort("UShort", false, null);
+            sendingElement.AddByte("Byte", false);
+            sendingElement.AddBytes("Bytes", false);
+            sendingElement.AddFloat("Float", false);
+            sendingElement.AddInt("Int", false);
+            sendingElement.AddLong("Long", false);
+            sendingElement.AddString("String", false);
+            sendingElement.AddUInt("UInt", false);
+            sendingElement.AddUShort("UShort", false);
 
             sendingElement.PrepareDelta();
             var serializedElement = sendingElement.Serialize();
@@ -202,14 +202,14 @@ namespace HeroCrabPluginTestsUnit.Element
         {
             var elementDesc = new NetElementDesc(uint.MaxValue,"Test", uint.MaxValue, uint.MaxValue);
             var sendingElement = new NetElement(elementDesc);
-            sendingElement.AddByte("Byte", false, null);
-            sendingElement.AddBytes("Bytes", false, null);
-            sendingElement.AddFloat("Float", false, null);
-            sendingElement.AddInt("Int", false, null);
-            sendingElement.AddLong("Long", false, null);
-            sendingElement.AddString("String", false, null);
-            sendingElement.AddUInt("UInt", false, null);
-            sendingElement.AddUShort("UShort", false, null);
+            sendingElement.AddByte("Byte", false);
+            sendingElement.AddBytes("Bytes", false);
+            sendingElement.AddFloat("Float", false);
+            sendingElement.AddInt("Int", false);
+            sendingElement.AddLong("Long", false);
+            sendingElement.AddString("String", false);
+            sendingElement.AddUInt("UInt", false);
+            sendingElement.AddUShort("UShort", false);
 
             sendingElement.PrepareDelta();
             var serializedElement = sendingElement.Serialize();
@@ -267,7 +267,7 @@ namespace HeroCrabPluginTestsUnit.Element
             var elementDescRx = new NetElementDesc(uint.MaxValue,"Test", uint.MaxValue, uint.MaxValue);
 
             var sendingElement = new NetElement(elementDescTx);
-            var byteField = sendingElement.AddByte("Byte", false, null);
+            var byteField = sendingElement.AddByte("Byte", false);
             byteField.Set(byte.MaxValue);
             byteField.Set(byte.MaxValue / 2);
 
@@ -298,14 +298,14 @@ namespace HeroCrabPluginTestsUnit.Element
         {
             var elementDesc = new NetElementDesc(uint.MaxValue,"Test", uint.MaxValue, uint.MaxValue);
             var sendingElement = new NetElement(elementDesc);
-            sendingElement.AddByte("Byte", false, null);
-            sendingElement.AddBytes("Bytes", false, null);
-            sendingElement.AddFloat("Float", false, null);
-            sendingElement.AddInt("Int", false, null);
-            sendingElement.AddLong("Long", false, null);
-            sendingElement.AddString("String", false, null);
-            sendingElement.AddUInt("UInt", false, null);
-            sendingElement.AddUShort("UShort", false, null);
+            sendingElement.AddByte("Byte", false);
+            sendingElement.AddBytes("Bytes", false);
+            sendingElement.AddFloat("Float", false);
+            sendingElement.AddInt("Int", false);
+            sendingElement.AddLong("Long", false);
+            sendingElement.AddString("String", false);
+            sendingElement.AddUInt("UInt", false);
+            sendingElement.AddUShort("UShort", false);
 
             var receivingElement = new NetElement(elementDesc);
 
@@ -333,14 +333,14 @@ namespace HeroCrabPluginTestsUnit.Element
         {
             var elementDesc = new NetElementDesc(uint.MaxValue,"Test", uint.MaxValue, uint.MaxValue);
             var sendingElement = new NetElement(elementDesc);
-            sendingElement.AddByte("Byte", false, null);
-            sendingElement.AddBytes("Bytes", false, null);
-            sendingElement.AddFloat("Float", false, null);
-            sendingElement.AddInt("Int", false, null);
-            sendingElement.AddLong("Long", false, null);
-            sendingElement.AddString("String", false, null);
-            sendingElement.AddUInt("UInt", false, null);
-            sendingElement.AddUShort("UShort", false, null);
+            sendingElement.AddByte("Byte", false);
+            sendingElement.AddBytes("Bytes", false);
+            sendingElement.AddFloat("Float", false);
+            sendingElement.AddInt("Int", false);
+            sendingElement.AddLong("Long", false);
+            sendingElement.AddString("String", false);
+            sendingElement.AddUInt("UInt", false);
+            sendingElement.AddUShort("UShort", false);
 
             var receivingElement = new NetElement(elementDesc);
 

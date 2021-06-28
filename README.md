@@ -1,6 +1,6 @@
 # HeroCrabPlugin
 
-HeroCrabPlugin is an authoritative network messaging framework for use in multi-player games developed with [Flax Engine](https://flaxengine.com/). The framework is unit tested and designed to be simple, flexible, and modular. This README provides an introduction to the core components and general use-case examples.
+HeroCrabPlugin is an authoritative network messaging framework for use in multi-player games developed with [Flax Engine](https://flaxengine.com/). It was designed to be simple, flexible, and modular with a primary use-case of distributed player-owned servers with a centralized catalog server. This README provides an introduction to the core components and general API examples.
 
 ## Components
 
@@ -61,7 +61,7 @@ There are a number of optional arguments which can be used to specify boot infor
 
 If there are any issues parsing "help" context will be returned.
 
---
+---
 
 ### 2. Server/Client Creation
 
@@ -115,7 +115,7 @@ private void OnElementDeleted (INetElement element)
 
 Ensure you unregister from events in the OnDestroy() method of your server and/or client scripts when destroying or before re-assigning the server and/or client.
 
---
+---
 
 ### 3. Host Processing
 
@@ -128,6 +128,8 @@ public override void OnFixedUpdate()
 }
 ```
 
+--- 
+
 ### 4. Starting the Server/Client
 
 The following will start a game server listening on the specified interface (use localhost or 127.0.0.1) and port number. A game client can be started in the same manner though when starting a client arguments refer to the destination server address and port number.
@@ -136,15 +138,13 @@ The following will start a game server listening on the specified interface (use
 Server.Start(config.ServerAddress, config.ServerPort);
 ```
 
+---
+
 ### 5. Elements
 
 Once the server is started and a client connects to the server the **SessionConnected** event will be invoked. It is then typical to create a "writable" network element so that the client can send to the server. Elements can only be created on the server and only those where the **AuthorId** match the **session.Id** can be written to by a client. Additionally, elements are streamed to all clients unless they have a non-zero **Recipient** property.
 
-
-
 Network elements are RPC-like messaging tunnels which comprise added fields (RPC end-points) and typically have 1:1 parity with game scripts. When creating an element you can do so it _immediately_ or in the _disabled state_. By creating an element in the disabled state you can then take advantage of the **ElementCreated** event on the server and the AssetId field of the element description to spawn a corresponding game prefab, gaining the possibility to use the **OnStart()** method in the instantiated prefab object's script to declare fields.
-
-
 
 The example below identifies how to spawn a player controller in a disabled state, specify the asset id (ActorId enum), author id, and set a single recipient.
 
@@ -162,8 +162,6 @@ private void OnSessionConnected(INetSession session)
 This example uses an "actor database" which maps ActorDb.ActorId enum (uint) values to prefabs through a dictionary populated in Flax editor.
 
 The stream group is a bitmask set on both the session and element, it can be used to filter elements to a session for different scenes or visibility groups (Lobby or Loading vs. Game).
-
-
 
 Using the above approach the **ElementCreated** event will be invoked on the server. Generally, from this point, the server would instantiate a prefab and add the object to the scene. A reference to the **Element** and **Stream** is useful to cache in the prefab script for later use. For this caching one approach is to extend **Script** and create a**NetScript** and then set Element and Server properties.
 
@@ -227,19 +225,15 @@ private void OnElementDeleted(INetElement element)
 
 After gaining an understanding of elements, there is one helpful property called **Sibling**. This property can be used to cache a reference on the seerver to a separate element from _this stream or another stream_. This can be leveraged in various design patterns, for coupling different streams together (registration and advertisement). 
 
+---
+
 ### 6. Fields
 
 By creating elements in a disabled state and caching a reference to them in the script or _network script_ it is then possible to add fields in the **OnStart()** method before the element is streamed to clients. This cleans up element field creation and ensures that all RPC-like functionality is defined within a game script.
 
-
-
 The below example differentiates the environment the script is running on by checking the **IsServer** property on the element before implementing logic, it demonstrates one-way transmission of a writeable element from the client to the server. It is also possible to create custom logic in your network script and have specific methods for **OnClientStart()** or **OnServerStart()** established in **OnStart()**.
 
-
-
 When adding a field to an element you can specify whether the field is to be delivered reliably or unreliably, this equates to the delivery method as well as providing relevant field buffer depth. For analog or responsive (predicted) player movements use an unreliable field. For scene control, ui control, or other critical actions which must be invoked and rendered us reliable fields.
-
-
 
 Once an element has been enabled, you can **no longer** add fields to it.
 
@@ -323,15 +317,13 @@ test.Set("Test 1, 2, 3");
 Element.SetAction("Test", OnCallBack);
 ```
 
+---
+
 ### 7. Filtering
 
 To filter elements from streams there are two options. 
 
-
-
 The first option is to set the **Recipient** of an **Element** to the session.Id of the intended target session. If the **Recipient** is zer, the **Element** will be sent to _all_ clients. 
-
-
 
 The second option is to use the **Element.Filter.StreamGroup** property which is a bitmask of type **NetStreamGroup**. Setting this property on an element provides an efficient and capable means of filtering at a macro level. Below are the default options for setting the stream group and what it looks like to set this on the session.
 
@@ -390,32 +382,66 @@ private void OnMessageReceived(string message)
 }
 ```
 
-### 8. Advanced
+---
+
+### 8. Security
+
+HeroCrabPlugin was designed to provide a *reasonable* level of security given it's primary use case of developer or player-hosted servers and a catalog server (think Minecraft). 
+
+
+
+Security features are as follows:
+
+* **Authoritative Server:** Elements must be created on the server and the server grants write permission to them for a single session. Attempting to write to an element in which a session is not the author is not permitted. Attempting to write to bogus elements are also not permitted.
+  
+  
+* **Rate Limiting:** Packet rates are limited based on network settings. Exceeding the packet rate +5 will result in a forced disconnect.
+  
+  
+* **Cryptography:** By default sublayer communications between client and server are encrypted using XXTEA algorithm and pre-shared keys. XXTEA is a minimal compute based cryptographic algorithm that provides light privacy. Initially traffic is encrypted using a Key-encrypting key (KEK), which can be viewed and set in Sublayer.cs. Once a session connects and the session id is assigned, an additional Traffic-encrypting key (TEK) is established for the duration of the session. This key is sent directly from server to client using the KEK. This is a minimal approach to security and can trivially be compromised by decompiling the game binary executable, extracting the KEK and capturing the initial session establishment to decrypt the TEK. In this case an eavesdropper would be able to inject input from client to server. 
+  
+  
+
+For games which require username/password login, persistent database storage, digital assets, and/or in-game purchases *do not* use the default method of encryption. For these cases you will need to implement another authentication and encryption scheme which offers more security, a starting point would be to write a class to facilitate secure key or token exchange and inherit from ICryptoModule.
+
+---
+
+### 9. Advanced
 
 There are many things not stated in this README. A few important mentions are:
 
 * When a client session disconnects all elements authored by it are deleted.
-* When a client session transitions to a new stream group all previous elements will have **ElementDeleted** invoked for them and they will continue to exist on the server.
-* When an client connects it will receive existing elements for its stream group after filtering; those elements will have fields _set_ with the last known field value. This means all _players_ will be populated with their current _positions_.
+  
+  
+* When a client session transitions to a new stream group all previous elements will have **ElementDeleted** invoked for them on the client yet they will continue to exist on the server. This allows for quickly changing scenes/levels/worlds.
+  
+  
+* When a client connects it will receive existing elements for its assigned stream group post filtering; those elements will have fields _set_ with the *last known* field value. This means all _players_ will be populated with their current _positions_.
+  
+  
 * Only deltas are streamed, if there is no change in a field nothing is sent.
+  
+  
 * Elements with both reliable and unreliables fields will always be streamed reliably *IF* there are any reliable fields with changes (deltas) queued.
+  
+  
 * Re-iterate: You cannot add fields to an element after it has been enabled the first time. If you require additional fields delete the existing element and create a new one with the extra fields.
   
   
 
 The simple components of streams, elements, fields and stream groups can be combined to create very capable, complex architectures. The game type and multiplayer design will infer the logic built around these components. It is possible to build multi-layer client-server architectures.
 
-
-
 If you are in need of additional examples other than what is provided here check the unit or integration tests. If that does not suffice feel free to contact me, _HeroCrab_ on the Flax Engine discord.
 
-### 9. Contributions
+---
 
-I consider myself to be between an amateur hobbyist developer, I don't code professionally for my vocation. There will surely be areas for improvement in this code base. If you have recommendations on improving the capability, performance, or testing for this plugin please let me konw, submit a PR and I will review--conributions are welcome.
+### 10. Contributions
 
+I consider myself to be  an amateur hobbyist developer, I don't code professionally for my vocation though I've studied for a number of years. There are surely areas for improvement in this code base. If you have recommendations on improving the capability, performance, or testing please let me know or submit a PR and I will review--conributions are welcome!
 
+---
 
-Hope this can be of service to you. 
+Hope this may be of service to you. 
 
 -Jarmo "HeroCrab"
 
