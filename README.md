@@ -440,7 +440,7 @@ For games which require username/password login, persistent database storage, di
 
 ### <a name="adding-herocrabplugin">Adding HeroCrabPlugin</a>
 
-This plugin is considered a "plugin project," documentation for plugin projects can be found [here.]([Plugin Project | Flax Documentation](https://docs.flaxengine.com/manual/scripting/plugins/plugin-project.html) 
+This plugin is considered a "plugin project," documentation for plugin projects can be found [here](https://docs.flaxengine.com/manual/scripting/plugins/plugin-project.html).
 
 To add HeroCrabPlugin to your game complete the following:
 
