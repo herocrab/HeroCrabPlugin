@@ -388,19 +388,13 @@ private void OnMessageReceived(string message)
 
 HeroCrabPlugin was designed to provide a *reasonable* level of security given it's primary use case of developer or player-hosted servers and a catalog server (think Minecraft). 
 
-
-
 Security features are as follows:
 
 * **Authoritative Server:** Elements must be created on the server and the server grants write permission to them for a single session. Attempting to write to an element in which a session is not the author is not permitted. Attempting to write to bogus elements are also not permitted.
-  
-  
+
 * **Rate Limiting:** Packet rates are limited based on network settings. Exceeding the packet rate +5 will result in a forced disconnect.
-  
-  
+
 * **Cryptography:** By default sublayer communications between client and server are encrypted using XXTEA algorithm and pre-shared keys. XXTEA is a minimal compute based cryptographic algorithm that provides light privacy. Initially traffic is encrypted using a Key-encrypting key (KEK), which can be viewed and set in Sublayer.cs. Once a session connects and the session id is assigned, an additional Traffic-encrypting key (TEK) is established for the duration of the session. This key is sent directly from server to client using the KEK. This is a minimal approach to security and can trivially be compromised by decompiling the game binary executable, extracting the KEK and capturing the initial session establishment to decrypt the TEK. In this case an eavesdropper would be able to inject input from client to server. 
-  
-  
 
 For games which require username/password login, persistent database storage, digital assets, and/or in-game purchases *do not* use the default method of encryption. For these cases you will need to implement another authentication and encryption scheme which offers more security, a starting point would be to write a class to facilitate secure key or token exchange and inherit from ICryptoModule.
 
@@ -411,27 +405,20 @@ For games which require username/password login, persistent database storage, di
 There are many things not stated in this README. A few important mentions are:
 
 * When a client session disconnects all elements authored by it are deleted.
-  
-  
+
 * When a client session transitions to a new stream group all previous elements will have **ElementDeleted** invoked for them on the client yet they will continue to exist on the server. This allows for quickly changing scenes/levels/worlds.
-  
-  
+
 * When a client connects it will receive existing elements for its assigned stream group post filtering; those elements will have fields _set_ with the *last known* field value. This means all _players_ will be populated with their current _positions_.
-  
-  
+
 * Only deltas are streamed, if there is no change in a field nothing is sent.
-  
-  
+
 * Elements with both reliable and unreliables fields will always be streamed reliably *IF* there are any reliable fields with changes (deltas) queued.
-  
-  
+
 * Re-iterate: You cannot add fields to an element after it has been enabled the first time. If you require additional fields delete the existing element and create a new one with the extra fields.
-  
-  
 
 The simple components of streams, elements, fields and stream groups can be combined to create very capable, complex architectures. The game type and multiplayer design will infer the logic built around these components. It is possible to build multi-layer client-server architectures.
 
-If you are in need of additional examples other than what is provided here check the unit or integration tests. If that does not suffice feel free to contact me, _HeroCrab_ on the Flax Engine discord.
+If you are in need of additional examples other than what is provided here check the unit or integration tests. If that does not suffice feel free to contact me, _HeroCrab_ on the [Flax Engine](https://flaxengine.com/discord) discord.
 
 ---
 
