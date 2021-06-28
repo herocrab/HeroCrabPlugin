@@ -55,7 +55,7 @@ There are a number of optional arguments which can be used to specify boot infor
 | catalogPort:42057               | ushort |
 | serverPort:42058                | ushort |
 | map:DemoMap                     | string |
-| connections:200                 | ushort |
+| connections:100                 | ushort |
 | log:1000                        | ushort |
 
 If there are any issues parsing the command line, "help" context will be returned.
