@@ -63,7 +63,7 @@ namespace HeroCrabPlugin.Element
         /// <param name="isReliable">If true this field is sent reliably</param>
         /// <param name="callback">Call back method invoked when receiving this field</param>
         /// <returns></returns>
-        INetFieldByte AddByte(string name, bool isReliable, Action<byte> callback);
+        INetField<byte> AddByte(string name, bool isReliable, Action<byte> callback);
 
         /// <summary>
         /// Add a series of bytes as a field to this element.
@@ -72,7 +72,7 @@ namespace HeroCrabPlugin.Element
         /// <param name="isReliable">If true this field is sent reliably</param>
         /// <param name="callback">Call back method invoked when receiving this field</param>
         /// <returns></returns>
-        INetFieldBytes AddBytes(string name, bool isReliable, Action<byte[]> callback);
+        INetField<byte[]> AddBytes(string name, bool isReliable, Action<byte[]> callback);
 
         /// <summary>
         /// Add a float network field to this element.
@@ -81,7 +81,7 @@ namespace HeroCrabPlugin.Element
         /// <param name="isReliable">If true this field is sent reliably</param>
         /// <param name="callback">Call back method invoked when receiving this field</param>
         /// <returns></returns>
-        INetFieldFloat AddFloat(string name, bool isReliable, Action<float> callback);
+        INetField<float> AddFloat(string name, bool isReliable, Action<float> callback);
 
         /// <summary>
         /// Add an int network field to this element.
@@ -90,7 +90,7 @@ namespace HeroCrabPlugin.Element
         /// <param name="isReliable">If true this field is sent reliably</param>
         /// <param name="callback">Call back method invoked when receiving this field</param>
         /// <returns></returns>
-        INetFieldInt AddInt(string name, bool isReliable, Action<int> callback);
+        INetField<int> AddInt(string name, bool isReliable, Action<int> callback);
 
         /// <summary>
         /// Add a long network field to this element.
@@ -99,7 +99,7 @@ namespace HeroCrabPlugin.Element
         /// <param name="isReliable">If true this field is sent reliably</param>
         /// <param name="callback">Call back method invoked when receiving this field</param>
         /// <returns></returns>
-        INetFieldLong AddLong(string name, bool isReliable, Action<long> callback);
+        INetField<long> AddLong(string name, bool isReliable, Action<long> callback);
 
         /// <summary>
         /// Add a string network field to this element.
@@ -108,7 +108,7 @@ namespace HeroCrabPlugin.Element
         /// <param name="isReliable">If true this field is sent reliably</param>
         /// <param name="callback">Call back method invoked when receiving this field</param>
         /// <returns></returns>
-        INetFieldString AddString(string name, bool isReliable, Action<string> callback);
+        INetField<string> AddString(string name, bool isReliable, Action<string> callback);
 
         /// <summary>
         /// Add a byte network field to this element.
@@ -117,7 +117,7 @@ namespace HeroCrabPlugin.Element
         /// <param name="isReliable">If true this field is sent reliably</param>
         /// <param name="callback">Call back method invoked when receiving this field</param>
         /// <returns></returns>
-        INetFieldUInt AddUInt(string name, bool isReliable, Action<uint> callback);
+        INetField<uint> AddUInt(string name, bool isReliable, Action<uint> callback);
 
         /// <summary>
         /// Add a ushort network field to this element.
@@ -126,7 +126,7 @@ namespace HeroCrabPlugin.Element
         /// <param name="isReliable">If true this field is sent reliably</param>
         /// <param name="callback">Call back method invoked when receiving this field</param>
         /// <returns></returns>
-        INetFieldUShort AddUShort(string name, bool isReliable, Action<ushort> callback);
+        INetField<ushort> AddUShort(string name, bool isReliable, Action<ushort> callback);
 
         /// <summary>
         /// Set the call back action for a named byte field, typically used on the client.
@@ -197,55 +197,55 @@ namespace HeroCrabPlugin.Element
         /// </summary>
         /// <param name="name">Field name</param>
         /// <returns></returns>
-        INetFieldByte GetByte(string name);
+        INetField<byte> GetByte(string name);
 
         /// <summary>
         /// Retrieves the setter for a series of bytes field.
         /// </summary>
         /// <param name="name">Field name</param>
         /// <returns></returns>
-        INetFieldBytes GetBytes(string name);
+        INetField<byte[]> GetBytes(string name);
 
         /// <summary>
         /// Retrieves the setter for a float field.
         /// </summary>
         /// <param name="name">Field name</param>
         /// <returns></returns>
-        INetFieldFloat GetFloat(string name);
+        INetField<float> GetFloat(string name);
 
         /// <summary>
         /// Retrieves the setter for an int field.
         /// </summary>
         /// <param name="name">Field name</param>
         /// <returns></returns>
-        INetFieldInt GetInt(string name);
+        INetField<int>GetInt(string name);
 
         /// <summary>
         /// Retrieves the setter for a long field.
         /// </summary>
         /// <param name="name">Field name</param>
         /// <returns></returns>
-        INetFieldLong GetLong(string name);
+        INetField<long> GetLong(string name);
 
         /// <summary>
         /// Retrieves the setter for a string field.
         /// </summary>
         /// <param name="name">Field name</param>
         /// <returns></returns>
-        INetFieldString GetString(string name);
+        INetField<string> GetString(string name);
 
         /// <summary>
         /// Retrieves the setter for a uint field.
         /// </summary>
         /// <param name="name">Field name</param>
         /// <returns></returns>
-        INetFieldUInt GetUInt(string name);
+        INetField<uint> GetUInt(string name);
 
         /// <summary>
         /// Retrieves the setter for a ushort field.
         /// </summary>
         /// <param name="name">Field name</param>
         /// <returns></returns>
-        INetFieldUShort GetUShort(string name);
+        INetField<ushort> GetUShort(string name);
     }
 }

@@ -79,7 +79,7 @@ namespace HeroCrabPlugin.Element
         public void Delete() => DeleteElement?.Invoke(this);
 
         /// <inheritdoc />
-        public INetFieldByte AddByte(string name, bool isReliable, Action<byte> callback = null)
+        public INetField<byte> AddByte(string name, bool isReliable, Action<byte> callback = null)
         {
             ResolveDuplicate(name);
             var field = new NetFieldByte(_fieldIndex, name, isReliable, callback);
@@ -91,7 +91,7 @@ namespace HeroCrabPlugin.Element
         }
 
         /// <inheritdoc />
-        public INetFieldBytes AddBytes(string name, bool isReliable, Action<byte[]> callback = null)
+        public INetField<byte[]> AddBytes(string name, bool isReliable, Action<byte[]> callback = null)
         {
             ResolveDuplicate(name);
             var field = new NetFieldBytes(_fieldIndex, name, isReliable, callback);
@@ -103,7 +103,7 @@ namespace HeroCrabPlugin.Element
         }
 
         /// <inheritdoc />
-        public INetFieldFloat AddFloat(string name, bool isReliable, Action<float> callback = null)
+        public INetField<float> AddFloat(string name, bool isReliable, Action<float> callback = null)
         {
             ResolveDuplicate(name);
             var field = new NetFieldFloat(_fieldIndex, name, isReliable, callback);
@@ -115,7 +115,7 @@ namespace HeroCrabPlugin.Element
         }
 
         /// <inheritdoc />
-        public INetFieldInt AddInt(string name, bool isReliable, Action<int> callback = null)
+        public INetField<int> AddInt(string name, bool isReliable, Action<int> callback = null)
         {
             ResolveDuplicate(name);
             var field = new NetFieldInt(_fieldIndex, name, isReliable, callback);
@@ -127,7 +127,7 @@ namespace HeroCrabPlugin.Element
         }
 
         /// <inheritdoc />
-        public INetFieldLong AddLong(string name, bool isReliable, Action<long> callback = null)
+        public INetField<long> AddLong(string name, bool isReliable, Action<long> callback = null)
         {
             ResolveDuplicate(name);
             var field = new NetFieldLong(_fieldIndex, name, isReliable, callback);
@@ -139,7 +139,7 @@ namespace HeroCrabPlugin.Element
         }
 
         /// <inheritdoc />
-        public INetFieldString AddString(string name, bool isReliable, Action<string> callback = null)
+        public INetField<string> AddString(string name, bool isReliable, Action<string> callback = null)
         {
             ResolveDuplicate(name);
             var field = new NetFieldString(_fieldIndex, name, isReliable, callback);
@@ -151,7 +151,7 @@ namespace HeroCrabPlugin.Element
         }
 
         /// <inheritdoc />
-        public INetFieldUInt AddUInt(string name, bool isReliable, Action<uint> callback = null)
+        public INetField<uint> AddUInt(string name, bool isReliable, Action<uint> callback = null)
         {
             ResolveDuplicate(name);
             var field = new NetFieldUInt(_fieldIndex, name, isReliable, callback);
@@ -163,7 +163,7 @@ namespace HeroCrabPlugin.Element
         }
 
         /// <inheritdoc />
-        public INetFieldUShort AddUShort(string name, bool isReliable, Action<ushort> callback = null)
+        public INetField<ushort> AddUShort(string name, bool isReliable, Action<ushort> callback = null)
         {
             ResolveDuplicate(name);
             var field = new NetFieldUShort(_fieldIndex, name, isReliable, callback);
@@ -175,80 +175,80 @@ namespace HeroCrabPlugin.Element
         }
 
         /// <inheritdoc />
-        public INetFieldByte GetByte(string name)
+        public INetField<byte> GetByte(string name)
         {
-            if (_fields.ContainsKey(name) && _fields[name] is INetFieldByte) {
-                return _fields[name] as INetFieldByte;
+            if (_fields.ContainsKey(name) && _fields[name] is INetField<byte>) {
+                return _fields[name] as INetField<byte>;
             }
 
             return null;
         }
 
         /// <inheritdoc />
-        public INetFieldBytes GetBytes(string name)
+        public INetField<byte[]> GetBytes(string name)
         {
-            if (_fields.ContainsKey(name) && _fields[name] is INetFieldBytes) {
-                return _fields[name] as INetFieldBytes;
+            if (_fields.ContainsKey(name) && _fields[name] is INetField<byte[]>) {
+                return _fields[name] as INetField<byte[]>;
             }
 
             return null;
         }
 
         /// <inheritdoc />
-        public INetFieldFloat GetFloat(string name)
+        public INetField<float> GetFloat(string name)
         {
-            if (_fields.ContainsKey(name) && _fields[name] is INetFieldFloat) {
-                return _fields[name] as INetFieldFloat;
+            if (_fields.ContainsKey(name) && _fields[name] is INetField<float>) {
+                return _fields[name] as INetField<float>;
             }
 
             return null;
         }
 
         /// <inheritdoc />
-        public INetFieldInt GetInt(string name)
+        public INetField<int> GetInt(string name)
         {
-            if (_fields.ContainsKey(name) && _fields[name] is INetFieldInt) {
-                return _fields[name] as INetFieldInt;
+            if (_fields.ContainsKey(name) && _fields[name] is INetField<int>) {
+                return _fields[name] as INetField<int>;
             }
 
             return null;
         }
 
         /// <inheritdoc />
-        public INetFieldLong GetLong(string name)
+        public INetField<long> GetLong(string name)
         {
-            if (_fields.ContainsKey(name) && _fields[name] is INetFieldLong) {
-                return _fields[name] as INetFieldLong;
+            if (_fields.ContainsKey(name) && _fields[name] is INetField<long>) {
+                return _fields[name] as INetField<long>;
             }
 
             return null;
         }
 
         /// <inheritdoc />
-        public INetFieldString GetString(string name)
+        public INetField<string> GetString(string name)
         {
-            if (_fields.ContainsKey(name) && _fields[name] is INetFieldString) {
-                return _fields[name] as INetFieldString;
+            if (_fields.ContainsKey(name) && _fields[name] is INetField<string>) {
+                return _fields[name] as INetField<string>;
             }
 
             return null;
         }
 
         /// <inheritdoc />
-        public INetFieldUInt GetUInt(string name)
+        public INetField<uint> GetUInt(string name)
         {
-            if (_fields.ContainsKey(name) && _fields[name] is INetFieldUInt) {
-                return _fields[name] as INetFieldUInt;
+            if (_fields.ContainsKey(name) && _fields[name] is INetField<uint>) {
+                return _fields[name] as INetField<uint>;
             }
 
             return null;
         }
 
         /// <inheritdoc />
-        public INetFieldUShort GetUShort(string name)
+        public INetField<ushort> GetUShort(string name)
         {
-            if (_fields.ContainsKey(name) && _fields[name] is INetFieldUShort) {
-                return _fields[name] as INetFieldUShort;
+            if (_fields.ContainsKey(name) && _fields[name] is INetField<ushort>) {
+                return _fields[name] as INetField<ushort>;
             }
 
             return null;

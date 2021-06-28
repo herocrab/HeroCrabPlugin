@@ -8,7 +8,7 @@ namespace HeroCrabPlugin.Field
     /// <summary>
     /// Network uint field.
     /// </summary>
-    public class NetFieldUInt: NetField, INetFieldUInt
+    public class NetFieldUInt: NetField, INetField<uint>
     {
         internal Action<uint> Receive { get; set; }
 

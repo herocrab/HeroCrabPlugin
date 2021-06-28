@@ -8,7 +8,7 @@ namespace HeroCrabPlugin.Field
     /// <summary>
     /// Network bytes field.
     /// </summary>
-    public class NetFieldBytes: NetField, INetFieldBytes
+    public class NetFieldBytes: NetField, INetField<byte[]>
     {
         internal Action<byte[]> Receive { get; set; }
 

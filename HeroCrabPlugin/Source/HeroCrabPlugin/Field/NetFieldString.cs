@@ -8,7 +8,7 @@ namespace HeroCrabPlugin.Field
     /// <summary>
     /// Network string field.
     /// </summary>
-    public class NetFieldString : NetField, INetFieldString
+    public class NetFieldString : NetField, INetField<string>
     {
         internal Action<string> Receive { get; set; }
 

@@ -8,7 +8,7 @@ namespace HeroCrabPlugin.Field
     /// <summary>
     /// Network float field.
     /// </summary>
-    public class NetFieldFloat: NetField, INetFieldFloat
+    public class NetFieldFloat: NetField, INetField<float>
     {
         internal Action<float> Receive { get; set; }
 
