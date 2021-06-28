@@ -35,8 +35,7 @@ NetBoot.ParseCommandLine(Engine.CommandLine);
 Or manually from a game script:
 
 ```
-NetBoot.ParseCommandLine("name:HeroCrab_Server address:127.0.0.1 
-    serverPort:12345 map:DemoMap);
+NetBoot.ParseCommandLine("name:HeroCrab_Server address:127.0.0.1 serverPort:12345 map:DemoMap);
 ```
 
 Another option is to use the constructor:
