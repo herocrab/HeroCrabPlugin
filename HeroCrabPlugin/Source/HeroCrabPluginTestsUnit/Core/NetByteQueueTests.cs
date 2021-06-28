@@ -281,5 +281,21 @@ namespace HeroCrabPlugin.Tests.Unit.Core
             var readQuaternion = byteQueue.ReadQuaternion();
             Assert.That(readQuaternion, Is.EqualTo(quaternion));
         }
+
+        [Test]
+        public void WriteBool_ReadBool_VerifyContentsAreSame()
+        {
+            const bool isTrue = true;
+            const bool isFalse = false;
+            var byteQueue = new NetByteQueue();
+            byteQueue.WriteBool(isTrue);
+            byteQueue.WriteBool(isFalse);
+
+            var resultIsTrue = byteQueue.ReadBool();
+            var resultIsFalse = byteQueue.ReadBool();
+
+            Assert.That(resultIsTrue, Is.True);
+            Assert.That(resultIsFalse, Is.False);
+        }
     }
 }

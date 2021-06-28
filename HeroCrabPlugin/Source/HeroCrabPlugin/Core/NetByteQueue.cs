@@ -220,6 +220,17 @@ namespace HeroCrabPlugin.Core
         public void WriteQuaternion(Quaternion quaternion) => WriteFloatArray(quaternion.ToArray());
 
         /// <summary>
+        /// Write a bool to this queue.
+        /// </summary>
+        /// <param name="value"></param>
+        public void WriteBool(bool value)
+        {
+            var boolean = (byte)(value ? 1 : 0);
+            _byteQueue.Enqueue(boolean);
+            _depth++;
+        }
+
+        /// <summary>
         /// Read a string from this queue.
         /// </summary>
         /// <returns>String</returns>
@@ -332,6 +343,16 @@ namespace HeroCrabPlugin.Core
         /// </summary>
         /// <returns></returns>
         public Quaternion ReadQuaternion() => new Quaternion(ReadFloatArray(4));
+
+        /// <summary>
+        /// Read a bool from this queue.
+        /// </summary>
+        /// <returns>Byte</returns>
+        public bool ReadBool()
+        {
+            var value = _byteQueue.Dequeue();
+            return value == 1 ? true : false;
+        }
 
         /// <summary>
         /// Read a series of bytes from this queue, includes length.
