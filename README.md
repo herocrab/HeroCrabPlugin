@@ -18,7 +18,7 @@ HeroCrabPlugin is an authoritative network messaging framework for use in multi-
   - [Filtering](#filtering)
   - [Sessions](#sessions)
   - [Security](#security)
-  - [Adding HeroCrabPlugin](#adding-hercrabplugin)
+  - [Adding HeroCrabPlugin](#adding-herocrabplugin)
   - [Contributions](#contributions)
   - [Conclusion](#conclusion)
 
