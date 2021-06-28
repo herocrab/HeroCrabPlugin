@@ -7,20 +7,20 @@ HeroCrabPlugin is an authoritative network messaging framework for use in multi-
 ### Overview
 
 * [Components](#components)
-* Diagram
-* Getting Started
-  - 1. Initialization
-  - 2. Server/Client Creation
-  - 3. Host Processing
-  - 4. Starting Server/Client
-  - 5. Elements
-  - 6. Fields
-  - 7. Filtering
-  - 8. Sessions
-  - 9. Security
-  - 10. Adding HeroCrab Plugin
-  - 11. Contributions
-  - 12. Conclusion
+* [Diagram](#diagram)
+* [Getting Started](#getting-started)
+  - [Initialization](#initialization)
+  - [Creation](#creation)
+  - [Processing](#processing)
+  - [Starting](#starting)
+  - [Elements](#elements)
+  - [Fields](#fields)
+  - [Filtering](#filtering)
+  - [Sessions](#sessions)
+  - [Security](#security)
+  - [Adding HeroCrabPlugin](#adding-hercrabplugin)
+  - [Contributions](#contributions)
+  - [Conclusion](#conclusion)
 
 ---
 
@@ -40,13 +40,13 @@ HeroCrabPlugin is an authoritative network messaging framework for use in multi-
 | NetSession     | A session uniquely identifies the client connection sublayer.                                                        |
 | NetSublayer    | Sublayer implementation for UDP and provides basic encryption.                                                       |
 
-## Diagram
+## <a name="diagram">Diagram</a>
 
 ![Diagram](Diagram.png)
 
 ## Getting Started
 
-### 1. Initialization
+### Initialization
 
 Initialization of the NetConfig occurs through parsing of command-line arguments during game launch:
 
@@ -85,7 +85,7 @@ If there are any issues parsing the command line, "help" context will be returne
 
 ---
 
-### 2. Server/Client Creation
+### <a name="creation">Creation</a>
 
 The default network settings are listed below:
 
@@ -139,7 +139,7 @@ Ensure you unregister from events in the OnDestroy() method of your server and/o
 
 ---
 
-### 3. Host Processing
+### <a name="processing">Processing</a>
 
 It is required that the game tick loop "pedal" host processing. The frequency of this loop must match what is specified in the network settings, default options are 60 (Flax default for FixedUpdate()) or 30hz (Flax default for Update()). This can be accomplished in the following way:
 
@@ -152,7 +152,7 @@ public override void OnFixedUpdate()
 
 --- 
 
-### 4. Starting Server/Client
+### <a name="starting">Starting</a>
 
 The following will start a game server listening on the specified interface (use localhost or 127.0.0.1) and port number. A game client can be started in the same manner though when starting a client arguments refer to the destination server address and port number.
 
@@ -162,7 +162,7 @@ Server.Start(config.ServerAddress, config.ServerPort);
 
 ---
 
-### 5. Elements
+### <a name="elements">Elements</a>
 
 Once the server is started and a client connects to the server the **SessionConnected** event will be invoked. It is then typical to create a "writable" network element so that the client can send to the server. Elements can only be created on the server and only those where the **AuthorId** match the **session.Id** can be written to by a client. Additionally, elements are streamed to all clients unless they have a non-zero **Recipient** property.
 
@@ -249,7 +249,7 @@ After gaining an understanding of elements, there is one helpful property called
 
 ---
 
-### 6. Fields
+### <a name="fields">Fields</a>
 
 By creating elements in a disabled state and caching a reference to them in the script or _network script_ it is then possible to add fields in the **OnStart()** method before the element is streamed to clients. This cleans up element field creation and ensures that all RPC-like functionality is defined within a game script.
 
@@ -341,7 +341,7 @@ Element.SetAction("Test", OnCallBack);
 
 ---
 
-### 7. Filtering
+### <a name="filtering">Filtering</a>
 
 To filter elements from sessions there are two options. 
 
@@ -406,7 +406,7 @@ private void OnMessageReceived(string message)
 
 ---
 
-### 8. Sessions
+### <a name="sessions">Sessions</a>
 
 There are a couple of important notes regarding sessions, these are:
 
@@ -422,7 +422,7 @@ There are a couple of important notes regarding sessions, these are:
 
 ---
 
-### 9. Security
+### <a name="security">Security</a>
 
 HeroCrabPlugin was designed to provide a *reasonable* level of security given it's primary use case of developer or player-hosted servers and a catalog server (think Minecraft). 
 
@@ -438,7 +438,7 @@ For games which require username/password login, persistent database storage, di
 
 ---
 
-### 10. Adding HeroCrabPlugin
+### <a name="adding-herocrabplugin">Adding HeroCrabPlugin</a>
 
 This plugin is considered a "plugin project," documentation for plugin projects can be found [here.]([Plugin Project | Flax Documentation](https://docs.flaxengine.com/manual/scripting/plugins/plugin-project.html) 
 
@@ -480,13 +480,13 @@ If you have any difficulties with this process visit the [Flax Engine](https://f
 
 ---
 
-### 11. Contributions
+### <a name="contributions">Contributions</a>
 
-I consider myself to be  an amateur hobbyist developer, I don't code professionally for my vocation though I've studied for a number of years. There are surely areas for improvement in this code base. If you have recommendations on improving the capability, performance, or testing please let me know or submit a PR and I will review--conributions are welcome!
+I consider myself to be  an amateur hobbyist developer, there are surely areas for improvement in this code base. If you have recommendations on improving the capability, performance, or testing please let me know or submit a PR and I will review--conributions are welcome and will be identified in CONTRIBUTORS.md!
 
 ---
 
-### 12. Conclusion
+### <a name="conclusion">Conclusion</a>
 
 The simple components of streams, elements, fields and stream groups can be combined to create capable, complex architectures. The game type and multiplayer design will infer the logic built around these components. It is possible to build multi-layer client-server architectures.
 
