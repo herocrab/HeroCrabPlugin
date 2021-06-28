@@ -1,8 +1,30 @@
 # HeroCrabPlugin
 
-HeroCrabPlugin is an authoritative network messaging framework for use in multi-player games developed with [Flax Engine](https://flaxengine.com/). It was designed to be simple, flexible, and modular with a primary use-case of facilitating distributed player-owned servers and centralized catalog servers. This README provides an introduction to the core components and general API examples.
+HeroCrabPlugin is an authoritative network messaging framework for use in multi-player games developed with [Flax Engine](https://flaxengine.com/). It was designed to be simple, flexible, and modular with a primary use-case of distributed player-owned servers and centralized catalog server(s). This README provides an introduction to the core components and general API examples.
 
-## Components
+---
+
+### Overview
+
+* [Components](#components)
+* Diagram
+* Getting Started
+  - 1. Initialization
+  - 2. Server/Client Creation
+  - 3. Host Processing
+  - 4. Starting Server/Client
+  - 5. Elements
+  - 6. Fields
+  - 7. Filtering
+  - 8. Sessions
+  - 9. Security
+  - 10. Adding HeroCrab Plugin
+  - 11. Contributions
+  - 12. Conclusion
+
+---
+
+## <a name="components">Components</a>
 
 | Class Name     | Description                                                                                                          |
 |:-------------- |:-------------------------------------------------------------------------------------------------------------------- |
@@ -35,7 +57,8 @@ NetBoot.ParseCommandLine(Engine.CommandLine);
 Or manually from a game script:
 
 ```
-NetBoot.ParseCommandLine("name:HeroCrab_Server address:127.0.0.1 serverPort:12345 map:DemoMap);
+NetBoot.ParseCommandLine("name:HeroCrab_Server address:127.0.0.1 
+    serverPort:12345 map:DemoMap);
 ```
 
 Another option is to use the constructor:
@@ -55,7 +78,7 @@ There are a number of optional arguments which can be used to specify boot infor
 | catalogPort:42057               | ushort |
 | serverPort:42058                | ushort |
 | map:DemoMap                     | string |
-| connections:100                 | ushort |
+| connections:200                 | ushort |
 | log:1000                        | ushort |
 
 If there are any issues parsing the command line, "help" context will be returned.
@@ -129,7 +152,7 @@ public override void OnFixedUpdate()
 
 --- 
 
-### 4. Starting the Server/Client
+### 4. Starting Server/Client
 
 The following will start a game server listening on the specified interface (use localhost or 127.0.0.1) and port number. A game client can be started in the same manner though when starting a client arguments refer to the destination server address and port number.
 
@@ -222,7 +245,7 @@ private void OnElementDeleted(INetElement element)
 }
 ```
 
-After gaining an understanding of elements, there is one helpful property called **Sibling**. This property can be used to cache a reference on the seerver to a separate element from _this stream or another stream_. This can be leveraged in various design patterns, for coupling different streams together (registration and advertisement). 
+After gaining an understanding of elements, there is one helpful property called **Sibling**. This property can be used to cache a reference on the seerver to a separate element from _this stream or another stream_. This can be leveraged in various design patterns, for coupling different streams together (registration and advertisement).
 
 ---
 
@@ -320,11 +343,11 @@ Element.SetAction("Test", OnCallBack);
 
 ### 7. Filtering
 
-To filter elements from streams there are two options. 
+To filter elements from sessions there are two options. 
 
-The first option is to set the **Recipient** of an **Element** to the session.Id of the intended target session. If the **Recipient** is zer, the **Element** will be sent to _all_ clients. 
+* The first option is to set the **Recipient** of an **Element** to the session.Id of the intended target session. If the **Recipient** is zer, the **Element** will be sent to _all_ clients. 
 
-The second option is to use the **Element.Filter.StreamGroup** property which is a bitmask of type **NetStreamGroup**. Setting this property on an element provides an efficient and capable means of filtering at a macro level. Below are the default options for setting the stream group and what it looks like to set this on the session.
+* The second option is to use the **Element.Filter.StreamGroup** property which is a bitmask of type **NetStreamGroup**. Setting this property on an element provides an efficient and capable means of filtering at a macro level. Below are the default options for setting the stream group and what it looks like to set this on the session.
 
 ```
 public enum NetStreamGroup
@@ -383,7 +406,23 @@ private void OnMessageReceived(string message)
 
 ---
 
-### 8. Security
+### 8. Sessions
+
+There are a couple of important notes regarding sessions, these are:
+
+- When a client session disconnects all elements authored by it are deleted.
+
+- When a client session transitions to a new stream group all previous elements will have **ElementDeleted** invoked for them on the client yet they will continue to exist on the server. This allows for quickly changing scenes/levels/worlds.
+
+- When a client connects it will receive existing elements for its assigned stream group post filtering; those elements will have fields *set* with the *last known* field value. This means all *players* will be populated with their current *positions*.
+
+- Only deltas are streamed over a session, if there is no change in a field nothing is sent.
+
+- Elements with both reliable and unreliables fields will always be streamed over a session reliably only *IF* there are reliable fields with changes (deltas) queued.
+
+---
+
+### 9. Security
 
 HeroCrabPlugin was designed to provide a *reasonable* level of security given it's primary use case of developer or player-hosted servers and a catalog server (think Minecraft). 
 
@@ -399,36 +438,62 @@ For games which require username/password login, persistent database storage, di
 
 ---
 
-### 9. Advanced
+### 10. Adding HeroCrabPlugin
 
-There are many things not stated in this README. A few important mentions are:
+This plugin is considered a "plugin project," documentation for plugin projects can be found [here.]([Plugin Project | Flax Documentation](https://docs.flaxengine.com/manual/scripting/plugins/plugin-project.html) 
 
-* When a client session disconnects all elements authored by it are deleted.
+To add HeroCrabPlugin to your game complete the following:
 
-* When a client session transitions to a new stream group all previous elements will have **ElementDeleted** invoked for them on the client yet they will continue to exist on the server. This allows for quickly changing scenes/levels/worlds.
+1) Clone the repositority or download it to /<your-game>/Plugins/ directory.
 
-* When a client connects it will receive existing elements for its assigned stream group post filtering; those elements will have fields _set_ with the *last known* field value. This means all _players_ will be populated with their current _positions_.
+2) Update <your-game>.flaxproj file as follows:
 
-* Only deltas are streamed, if there is no change in a field nothing is sent.
+```
+    "References": [
+        {
+            "Name": "$(EnginePath)/Flax.flaxproj"
+        },
+        {
+            "Name": "$(ProjectPath)/Plugins/HeroCrabPlugin/HeroCrabPlugin.flaxproj"
+        }
+    ],
+```
 
-* Elements with both reliable and unreliables fields will always be streamed reliably *IF* there are any reliable fields with changes (deltas) queued.
+3. Add a refrence to <your-game>.Build.cs build script as follows:
 
-* Re-iterate: You cannot add fields to an element after it has been enabled the first time. If you require additional fields delete the existing element and create a new one with the extra fields.
+```
+    public override void Setup(BuildOptions options)
+    {
+        base.Setup(options);
+        options.ScriptingAPI.IgnoreMissingDocumentationWarnings = true;
+        options.PublicDependencies.Add("HeroCrabPlugin");
+    }
+```
 
-The simple components of streams, elements, fields and stream groups can be combined to create very capable, complex architectures. The game type and multiplayer design will infer the logic built around these components. It is possible to build multi-layer client-server architectures.
+4. Right click <your-game>.flaxproj and "Generate scripts project files."
 
-If you are in need of additional examples other than what is provided here check the unit or integration tests. If that does not suffice feel free to contact me, _HeroCrab_ on the [Flax Engine](https://flaxengine.com/discord) discord.
+5. Launch Flax Editor and ensure the plugin shows up under  Tools --> Plugins:
+
+![HeroCrabPlugin](HeroCrabPlugin.png)
+
+If you have any difficulties with this process visit the [Flax Engine](https://flaxengine.com/discord) discord.
 
 ---
 
-### 10. Contributions
+### 11. Contributions
 
 I consider myself to be  an amateur hobbyist developer, I don't code professionally for my vocation though I've studied for a number of years. There are surely areas for improvement in this code base. If you have recommendations on improving the capability, performance, or testing please let me know or submit a PR and I will review--conributions are welcome!
 
 ---
 
+### 12. Conclusion
+
+The simple components of streams, elements, fields and stream groups can be combined to create capable, complex architectures. The game type and multiplayer design will infer the logic built around these components. It is possible to build multi-layer client-server architectures.
+
+If you are in need of additional examples other than what is provided here check the unit or integration tests. If that does not suffice feel free to contact me, *HeroCrab* on the [Flax Engine](https://flaxengine.com/discord) discord.
+
 Hope this may be of service to you. 
 
 -Jarmo "HeroCrab"
 
-![HeroCrabPlugin](HeroCrab.png)
+![HeroCrab](HeroCrab.png)
