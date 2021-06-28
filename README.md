@@ -45,7 +45,7 @@ Another option is to use the constructor:
 NetBoot.Config = new NetConfig(address:"herocrab.com", serverPort: 42000);
 ```
 
-There are a number of optional arguments which can be used to specify boot information. The default configuration is designed to incorporate three roles; a catalog server, game server, and game client communicating the _loopback_ address (127.0.0.1). Domain names are supported.
+There are a number of optional arguments which can be used to specify boot information. The default configuration is designed to incorporate three roles; a catalog server, game server, and game client communicating over the _loopback_ address (127.0.0.1). Domain names are supported.
 
 | Optional command-line arguments | Type   |
 |:------------------------------- |:------ |
@@ -59,7 +59,7 @@ There are a number of optional arguments which can be used to specify boot infor
 | connections:200                 | ushort |
 | log:1000                        | ushort |
 
-If there are any issues parsing "help" context will be returned.
+If there are any issues parsing the command line, "help" context will be returned.
 
 ---
 
