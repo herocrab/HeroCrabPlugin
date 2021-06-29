@@ -64,7 +64,7 @@ namespace HeroCrabPlugin.Element
         /// <param name="isReliable">If true this field is sent reliably</param>
         /// <param name="callback">Call back method invoked when receiving this field</param>
         /// <returns>Field</returns>
-        INetField<byte> AddByte(string name, bool isReliable, Action<byte> callback);
+        INetField<byte> AddByte(string name, bool isReliable, Action<byte> callback = null);
 
         /// <summary>
         /// Add a series of bytes as a field to this element.
@@ -73,7 +73,7 @@ namespace HeroCrabPlugin.Element
         /// <param name="isReliable">If true this field is sent reliably</param>
         /// <param name="callback">Call back method invoked when receiving this field</param>
         /// <returns>Field</returns>
-        INetField<byte[]> AddBytes(string name, bool isReliable, Action<byte[]> callback);
+        INetField<byte[]> AddBytes(string name, bool isReliable, Action<byte[]> callback = null);
 
         /// <summary>
         /// Add a float network field to this element.
@@ -82,7 +82,7 @@ namespace HeroCrabPlugin.Element
         /// <param name="isReliable">If true this field is sent reliably</param>
         /// <param name="callback">Call back method invoked when receiving this field</param>
         /// <returns>Field</returns>
-        INetField<float> AddFloat(string name, bool isReliable, Action<float> callback);
+        INetField<float> AddFloat(string name, bool isReliable, Action<float> callback = null);
 
         /// <summary>
         /// Add an int network field to this element.
@@ -91,7 +91,7 @@ namespace HeroCrabPlugin.Element
         /// <param name="isReliable">If true this field is sent reliably</param>
         /// <param name="callback">Call back method invoked when receiving this field</param>
         /// <returns>Field</returns>
-        INetField<int> AddInt(string name, bool isReliable, Action<int> callback);
+        INetField<int> AddInt(string name, bool isReliable, Action<int> callback = null);
 
         /// <summary>
         /// Add a long network field to this element.
@@ -100,7 +100,7 @@ namespace HeroCrabPlugin.Element
         /// <param name="isReliable">If true this field is sent reliably</param>
         /// <param name="callback">Call back method invoked when receiving this field</param>
         /// <returns>Field</returns>
-        INetField<long> AddLong(string name, bool isReliable, Action<long> callback);
+        INetField<long> AddLong(string name, bool isReliable, Action<long> callback = null);
 
         /// <summary>
         /// Add a string network field to this element.
@@ -109,7 +109,7 @@ namespace HeroCrabPlugin.Element
         /// <param name="isReliable">If true this field is sent reliably</param>
         /// <param name="callback">Call back method invoked when receiving this field</param>
         /// <returns>Field</returns>
-        INetField<string> AddString(string name, bool isReliable, Action<string> callback);
+        INetField<string> AddString(string name, bool isReliable, Action<string> callback = null);
 
         /// <summary>
         /// Add a byte network field to this element.
@@ -118,7 +118,7 @@ namespace HeroCrabPlugin.Element
         /// <param name="isReliable">If true this field is sent reliably</param>
         /// <param name="callback">Call back method invoked when receiving this field</param>
         /// <returns>Field</returns>
-        INetField<uint> AddUInt(string name, bool isReliable, Action<uint> callback);
+        INetField<uint> AddUInt(string name, bool isReliable, Action<uint> callback = null);
 
         /// <summary>
         /// Add a ushort network field to this element.
@@ -127,7 +127,7 @@ namespace HeroCrabPlugin.Element
         /// <param name="isReliable">If true this field is sent reliably</param>
         /// <param name="callback">Call back method invoked when receiving this field</param>
         /// <returns>Field</returns>
-        INetField<ushort> AddUShort(string name, bool isReliable, Action<ushort> callback);
+        INetField<ushort> AddUShort(string name, bool isReliable, Action<ushort> callback = null);
 
         /// <summary>
         /// Add a Vector2 network field to this element.
@@ -136,7 +136,7 @@ namespace HeroCrabPlugin.Element
         /// <param name="isReliable">If true this field is sent reliably</param>
         /// <param name="callback">Call back method invoked when receiving this field</param>
         /// <returns>Field</returns>
-        INetField<Vector2> AddVector2(string name, bool isReliable, Action<Vector2> callback);
+        INetField<Vector2> AddVector2(string name, bool isReliable, Action<Vector2> callback = null);
 
         /// <summary>
         /// Add a Vector3 network field to this element.
@@ -145,7 +145,7 @@ namespace HeroCrabPlugin.Element
         /// <param name="isReliable">If true this field is sent reliably</param>
         /// <param name="callback">Call back method invoked when receiving this field</param>
         /// <returns>Field</returns>
-        INetField<Vector3> AddVector3(string name, bool isReliable, Action<Vector3> callback);
+        INetField<Vector3> AddVector3(string name, bool isReliable, Action<Vector3> callback = null);
 
         /// <summary>
         /// Add a Vector4 network field to this element.
@@ -154,7 +154,7 @@ namespace HeroCrabPlugin.Element
         /// <param name="isReliable">If true this field is sent reliably</param>
         /// <param name="callback">Call back method invoked when receiving this field</param>
         /// <returns>Field</returns>
-        INetField<Vector4> AddVector4(string name, bool isReliable, Action<Vector4> callback);
+        INetField<Vector4> AddVector4(string name, bool isReliable, Action<Vector4> callback = null);
 
         /// <summary>
         /// Add a Quaternion network field to this element.
@@ -163,7 +163,7 @@ namespace HeroCrabPlugin.Element
         /// <param name="isReliable">If true this field is sent reliably</param>
         /// <param name="callback">Call back method invoked when receiving this field</param>
         /// <returns>Field</returns>
-        INetField<Quaternion> AddQuaternion(string name, bool isReliable, Action<Quaternion> callback);
+        INetField<Quaternion> AddQuaternion(string name, bool isReliable, Action<Quaternion> callback = null);
 
         /// <summary>
         /// Add a bool network field to this element.
@@ -172,7 +172,7 @@ namespace HeroCrabPlugin.Element
         /// <param name="isReliable">If true this field is sent reliably</param>
         /// <param name="callback">Call back method invoked when receiving this field</param>
         /// <returns>Field</returns>
-        INetField<bool> AddBool(string name, bool isReliable, Action<bool> callback);
+        INetField<bool> AddBool(string name, bool isReliable, Action<bool> callback = null);
 
         /// <summary>
         /// Set the call back action for a named byte field, typically used on the client.
