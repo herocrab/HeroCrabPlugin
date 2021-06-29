@@ -334,10 +334,10 @@ private void SetVersion()
 Fields can be added to elements with a provided callback, retrieved from elements by name to be used as a setter, or updated with a callback (i.e "SetAction"). This satisfies all uses cases in various client/server architectures.
 
 ```
-//Typical server creats the field and provides a callback
+//Typical server creates the field and provides a callback
 Element.AddString("Test", true, OnCallBack);
 
-// Typical client cachees the setter and sets the field (transmit)
+// Typical client caches the setter and sets the field (transmit)
 var test = Element.GetString("Test");
 test.Set("Test 1, 2, 3");
 
