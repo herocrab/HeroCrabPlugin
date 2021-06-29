@@ -424,7 +424,7 @@ There are a couple of important notes regarding sessions, these are:
 
 - Only deltas are streamed over a session, if there is no change in a field nothing is sent.
 
-- Elements with both reliable and unreliables fields will always be streamed over a session reliably only *IF* there are reliable fields with changes (deltas) queued.
+- Elements with both reliable and unreliable fields will always be streamed over a session reliably only *IF* there are reliable fields with changes (deltas) queued.
 
 ---
 
