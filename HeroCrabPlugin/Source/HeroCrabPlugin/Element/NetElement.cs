@@ -82,6 +82,7 @@ namespace HeroCrabPlugin.Element
         /// <inheritdoc />
         public INetField<byte> AddByte(string name, bool isReliable, Action<byte> callback = null)
         {
+            // TODO reduce repetition by refactoring this.
             ResolveDuplicate(name);
             var field = new NetFieldByte(_fieldIndex, name, isReliable, callback);
             AddField(field);
@@ -238,6 +239,8 @@ namespace HeroCrabPlugin.Element
         /// <inheritdoc />
         public INetField<byte> GetByte(string name)
         {
+            // TODO reduce repetition by refactoring this.
+
             if (_fields.ContainsKey(name) && _fields[name] is INetField<byte>) {
                 return _fields[name] as INetField<byte>;
             }
@@ -368,6 +371,8 @@ namespace HeroCrabPlugin.Element
         /// <inheritdoc />
         public bool SetActionByte(string name, Action<byte> callback)
         {
+            // TODO reduce repetition by refactoring this.
+
             if (!_fields.ContainsKey(name)) {
                 return false;
             }
