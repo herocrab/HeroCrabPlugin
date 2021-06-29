@@ -257,7 +257,7 @@ The below example differentiates the environment the script is running on by che
 
 When adding a field to an element you can specify whether the field is to be delivered reliably or unreliably, this equates to the delivery method as well as providing relevant field buffer depth. For analog or responsive (predicted) player movements use an unreliable field. For scene control, ui control, or other critical actions which must be invoked and rendered us reliable fields.
 
-Once an element has been enabled, you can **no longer** add fields to it.
+Once an element has been enabled, **you cannot add fields to it unless you first disable it** (Enabled = false) for at least one game tick. Once the element is re-enabled fields will be propagated to clients.
 
 ```
 private INetField<string> _playerName;
