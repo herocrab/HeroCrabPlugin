@@ -1,6 +1,6 @@
 # HeroCrabPlugin
 
-HeroCrabPlugin is an authoritative network messaging framework for use in multi-player games developed with [Flax Engine](https://flaxengine.com/). It was designed to be simple, flexible, and modular with a primary use-case of distributed player-owned servers and centralized catalog server(s). This README provides an introduction to the core components and general API examples.
+HeroCrabPlugin is a "plugin project" for Flax games that provides an authoritative network messaging framework for use in multi-player games developed with [Flax Engine](https://flaxengine.com/). It was designed to be simple, flexible, and modular with a primary use-case of distributed player-owned servers and centralized catalog server(s). This README provides an introduction to the core components and general API examples.
 
 ---
 
