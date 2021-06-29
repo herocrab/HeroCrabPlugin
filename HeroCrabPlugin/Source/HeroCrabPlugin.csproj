@@ -266,9 +266,13 @@
     <Compile Include="HeroCrabPlugin\Field\NetFieldFloat.cs" />
     <Compile Include="HeroCrabPlugin\Field\NetFieldInt.cs" />
     <Compile Include="HeroCrabPlugin\Field\NetFieldLong.cs" />
+    <Compile Include="HeroCrabPlugin\Field\NetFieldQuaternion.cs" />
     <Compile Include="HeroCrabPlugin\Field\NetFieldString.cs" />
     <Compile Include="HeroCrabPlugin\Field\NetFieldUInt.cs" />
     <Compile Include="HeroCrabPlugin\Field\NetFieldUShort.cs" />
+    <Compile Include="HeroCrabPlugin\Field\NetFieldVector2.cs" />
+    <Compile Include="HeroCrabPlugin\Field\NetFieldVector3.cs" />
+    <Compile Include="HeroCrabPlugin\Field\NetFieldVector4.cs" />
     <Compile Include="HeroCrabPlugin\MyHeroCrabPlugin.cs" />
     <Compile Include="HeroCrabPlugin\Session\INetSession.cs" />
     <Compile Include="HeroCrabPlugin\Session\NetSession.cs" />
@@ -285,21 +289,21 @@
     <Compile Include="HeroCrabPlugin\Sublayer\Udp\NetHost.cs" />
     <Compile Include="HeroCrabPlugin\Sublayer\Udp\NetServer.cs" />
     <Compile Include="HeroCrabPlugin\Sublayer\Udp\NetSublayer.cs" />
-    <Compile Visible="false" Include="C:\Projects\Flax\FlaxWars\Plugins\HeroCrabPlugin\Cache/Intermediate\HeroCrabPluginEditorTarget\Windows\x64\Debug\HeroCrabPlugin\HeroCrabPlugin.Bindings.Gen.cs" />
-    <Compile Visible="false" Include="C:\Projects\Flax\FlaxWars\Plugins\HeroCrabPlugin\Cache/Intermediate\HeroCrabPluginEditorTarget\Windows\x64\Development\HeroCrabPlugin\HeroCrabPlugin.Bindings.Gen.cs" />
-    <Compile Visible="false" Include="C:\Projects\Flax\FlaxWars\Plugins\HeroCrabPlugin\Cache/Intermediate\HeroCrabPluginEditorTarget\Windows\x64\Release\HeroCrabPlugin\HeroCrabPlugin.Bindings.Gen.cs" />
-    <Compile Visible="false" Include="C:\Projects\Flax\FlaxWars\Plugins\HeroCrabPlugin\Cache/Intermediate\HeroCrabPluginTarget\Windows\x64\Debug\HeroCrabPlugin\HeroCrabPlugin.Bindings.Gen.cs" />
-    <Compile Visible="false" Include="C:\Projects\Flax\FlaxWars\Plugins\HeroCrabPlugin\Cache/Intermediate\HeroCrabPluginTarget\Windows\Win32\Debug\HeroCrabPlugin\HeroCrabPlugin.Bindings.Gen.cs" />
-    <Compile Visible="false" Include="C:\Projects\Flax\FlaxWars\Plugins\HeroCrabPlugin\Cache/Intermediate\HeroCrabPluginTarget\Windows\x64\Development\HeroCrabPlugin\HeroCrabPlugin.Bindings.Gen.cs" />
-    <Compile Visible="false" Include="C:\Projects\Flax\FlaxWars\Plugins\HeroCrabPlugin\Cache/Intermediate\HeroCrabPluginTarget\Windows\Win32\Development\HeroCrabPlugin\HeroCrabPlugin.Bindings.Gen.cs" />
-    <Compile Visible="false" Include="C:\Projects\Flax\FlaxWars\Plugins\HeroCrabPlugin\Cache/Intermediate\HeroCrabPluginTarget\Windows\x64\Release\HeroCrabPlugin\HeroCrabPlugin.Bindings.Gen.cs" />
-    <Compile Visible="false" Include="C:\Projects\Flax\FlaxWars\Plugins\HeroCrabPlugin\Cache/Intermediate\HeroCrabPluginTarget\Windows\Win32\Release\HeroCrabPlugin\HeroCrabPlugin.Bindings.Gen.cs" />
-    <Compile Visible="false" Include="C:\Projects\Flax\FlaxWars\Plugins\HeroCrabPlugin\Cache/Intermediate\HeroCrabPluginTarget\UWP\x64\Debug\HeroCrabPlugin\HeroCrabPlugin.Bindings.Gen.cs" />
-    <Compile Visible="false" Include="C:\Projects\Flax\FlaxWars\Plugins\HeroCrabPlugin\Cache/Intermediate\HeroCrabPluginTarget\UWP\x64\Development\HeroCrabPlugin\HeroCrabPlugin.Bindings.Gen.cs" />
-    <Compile Visible="false" Include="C:\Projects\Flax\FlaxWars\Plugins\HeroCrabPlugin\Cache/Intermediate\HeroCrabPluginTarget\UWP\x64\Release\HeroCrabPlugin\HeroCrabPlugin.Bindings.Gen.cs" />
-    <Compile Visible="false" Include="C:\Projects\Flax\FlaxWars\Plugins\HeroCrabPlugin\Cache/Intermediate\HeroCrabPluginTarget\XboxOne\x64\Debug\HeroCrabPlugin\HeroCrabPlugin.Bindings.Gen.cs" />
-    <Compile Visible="false" Include="C:\Projects\Flax\FlaxWars\Plugins\HeroCrabPlugin\Cache/Intermediate\HeroCrabPluginTarget\XboxOne\x64\Development\HeroCrabPlugin\HeroCrabPlugin.Bindings.Gen.cs" />
-    <Compile Visible="false" Include="C:\Projects\Flax\FlaxWars\Plugins\HeroCrabPlugin\Cache/Intermediate\HeroCrabPluginTarget\XboxOne\x64\Release\HeroCrabPlugin\HeroCrabPlugin.Bindings.Gen.cs" />
+    <Compile Visible="false" Include ="C:\Projects\Flax\FlaxWars\Plugins\HeroCrabPlugin\Cache/Intermediate\HeroCrabPluginEditorTarget\Windows\x64\Debug\HeroCrabPlugin\HeroCrabPlugin.Bindings.Gen.cs" />
+    <Compile Visible="false" Include ="C:\Projects\Flax\FlaxWars\Plugins\HeroCrabPlugin\Cache/Intermediate\HeroCrabPluginEditorTarget\Windows\x64\Development\HeroCrabPlugin\HeroCrabPlugin.Bindings.Gen.cs" />
+    <Compile Visible="false" Include ="C:\Projects\Flax\FlaxWars\Plugins\HeroCrabPlugin\Cache/Intermediate\HeroCrabPluginEditorTarget\Windows\x64\Release\HeroCrabPlugin\HeroCrabPlugin.Bindings.Gen.cs" />
+    <Compile Visible="false" Include ="C:\Projects\Flax\FlaxWars\Plugins\HeroCrabPlugin\Cache/Intermediate\HeroCrabPluginTarget\Windows\x64\Debug\HeroCrabPlugin\HeroCrabPlugin.Bindings.Gen.cs" />
+    <Compile Visible="false" Include ="C:\Projects\Flax\FlaxWars\Plugins\HeroCrabPlugin\Cache/Intermediate\HeroCrabPluginTarget\Windows\Win32\Debug\HeroCrabPlugin\HeroCrabPlugin.Bindings.Gen.cs" />
+    <Compile Visible="false" Include ="C:\Projects\Flax\FlaxWars\Plugins\HeroCrabPlugin\Cache/Intermediate\HeroCrabPluginTarget\Windows\x64\Development\HeroCrabPlugin\HeroCrabPlugin.Bindings.Gen.cs" />
+    <Compile Visible="false" Include ="C:\Projects\Flax\FlaxWars\Plugins\HeroCrabPlugin\Cache/Intermediate\HeroCrabPluginTarget\Windows\Win32\Development\HeroCrabPlugin\HeroCrabPlugin.Bindings.Gen.cs" />
+    <Compile Visible="false" Include ="C:\Projects\Flax\FlaxWars\Plugins\HeroCrabPlugin\Cache/Intermediate\HeroCrabPluginTarget\Windows\x64\Release\HeroCrabPlugin\HeroCrabPlugin.Bindings.Gen.cs" />
+    <Compile Visible="false" Include ="C:\Projects\Flax\FlaxWars\Plugins\HeroCrabPlugin\Cache/Intermediate\HeroCrabPluginTarget\Windows\Win32\Release\HeroCrabPlugin\HeroCrabPlugin.Bindings.Gen.cs" />
+    <Compile Visible="false" Include ="C:\Projects\Flax\FlaxWars\Plugins\HeroCrabPlugin\Cache/Intermediate\HeroCrabPluginTarget\UWP\x64\Debug\HeroCrabPlugin\HeroCrabPlugin.Bindings.Gen.cs" />
+    <Compile Visible="false" Include ="C:\Projects\Flax\FlaxWars\Plugins\HeroCrabPlugin\Cache/Intermediate\HeroCrabPluginTarget\UWP\x64\Development\HeroCrabPlugin\HeroCrabPlugin.Bindings.Gen.cs" />
+    <Compile Visible="false" Include ="C:\Projects\Flax\FlaxWars\Plugins\HeroCrabPlugin\Cache/Intermediate\HeroCrabPluginTarget\UWP\x64\Release\HeroCrabPlugin\HeroCrabPlugin.Bindings.Gen.cs" />
+    <Compile Visible="false" Include ="C:\Projects\Flax\FlaxWars\Plugins\HeroCrabPlugin\Cache/Intermediate\HeroCrabPluginTarget\XboxOne\x64\Debug\HeroCrabPlugin\HeroCrabPlugin.Bindings.Gen.cs" />
+    <Compile Visible="false" Include ="C:\Projects\Flax\FlaxWars\Plugins\HeroCrabPlugin\Cache/Intermediate\HeroCrabPluginTarget\XboxOne\x64\Development\HeroCrabPlugin\HeroCrabPlugin.Bindings.Gen.cs" />
+    <Compile Visible="false" Include ="C:\Projects\Flax\FlaxWars\Plugins\HeroCrabPlugin\Cache/Intermediate\HeroCrabPluginTarget\XboxOne\x64\Release\HeroCrabPlugin\HeroCrabPlugin.Bindings.Gen.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

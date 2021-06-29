@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FlaxEngine;
 using HeroCrabPlugin.Core;
 using HeroCrabPlugin.Field;
 // ReSharper disable NotResolvedInText
@@ -175,6 +176,54 @@ namespace HeroCrabPlugin.Element
         }
 
         /// <inheritdoc />
+        public INetField<Vector2> AddVector2(string name, bool isReliable, Action<Vector2> callback = null)
+        {
+            ResolveDuplicate(name);
+            var field = new NetFieldVector2(_fieldIndex, name, isReliable, callback);
+            AddField(field);
+            _fieldIndex++;
+
+            Description.WriteLedger(_ledger);
+            return field;
+        }
+
+        /// <inheritdoc />
+        public INetField<Vector3> AddVector3(string name, bool isReliable, Action<Vector3> callback = null)
+        {
+            ResolveDuplicate(name);
+            var field = new NetFieldVector3(_fieldIndex, name, isReliable, callback);
+            AddField(field);
+            _fieldIndex++;
+
+            Description.WriteLedger(_ledger);
+            return field;
+        }
+
+        /// <inheritdoc />
+        public INetField<Vector4> AddVector4(string name, bool isReliable, Action<Vector4> callback = null)
+        {
+            ResolveDuplicate(name);
+            var field = new NetFieldVector4(_fieldIndex, name, isReliable, callback);
+            AddField(field);
+            _fieldIndex++;
+
+            Description.WriteLedger(_ledger);
+            return field;
+        }
+
+        /// <inheritdoc />
+        public INetField<Quaternion> AddQuaternion(string name, bool isReliable, Action<Quaternion> callback = null)
+        {
+            ResolveDuplicate(name);
+            var field = new NetFieldQuaternion(_fieldIndex, name, isReliable, callback);
+            AddField(field);
+            _fieldIndex++;
+
+            Description.WriteLedger(_ledger);
+            return field;
+        }
+
+        /// <inheritdoc />
         public INetField<byte> GetByte(string name)
         {
             if (_fields.ContainsKey(name) && _fields[name] is INetField<byte>) {
@@ -249,6 +298,46 @@ namespace HeroCrabPlugin.Element
         {
             if (_fields.ContainsKey(name) && _fields[name] is INetField<ushort>) {
                 return _fields[name] as INetField<ushort>;
+            }
+
+            return null;
+        }
+
+        /// <inheritdoc />
+        public INetField<Vector2> GetVector2(string name)
+        {
+            if (_fields.ContainsKey(name) && _fields[name] is INetField<ushort>) {
+                return _fields[name] as INetField<Vector2>;
+            }
+
+            return null;
+        }
+
+        /// <inheritdoc />
+        public INetField<Vector3> GetVector3(string name)
+        {
+            if (_fields.ContainsKey(name) && _fields[name] is INetField<ushort>) {
+                return _fields[name] as INetField<Vector3>;
+            }
+
+            return null;
+        }
+
+        /// <inheritdoc />
+        public INetField<Vector4> GetVector4(string name)
+        {
+            if (_fields.ContainsKey(name) && _fields[name] is INetField<ushort>) {
+                return _fields[name] as INetField<Vector4>;
+            }
+
+            return null;
+        }
+
+        /// <inheritdoc />
+        public INetField<Quaternion> GetQuaternion(string name)
+        {
+            if (_fields.ContainsKey(name) && _fields[name] is INetField<ushort>) {
+                return _fields[name] as INetField<Quaternion>;
             }
 
             return null;
@@ -373,6 +462,67 @@ namespace HeroCrabPlugin.Element
             field.Receive = callback;
             return true;
         }
+
+        /// <inheritdoc />
+        public bool SetActionVector2(string name, Action<Vector2> callback)
+        {
+            if (!_fields.ContainsKey(name)) {
+                return false;
+            }
+
+            if (!(_fields[name] is NetFieldVector2 field)) {
+                return false;
+            }
+
+            field.Receive = callback;
+            return true;
+        }
+
+        /// <inheritdoc />
+        public bool SetActionVector3(string name, Action<Vector3> callback)
+        {
+            if (!_fields.ContainsKey(name)) {
+                return false;
+            }
+
+            if (!(_fields[name] is NetFieldVector3 field)) {
+                return false;
+            }
+
+            field.Receive = callback;
+            return true;
+        }
+
+        /// <inheritdoc />
+        public bool SetActionVector4(string name, Action<Vector4> callback)
+        {
+            if (!_fields.ContainsKey(name)) {
+                return false;
+            }
+
+            if (!(_fields[name] is NetFieldVector4 field)) {
+                return false;
+            }
+
+            field.Receive = callback;
+            return true;
+        }
+
+        /// <inheritdoc />
+        public bool SetActionQuaternion(string name, Action<Quaternion> callback)
+        {
+            if (!_fields.ContainsKey(name)) {
+                return false;
+            }
+
+            if (!(_fields[name] is NetFieldQuaternion field)) {
+                return false;
+            }
+
+            field.Receive = callback;
+            return true;
+        }
+
 
         /// <summary>
         /// Process each of the fields in this element, called by host.
@@ -517,19 +667,19 @@ namespace HeroCrabPlugin.Element
                         break;
 
                     case NetFieldDesc.TypeCode.Vector2:
-                        //TODO this
+                        AddField(new NetFieldVector2(field.Index, field.Name, field.IsReliable));
                         break;
 
                     case NetFieldDesc.TypeCode.Vector3:
-                        //TODO this
+                        AddField(new NetFieldVector3(field.Index, field.Name, field.IsReliable));
                         break;
 
                     case NetFieldDesc.TypeCode.Vector4:
-                        //TODO this
+                        AddField(new NetFieldVector4(field.Index, field.Name, field.IsReliable));
                         break;
 
                     case NetFieldDesc.TypeCode.Quaternion:
-                        //TODO this
+                        AddField(new NetFieldQuaternion(field.Index, field.Name, field.IsReliable));
                         break;
 
                     default:

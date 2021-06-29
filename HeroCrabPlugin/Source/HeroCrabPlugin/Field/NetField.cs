@@ -16,7 +16,7 @@ namespace HeroCrabPlugin.Field
         /// <summary>
         /// IsReliable is true if this field is set to be sent reliably.
         /// </summary>
-        public bool IsReliable { get; protected set; }
+        public bool IsReliable { get; }
 
         /// <summary>
         /// IsUpdated is true if this field has been updated and is queued for transmission.
