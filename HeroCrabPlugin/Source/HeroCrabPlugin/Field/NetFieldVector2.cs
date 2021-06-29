@@ -1,46 +1,52 @@
 ﻿// Copyright (c) Jeremy Buck "Jarmo" - HeroCrab Ltd. (https://github.com/herocrab)
 // Distributed under the MIT license. See the LICENSE.md file in the project root for more information.
+
 using System;
+using FlaxEngine;
 using HeroCrabPlugin.Core;
 
 namespace HeroCrabPlugin.Field
 {
     /// <summary>
-    /// Network bytes field.
+    /// Network Vector2 field.
     /// </summary>
-    public class NetFieldBytes: NetField, INetField<byte[]>, INetFieldReceiver<byte[]>
+    public class NetFieldVector2 : NetField, INetField<Vector2>, INetFieldReceiver<Vector2>
     {
         /// <inheritdoc />
-        public Action<byte[]> Receive { get; set; }
+        public Action<Vector2> Receive { get; set; }
 
-        private readonly NetFieldBuffer<byte[]> _buffer;
+        private readonly NetFieldBuffer<Vector2> _buffer;
 
         /// <inheritdoc />
-        public NetFieldBytes(byte index, string name, bool isReliable, Action<byte[]> callback = null)  : base (isReliable)
+        public NetFieldVector2(byte index, string name, bool isReliable, Action<Vector2> callback = null) : base (isReliable)
         {
-            Description = new NetFieldDesc(index, name, isReliable, NetFieldDesc.TypeCode.ByteArray);
-            _buffer = new NetFieldBuffer<byte[]>(BufferSize);
+            Description = new NetFieldDesc(index, name, isReliable, NetFieldDesc.TypeCode.Vector2);
+            _buffer = new NetFieldBuffer<Vector2>(BufferSize);
             Receive = callback;
         }
 
         /// <inheritdoc />
-        public NetFieldBytes(NetFieldDesc description, Action<byte[]> callback = null) : base (description)
+        public NetFieldVector2(NetFieldDesc description, Action<Vector2> callback = null) : base (description)
         {
-            _buffer = new NetFieldBuffer<byte[]>(BufferSize);
+            _buffer = new NetFieldBuffer<Vector2>(BufferSize);
             Receive = callback;
         }
 
         /// <inheritdoc />
-        public void Set(byte[] value)
+        public void Set(Vector2 value)
         {
             _buffer.Add(value);
-            TxQueue.WriteBytes(value);
+            TxQueue.WriteVector2(value);
             IsUpdated = true;
+
+            LastQueue.Clear();
+            LastQueue.WriteVector2(value);
         }
 
         /// <inheritdoc />
         public override void Process()
         {
+            // Only process one buffered item per tick
             if (_buffer.Any()) {
                 Receive?.Invoke(_buffer.Read());
             }
@@ -52,7 +58,7 @@ namespace HeroCrabPlugin.Field
             var count = rxQueue.ReadByte();
 
             for (var i = 0; i < count; i++) {
-                _buffer.Add(rxQueue.ReadBytes());
+                _buffer.Add(rxQueue.ReadVector2());
             }
         }
     }

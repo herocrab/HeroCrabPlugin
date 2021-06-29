@@ -36,7 +36,7 @@ HeroCrabPlugin is an authoritative network messaging framework for use in multi-
 | NetStream      | A stream is a collection of Elements and Sessions.                                                                   |
 | NetStreamGroup | A stream group is a bitmask for filtering elements from sessions.                                                    |
 | NetElement     | An element contains fields and provides an RPC-like messaging tunnel. This is typically associated to a game script. |
-| NetField       | A field is an RPC-end-point (example: byte, int, string, etc.).                                                      |
+| NetField       | A field is an RPC-end-point (example: bool, byte, int, string, Vector3, etc.).                                       |
 | NetSession     | A session uniquely identifies the client connection sublayer.                                                        |
 | NetSublayer    | Sublayer implementation for UDP and provides basic encryption.                                                       |
 
@@ -257,14 +257,18 @@ The below example differentiates the environment the script is running on by che
 
 When adding a field to an element you can specify whether the field is to be delivered reliably or unreliably, this equates to the delivery method as well as providing relevant field buffer depth. For analog or responsive (predicted) player movements use an unreliable field. For scene control, ui control, or other critical actions which must be invoked and rendered us reliable fields.
 
-Once an element has been enabled, you can **no longer** add fields to it.
+Once an element has been enabled, **you cannot add fields to it unless you first disable it** (Enabled = false) for at least one game tick. Once the element is re-enabled fields will be propagated to clients.
 
 ```
+private INetField<string> _playerName;
+private INetField<Vector3> _direction;
+private INetField<byte> _attack;
+
 public override void OnStart()
 {
     if (Element.IsServer) {
         Element.AddString("Name", true, OnNameReceived);
-        Element.AddBytes("Direction", false, OnDirectionReceived);
+        Element.AddVector3("Direction", false, OnDirectionReceived);
         Element.AddByte("Attack", true, OnAttackReceived);        
         Element.Filter.StreamGroup = NetStreamGroup.Default;
         Element.Enabled = true;
@@ -280,7 +284,7 @@ private void OnNameReceived(string name)
     // Do something here
 }
 
-private void OnDirectionReceived(byte[] bytes)
+private void OnDirectionReceived(Vector3 vector)
 {
     // Do something here
 }
@@ -294,6 +298,8 @@ private void OnAttackReceived(byte byte)
 Below is an example of bi-directional communication within the same script. This script is used as a version checker.
 
 ```
+private INetField<string> _status;
+
 public override void OnStart()
 {
     if (Element.IsServer) {

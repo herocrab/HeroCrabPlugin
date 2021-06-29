@@ -16,7 +16,7 @@ namespace HeroCrabPlugin.Field
         /// <summary>
         /// IsReliable is true if this field is set to be sent reliably.
         /// </summary>
-        public bool IsReliable { get; protected set; }
+        public bool IsReliable { get; }
 
         /// <summary>
         /// IsUpdated is true if this field has been updated and is queued for transmission.
@@ -33,13 +33,33 @@ namespace HeroCrabPlugin.Field
         /// </summary>
         protected readonly NetByteQueue LastQueue;
 
+        /// <summary>
+        /// Field buffer size.
+        /// </summary>
+        protected readonly byte BufferSize;
+
         private readonly NetByteQueue _serializeQueue;
 
         private const int MaxFieldDepth = 256;
 
         /// <inheritdoc />
-        protected NetField()
+        protected NetField(bool isReliable)
         {
+            IsReliable = isReliable;
+            BufferSize = IsReliable ? NetSettings.ReliableBufferDepth : NetSettings.UnreliableBufferDepth;
+
+            TxQueue = new NetByteQueue();
+            LastQueue = new NetByteQueue();
+            _serializeQueue = new NetByteQueue();
+        }
+
+        /// <inheritdoc />
+        protected NetField(NetFieldDesc description)
+        {
+            Description = description;
+            IsReliable = description.IsReliable;
+            BufferSize = IsReliable ? NetSettings.ReliableBufferDepth : NetSettings.UnreliableBufferDepth;
+
             TxQueue = new NetByteQueue();
             LastQueue = new NetByteQueue();
             _serializeQueue = new NetByteQueue();

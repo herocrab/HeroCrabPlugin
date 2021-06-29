@@ -8,32 +8,26 @@ namespace HeroCrabPlugin.Field
     /// <summary>
     /// Network string field.
     /// </summary>
-    public class NetFieldString : NetField, INetFieldString
+    public class NetFieldString : NetField, INetField<string>, INetFieldReceiver<string>
     {
-        internal Action<string> Receive { get; set; }
+        /// <inheritdoc />
+        public Action<string> Receive { get; set; }
 
         private readonly NetFieldBuffer<string> _buffer;
 
         /// <inheritdoc />
-        public NetFieldString(byte index, string name, bool isReliable, Action<string> callback)
+        public NetFieldString(byte index, string name, bool isReliable, Action<string> callback = null) : base (isReliable)
         {
-            IsReliable = isReliable;
             Description = new NetFieldDesc(index, name, isReliable, NetFieldDesc.TypeCode.String);
-
+            _buffer = new NetFieldBuffer<string>(BufferSize);
             Receive = callback;
-            var bufferSize = IsReliable ? NetSettings.ReliableBufferDepth : NetSettings.UnreliableBufferDepth;
-            _buffer = new NetFieldBuffer<string>(bufferSize);
         }
 
         /// <inheritdoc />
-        public NetFieldString(NetFieldDesc description, Action<string> callback)
+        public NetFieldString(NetFieldDesc description, Action<string> callback = null) : base (description)
         {
-            IsReliable = description.IsReliable;
-            Description = description;
-
+            _buffer = new NetFieldBuffer<string>(BufferSize);
             Receive = callback;
-            var bufferSize = IsReliable ? NetSettings.ReliableBufferDepth : NetSettings.UnreliableBufferDepth;
-            _buffer = new NetFieldBuffer<string>(bufferSize);
         }
 
         /// <inheritdoc />

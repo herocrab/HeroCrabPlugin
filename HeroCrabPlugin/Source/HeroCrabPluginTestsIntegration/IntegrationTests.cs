@@ -22,6 +22,7 @@ namespace HeroCrabPluginTestsIntegration
         private INetElement _serverElementC;
         private INetElement _serverElementD;
         private INetElement _clientInputElement;
+        private INetElement _lastElement;
 
         private int _processCount;
         private int _serverSessionConnectedCount;
@@ -142,6 +143,8 @@ namespace HeroCrabPluginTestsIntegration
 
         private void OnClientElementCreated(INetElement element)
         {
+            _lastElement = element;
+
             if (element.Description.AuthorId == 1) {
                 element.SetActionString("Input", OnClientAInputElementInputString);
             }
@@ -167,16 +170,16 @@ namespace HeroCrabPluginTestsIntegration
         private void AddServerElements()
         {
             _serverElementA = _server.Stream.CreateElement("ServerElementA", 0);
-            _serverElementA.AddFloat("SomeFloat", false, null);
+            _serverElementA.AddFloat("SomeFloat", false);
 
             _serverElementB = _server.Stream.CreateElement("ServerElementB", 0);
-            _serverElementB.AddFloat("SomeFloat", false, null);
+            _serverElementB.AddFloat("SomeFloat", false);
 
             _serverElementC = _server.Stream.CreateElement("ServerElementC", 0);
-            _serverElementC.AddFloat("SomeFloat", false, null);
+            _serverElementC.AddFloat("SomeFloat", false);
 
             _serverElementD = _server.Stream.CreateElement("ServerElementD", 0);
-            _serverElementD.AddFloat("SomeFloat", false, null);
+            _serverElementD.AddFloat("SomeFloat", false);
             _serverElementD.Filter.Exclude = 2;
         }
 
@@ -290,6 +293,50 @@ namespace HeroCrabPluginTestsIntegration
 
             Assert.That(_serverSessionConnectedCount, Is.EqualTo(1));
             Assert.That(_server.Stream.SessionCount, Is.EqualTo(1));
+
+            Reset();
+        }
+
+        [Test, Apartment(ApartmentState.STA)]
+        public void TestAddingFieldsMoreThanOnce()
+        {
+            Process(100);
+            StartServer();
+            Process(100);
+            StartClients();
+            Process(100);
+            AddServerElements();
+            Process(100);
+
+            Assert.That(_clientSessionConnectedCount, Is.EqualTo(2));
+            Assert.That(_serverSessionConnectedCount, Is.EqualTo(2));
+
+            Assert.That(_server.Stream.ElementCount, Is.EqualTo(6));
+            Assert.That(_clientA.Stream.ElementCount, Is.EqualTo(5));
+            Assert.That(_clientB.Stream.ElementCount, Is.EqualTo(4));
+
+            Assert.That(_serverInputElementStringChanged, Is.EqualTo(5));
+            Assert.That(_clientAInputElementStringChanged, Is.EqualTo(1));
+            Assert.That(_clientBInputElementStringChanged, Is.EqualTo(4));
+
+            // Disable element as to add more fields.
+            _serverElementA.Enabled = false;
+            Process(100);
+
+            Assert.That(_server.Stream.ElementCount, Is.EqualTo(6));
+            Assert.That(_clientA.Stream.ElementCount, Is.EqualTo(4));
+            Assert.That(_clientB.Stream.ElementCount, Is.EqualTo(3));
+
+            // Add more fields to the element
+
+            _serverElementA.AddByte("SomethingAddedA", true);
+            _serverElementA.AddByte("SomethingAddedB", true);
+            _serverElementA.Enabled = true;
+
+            Process(100);
+
+            Assert.That(_serverElementA.FieldCount, Is.EqualTo(3));
+            Assert.That(_lastElement.FieldCount, Is.EqualTo(3));
 
             Reset();
         }

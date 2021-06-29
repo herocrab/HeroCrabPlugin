@@ -45,7 +45,7 @@ namespace HeroCrabPluginTestsUnit.Field
                 lastValue = value;
             }
 
-            var field = new NetFieldUShort(0, "Test", false, null);
+            var field = new NetFieldUShort(0, "Test", false);
             field.Set(ushort.MaxValue);
 
             var serializedBytes = field.Serialize();
@@ -71,7 +71,7 @@ namespace HeroCrabPluginTestsUnit.Field
                 lastValue = value;
             }
 
-            var field = new NetFieldUShort(0, "Test", false, null);
+            var field = new NetFieldUShort(0, "Test", false);
             field.Set(ushort.MaxValue);
             field.Set(0);
             field.Set(1);

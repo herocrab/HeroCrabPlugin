@@ -1,11 +1,12 @@
-﻿using HeroCrabPlugin.Core;
+﻿using FlaxEngine;
+using HeroCrabPlugin.Core;
 using HeroCrabPlugin.Field;
 using NUnit.Framework;
 
 namespace HeroCrabPluginTestsUnit.Field
 {
     [TestFixture]
-    public class NetFieldFloatTests
+    public class NetFieldQuaternionTests
     {
         [SetUp]
         public void SetUp()
@@ -19,75 +20,75 @@ namespace HeroCrabPluginTestsUnit.Field
         public void Set_ConstructAndSetValueThenProcess_VerifyCountAndValueIsCorrect()
         {
             var count = 0;
-            var lastValue = float.MinValue;
-            void Callback(float value)
+            var lastValue = Quaternion.Zero;
+            void Callback(Quaternion value)
             {
                 count++;
                 lastValue = value;
             }
 
-            var field = new NetFieldFloat(0, "Test", false, Callback);
-            field.Set(float.MaxValue);
+            var field = new NetFieldQuaternion(0, "Test", false, Callback);
+            field.Set(Quaternion.One);
             field.Process();
 
             Assert.That(count, Is.EqualTo(1));
-            Assert.That(lastValue, Is.EqualTo(float.MaxValue));
+            Assert.That(lastValue, Is.EqualTo(Quaternion.One));
         }
 
         [Test]
         public void Serialize_SerializeAndDeserialize_CompareResultsAreEqual()
         {
             var count = 0;
-            var lastValue = float.MinValue;
-            void Callback(float value)
+            var lastValue = Quaternion.Zero;
+            void Callback(Quaternion value)
             {
                 count++;
                 lastValue = value;
             }
 
-            var field = new NetFieldFloat(0, "Test", false);
-            field.Set(float.MaxValue);
+            var field = new NetFieldQuaternion(0, "Test", false);
+            field.Set(Quaternion.One);
 
             var serializedBytes = field.Serialize();
             var receivingQueue = new NetByteQueue();
             receivingQueue.WriteRaw(serializedBytes);
 
-            var receivingField = new NetFieldFloat(field.Description, Callback);
+            var receivingField = new NetFieldQuaternion(field.Description, Callback);
             receivingField.Deserialize(receivingQueue);
             receivingField.Process();
 
             Assert.That(count, Is.EqualTo(1));
-            Assert.That(lastValue, Is.EqualTo(float.MaxValue));
+            Assert.That(lastValue, Is.EqualTo(Quaternion.One));
         }
 
         [Test]
         public void Serialize_SetFieldThreeTimesSerializeAndDeserialize_CompareTheCountAndLastResult()
         {
             var count = 0;
-            var lastValue = float.MinValue;
-            void Callback(float value)
+            var lastValue = Quaternion.Zero;
+            void Callback(Quaternion value)
             {
                 count++;
                 lastValue = value;
             }
 
-            var field = new NetFieldFloat(0, "Test", false);
-            field.Set(float.MaxValue);
-            field.Set(0);
-            field.Set(1);
+            var field = new NetFieldQuaternion(0, "Test", false);
+            field.Set(Quaternion.One);
+            field.Set(Quaternion.Zero);
+            field.Set(Quaternion.One);
 
             var serializedBytes = field.Serialize();
             var receivingQueue = new NetByteQueue();
             receivingQueue.WriteRaw(serializedBytes);
 
-            var receivingField = new NetFieldFloat(field.Description, Callback);
+            var receivingField = new NetFieldQuaternion(field.Description, Callback);
             receivingField.Deserialize(receivingQueue);
             receivingField.Process();
             receivingField.Process();
             receivingField.Process();
 
             Assert.That(count, Is.EqualTo(3));
-            Assert.That(lastValue, Is.EqualTo(1));
+            Assert.That(lastValue, Is.EqualTo(Quaternion.One));
         }
     }
 }

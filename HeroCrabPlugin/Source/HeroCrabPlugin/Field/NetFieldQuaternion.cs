@@ -1,44 +1,46 @@
 ﻿// Copyright (c) Jeremy Buck "Jarmo" - HeroCrab Ltd. (https://github.com/herocrab)
 // Distributed under the MIT license. See the LICENSE.md file in the project root for more information.
+
 using System;
+using FlaxEngine;
 using HeroCrabPlugin.Core;
 
 namespace HeroCrabPlugin.Field
 {
     /// <summary>
-    /// Network ushort field.
+    /// Network Vector2 field.
     /// </summary>
-    public class NetFieldUShort : NetField, INetField<ushort>, INetFieldReceiver<ushort>
+    public class NetFieldQuaternion : NetField, INetField<Quaternion>, INetFieldReceiver<Quaternion>
     {
         /// <inheritdoc />
-        public Action<ushort> Receive { get; set; }
+        public Action<Quaternion> Receive { get; set; }
 
-        private readonly NetFieldBuffer<ushort> _buffer;
+        private readonly NetFieldBuffer<Quaternion> _buffer;
 
         /// <inheritdoc />
-        public NetFieldUShort(byte index, string name, bool isReliable, Action<ushort> callback = null) : base (isReliable)
+        public NetFieldQuaternion(byte index, string name, bool isReliable, Action<Quaternion> callback = null) : base (isReliable)
         {
-            Description = new NetFieldDesc(index, name, isReliable, NetFieldDesc.TypeCode.UShort);
-            _buffer = new NetFieldBuffer<ushort>(BufferSize);
+            Description = new NetFieldDesc(index, name, isReliable, NetFieldDesc.TypeCode.Quaternion);
+            _buffer = new NetFieldBuffer<Quaternion>(BufferSize);
             Receive = callback;
         }
 
         /// <inheritdoc />
-        public NetFieldUShort(NetFieldDesc description, Action<ushort> callback = null) : base (description)
+        public NetFieldQuaternion(NetFieldDesc description, Action<Quaternion> callback = null) : base (description)
         {
-            _buffer = new NetFieldBuffer<ushort>(BufferSize);
+            _buffer = new NetFieldBuffer<Quaternion>(BufferSize);
             Receive = callback;
         }
 
         /// <inheritdoc />
-        public void Set(ushort value)
+        public void Set(Quaternion value)
         {
             _buffer.Add(value);
-            TxQueue.WriteUShort(value);
+            TxQueue.WriteQuaternion(value);
             IsUpdated = true;
 
             LastQueue.Clear();
-            LastQueue.WriteUShort(value);
+            LastQueue.WriteQuaternion(value);
         }
 
         /// <inheritdoc />
@@ -56,7 +58,7 @@ namespace HeroCrabPlugin.Field
             var count = rxQueue.ReadByte();
 
             for (var i = 0; i < count; i++) {
-                _buffer.Add(rxQueue.ReadUShort());
+                _buffer.Add(rxQueue.ReadQuaternion());
             }
         }
     }

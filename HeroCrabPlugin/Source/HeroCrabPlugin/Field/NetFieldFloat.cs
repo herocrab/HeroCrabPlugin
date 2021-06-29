@@ -8,32 +8,26 @@ namespace HeroCrabPlugin.Field
     /// <summary>
     /// Network float field.
     /// </summary>
-    public class NetFieldFloat: NetField, INetFieldFloat
+    public class NetFieldFloat: NetField, INetField<float>, INetFieldReceiver<float>
     {
-        internal Action<float> Receive { get; set; }
+        /// <inheritdoc />
+        public Action<float> Receive { get; set; }
 
         private readonly NetFieldBuffer<float> _buffer;
 
         /// <inheritdoc />
-        public NetFieldFloat(byte index, string name, bool isReliable, Action<float> callback)
+        public NetFieldFloat(byte index, string name, bool isReliable, Action<float> callback = null)  : base (isReliable)
         {
-            IsReliable = isReliable;
             Description = new NetFieldDesc(index, name, isReliable, NetFieldDesc.TypeCode.Float);
-
+            _buffer = new NetFieldBuffer<float>(BufferSize);
             Receive = callback;
-            var bufferSize = IsReliable ? NetSettings.ReliableBufferDepth : NetSettings.UnreliableBufferDepth;
-            _buffer = new NetFieldBuffer<float>(bufferSize);
         }
 
         /// <inheritdoc />
-        public NetFieldFloat(NetFieldDesc description, Action<float> callback)
+        public NetFieldFloat(NetFieldDesc description, Action<float> callback = null) : base (description)
         {
-            IsReliable = description.IsReliable;
-            Description = description;
-
+            _buffer = new NetFieldBuffer<float>(BufferSize);
             Receive = callback;
-            var bufferSize = IsReliable ? NetSettings.ReliableBufferDepth : NetSettings.UnreliableBufferDepth;
-            _buffer = new NetFieldBuffer<float>(bufferSize);
         }
 
         /// <inheritdoc />

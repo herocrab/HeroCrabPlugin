@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Jeremy Buck "Jarmo" - HeroCrab Ltd. (https://github.com/herocrab)
 // Distributed under the MIT license. See the LICENSE.md file in the project root for more information.
 using System;
+using FlaxEngine;
 using HeroCrabPlugin.Field;
 // ReSharper disable UnusedMemberInSuper.Global
 
@@ -62,8 +63,8 @@ namespace HeroCrabPlugin.Element
         /// <param name="name">Field name</param>
         /// <param name="isReliable">If true this field is sent reliably</param>
         /// <param name="callback">Call back method invoked when receiving this field</param>
-        /// <returns></returns>
-        INetFieldByte AddByte(string name, bool isReliable, Action<byte> callback);
+        /// <returns>Field</returns>
+        INetField<byte> AddByte(string name, bool isReliable, Action<byte> callback = null);
 
         /// <summary>
         /// Add a series of bytes as a field to this element.
@@ -71,8 +72,8 @@ namespace HeroCrabPlugin.Element
         /// <param name="name">Field name</param>
         /// <param name="isReliable">If true this field is sent reliably</param>
         /// <param name="callback">Call back method invoked when receiving this field</param>
-        /// <returns></returns>
-        INetFieldBytes AddBytes(string name, bool isReliable, Action<byte[]> callback);
+        /// <returns>Field</returns>
+        INetField<byte[]> AddBytes(string name, bool isReliable, Action<byte[]> callback = null);
 
         /// <summary>
         /// Add a float network field to this element.
@@ -80,8 +81,8 @@ namespace HeroCrabPlugin.Element
         /// <param name="name">Field name</param>
         /// <param name="isReliable">If true this field is sent reliably</param>
         /// <param name="callback">Call back method invoked when receiving this field</param>
-        /// <returns></returns>
-        INetFieldFloat AddFloat(string name, bool isReliable, Action<float> callback);
+        /// <returns>Field</returns>
+        INetField<float> AddFloat(string name, bool isReliable, Action<float> callback = null);
 
         /// <summary>
         /// Add an int network field to this element.
@@ -89,8 +90,8 @@ namespace HeroCrabPlugin.Element
         /// <param name="name">Field name</param>
         /// <param name="isReliable">If true this field is sent reliably</param>
         /// <param name="callback">Call back method invoked when receiving this field</param>
-        /// <returns></returns>
-        INetFieldInt AddInt(string name, bool isReliable, Action<int> callback);
+        /// <returns>Field</returns>
+        INetField<int> AddInt(string name, bool isReliable, Action<int> callback = null);
 
         /// <summary>
         /// Add a long network field to this element.
@@ -98,8 +99,8 @@ namespace HeroCrabPlugin.Element
         /// <param name="name">Field name</param>
         /// <param name="isReliable">If true this field is sent reliably</param>
         /// <param name="callback">Call back method invoked when receiving this field</param>
-        /// <returns></returns>
-        INetFieldLong AddLong(string name, bool isReliable, Action<long> callback);
+        /// <returns>Field</returns>
+        INetField<long> AddLong(string name, bool isReliable, Action<long> callback = null);
 
         /// <summary>
         /// Add a string network field to this element.
@@ -107,8 +108,8 @@ namespace HeroCrabPlugin.Element
         /// <param name="name">Field name</param>
         /// <param name="isReliable">If true this field is sent reliably</param>
         /// <param name="callback">Call back method invoked when receiving this field</param>
-        /// <returns></returns>
-        INetFieldString AddString(string name, bool isReliable, Action<string> callback);
+        /// <returns>Field</returns>
+        INetField<string> AddString(string name, bool isReliable, Action<string> callback = null);
 
         /// <summary>
         /// Add a byte network field to this element.
@@ -116,8 +117,8 @@ namespace HeroCrabPlugin.Element
         /// <param name="name">Field name</param>
         /// <param name="isReliable">If true this field is sent reliably</param>
         /// <param name="callback">Call back method invoked when receiving this field</param>
-        /// <returns></returns>
-        INetFieldUInt AddUInt(string name, bool isReliable, Action<uint> callback);
+        /// <returns>Field</returns>
+        INetField<uint> AddUInt(string name, bool isReliable, Action<uint> callback = null);
 
         /// <summary>
         /// Add a ushort network field to this element.
@@ -125,15 +126,60 @@ namespace HeroCrabPlugin.Element
         /// <param name="name">Field name</param>
         /// <param name="isReliable">If true this field is sent reliably</param>
         /// <param name="callback">Call back method invoked when receiving this field</param>
-        /// <returns></returns>
-        INetFieldUShort AddUShort(string name, bool isReliable, Action<ushort> callback);
+        /// <returns>Field</returns>
+        INetField<ushort> AddUShort(string name, bool isReliable, Action<ushort> callback = null);
+
+        /// <summary>
+        /// Add a Vector2 network field to this element.
+        /// </summary>
+        /// <param name="name">Field name</param>
+        /// <param name="isReliable">If true this field is sent reliably</param>
+        /// <param name="callback">Call back method invoked when receiving this field</param>
+        /// <returns>Field</returns>
+        INetField<Vector2> AddVector2(string name, bool isReliable, Action<Vector2> callback = null);
+
+        /// <summary>
+        /// Add a Vector3 network field to this element.
+        /// </summary>
+        /// <param name="name">Field name</param>
+        /// <param name="isReliable">If true this field is sent reliably</param>
+        /// <param name="callback">Call back method invoked when receiving this field</param>
+        /// <returns>Field</returns>
+        INetField<Vector3> AddVector3(string name, bool isReliable, Action<Vector3> callback = null);
+
+        /// <summary>
+        /// Add a Vector4 network field to this element.
+        /// </summary>
+        /// <param name="name">Field name</param>
+        /// <param name="isReliable">If true this field is sent reliably</param>
+        /// <param name="callback">Call back method invoked when receiving this field</param>
+        /// <returns>Field</returns>
+        INetField<Vector4> AddVector4(string name, bool isReliable, Action<Vector4> callback = null);
+
+        /// <summary>
+        /// Add a Quaternion network field to this element.
+        /// </summary>
+        /// <param name="name">Field name</param>
+        /// <param name="isReliable">If true this field is sent reliably</param>
+        /// <param name="callback">Call back method invoked when receiving this field</param>
+        /// <returns>Field</returns>
+        INetField<Quaternion> AddQuaternion(string name, bool isReliable, Action<Quaternion> callback = null);
+
+        /// <summary>
+        /// Add a bool network field to this element.
+        /// </summary>
+        /// <param name="name">Field name</param>
+        /// <param name="isReliable">If true this field is sent reliably</param>
+        /// <param name="callback">Call back method invoked when receiving this field</param>
+        /// <returns>Field</returns>
+        INetField<bool> AddBool(string name, bool isReliable, Action<bool> callback = null);
 
         /// <summary>
         /// Set the call back action for a named byte field, typically used on the client.
         /// </summary>
         /// <param name="name">Field name</param>
         /// <param name="callback">Call back method invoked when receiving this field</param>
-        /// <returns></returns>
+        /// <returns>Field</returns>
         bool SetActionByte(string name, Action<byte> callback);
 
         /// <summary>
@@ -141,7 +187,7 @@ namespace HeroCrabPlugin.Element
         /// </summary>
         /// <param name="name">Field name</param>
         /// <param name="callback">Call back method invoked when receiving this field</param>
-        /// <returns></returns>
+        /// <returns>Field</returns>
         bool SetActionBytes(string name, Action<byte[]> callback);
 
         /// <summary>
@@ -149,7 +195,7 @@ namespace HeroCrabPlugin.Element
         /// </summary>
         /// <param name="name">Field name</param>
         /// <param name="callback">Call back method invoked when receiving this field</param>
-        /// <returns></returns>
+        /// <returns>Field</returns>
         bool SetActionFloat(string name, Action<float> callback);
 
         /// <summary>
@@ -157,7 +203,7 @@ namespace HeroCrabPlugin.Element
         /// </summary>
         /// <param name="name">Field name</param>
         /// <param name="callback">Call back method invoked when receiving this field</param>
-        /// <returns></returns>
+        /// <returns>Field</returns>
         bool SetActionInt(string name, Action<int> callback);
 
         /// <summary>
@@ -165,7 +211,7 @@ namespace HeroCrabPlugin.Element
         /// </summary>
         /// <param name="name">Field name</param>
         /// <param name="callback">Call back method invoked when receiving this field</param>
-        /// <returns></returns>
+        /// <returns>Field</returns>
         bool SetActionLong(string name, Action<long> callback);
 
         /// <summary>
@@ -173,7 +219,7 @@ namespace HeroCrabPlugin.Element
         /// </summary>
         /// <param name="name">Field name</param>
         /// <param name="callback">Call back method invoked when receiving this field</param>
-        /// <returns></returns>
+        /// <returns>Field</returns>
         bool SetActionString(string name, Action<string> callback);
 
         /// <summary>
@@ -181,7 +227,7 @@ namespace HeroCrabPlugin.Element
         /// </summary>
         /// <param name="name">Field name</param>
         /// <param name="callback">Call back method invoked when receiving this field</param>
-        /// <returns></returns>
+        /// <returns>Field</returns>
         bool SetActionUInt(string name, Action<uint> callback);
 
         /// <summary>
@@ -189,63 +235,138 @@ namespace HeroCrabPlugin.Element
         /// </summary>
         /// <param name="name">Field name</param>
         /// <param name="callback">Call back method invoked when receiving this field</param>
-        /// <returns></returns>
+        /// <returns>Field</returns>
         bool SetActionUShort(string name, Action<ushort> callback);
+
+        /// <summary>
+        /// Set the call back action for a named Vector2 field, typically used on the client.
+        /// </summary>
+        /// <param name="name">Field name</param>
+        /// <param name="callback">Call back method invoked when receiving this field</param>
+        /// <returns>Field</returns>
+        bool SetActionVector2(string name, Action<Vector2> callback);
+
+        /// <summary>
+        /// Set the call back action for a named Vector3 field, typically used on the client.
+        /// </summary>
+        /// <param name="name">Field name</param>
+        /// <param name="callback">Call back method invoked when receiving this field</param>
+        /// <returns>Field</returns>
+        bool SetActionVector3(string name, Action<Vector3> callback);
+
+        /// <summary>
+        /// Set the call back action for a named Vector4 field, typically used on the client.
+        /// </summary>
+        /// <param name="name">Field name</param>
+        /// <param name="callback">Call back method invoked when receiving this field</param>
+        /// <returns>Field</returns>
+        bool SetActionVector4(string name, Action<Vector4> callback);
+
+        /// <summary>
+        /// Set the call back action for a named Quaternion field, typically used on the client.
+        /// </summary>
+        /// <param name="name">Field name</param>
+        /// <param name="callback">Call back method invoked when receiving this field</param>
+        /// <returns>Field</returns>
+        bool SetActionQuaternion(string name, Action<Quaternion> callback);
+
+        /// <summary>
+        /// Set the call back action for a named bool field, typically used on the client.
+        /// </summary>
+        /// <param name="name">Field name</param>
+        /// <param name="callback">Call back method invoked when receiving this field</param>
+        /// <returns>Field</returns>
+        bool SetActionBool(string name, Action<bool> callback);
 
         /// <summary>
         /// Retrieves the setter for a byte field.
         /// </summary>
         /// <param name="name">Field name</param>
-        /// <returns></returns>
-        INetFieldByte GetByte(string name);
+        /// <returns>Field</returns>
+        INetField<byte> GetByte(string name);
 
         /// <summary>
         /// Retrieves the setter for a series of bytes field.
         /// </summary>
         /// <param name="name">Field name</param>
-        /// <returns></returns>
-        INetFieldBytes GetBytes(string name);
+        /// <returns>Field</returns>
+        INetField<byte[]> GetBytes(string name);
 
         /// <summary>
         /// Retrieves the setter for a float field.
         /// </summary>
         /// <param name="name">Field name</param>
-        /// <returns></returns>
-        INetFieldFloat GetFloat(string name);
+        /// <returns>Field</returns>
+        INetField<float> GetFloat(string name);
 
         /// <summary>
         /// Retrieves the setter for an int field.
         /// </summary>
         /// <param name="name">Field name</param>
-        /// <returns></returns>
-        INetFieldInt GetInt(string name);
+        /// <returns>Field</returns>
+        INetField<int>GetInt(string name);
 
         /// <summary>
         /// Retrieves the setter for a long field.
         /// </summary>
         /// <param name="name">Field name</param>
-        /// <returns></returns>
-        INetFieldLong GetLong(string name);
+        /// <returns>Field</returns>
+        INetField<long> GetLong(string name);
 
         /// <summary>
         /// Retrieves the setter for a string field.
         /// </summary>
         /// <param name="name">Field name</param>
-        /// <returns></returns>
-        INetFieldString GetString(string name);
+        /// <returns>Field</returns>
+        INetField<string> GetString(string name);
 
         /// <summary>
         /// Retrieves the setter for a uint field.
         /// </summary>
         /// <param name="name">Field name</param>
-        /// <returns></returns>
-        INetFieldUInt GetUInt(string name);
+        /// <returns>Field</returns>
+        INetField<uint> GetUInt(string name);
 
         /// <summary>
         /// Retrieves the setter for a ushort field.
         /// </summary>
         /// <param name="name">Field name</param>
-        /// <returns></returns>
-        INetFieldUShort GetUShort(string name);
+        /// <returns>Field</returns>
+        INetField<ushort> GetUShort(string name);
+
+        /// <summary>
+        /// Retrieves the setter for a Vector2 field.
+        /// </summary>
+        /// <param name="name">Field name</param>
+        /// <returns>Field</returns>
+        INetField<Vector2> GetVector2(string name);
+
+        /// <summary>
+        /// Retrieves the setter for a Vector3 field.
+        /// </summary>
+        /// <param name="name">Field name</param>
+        /// <returns>Field</returns>
+        INetField<Vector3> GetVector3(string name);
+
+        /// <summary>
+        /// Retrieves the setter for a Vector4 field.
+        /// </summary>
+        /// <param name="name">Field name</param>
+        /// <returns>Field</returns>
+        INetField<Vector4> GetVector4(string name);
+
+        /// <summary>
+        /// Retrieves the setter for a Quaternion field.
+        /// </summary>
+        /// <param name="name">Field name</param>
+        /// <returns>Field</returns>
+        INetField<Quaternion> GetQuaternion(string name);
+
+        /// <summary>
+        /// Retrieves the setter for a bool field.
+        /// </summary>
+        /// <param name="name">Field name</param>
+        /// <returns>Field</returns>
+        INetField<bool> GetBool(string name);
     }
 }

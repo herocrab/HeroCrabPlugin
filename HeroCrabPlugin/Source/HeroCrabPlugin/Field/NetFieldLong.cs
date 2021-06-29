@@ -8,32 +8,26 @@ namespace HeroCrabPlugin.Field
     /// <summary>
     /// Network long field.
     /// </summary>
-    public class NetFieldLong : NetField, INetFieldLong
+    public class NetFieldLong : NetField, INetField<long>, INetFieldReceiver<long>
     {
-        internal Action<long> Receive { get; set; }
+        /// <inheritdoc />
+        public Action<long> Receive { get; set; }
 
         private readonly NetFieldBuffer<long> _buffer;
 
         /// <inheritdoc />
-        public NetFieldLong(byte index, string name, bool isReliable, Action<long> callback)
+        public NetFieldLong(byte index, string name, bool isReliable, Action<long> callback = null) : base (isReliable)
         {
-            IsReliable = isReliable;
             Description = new NetFieldDesc(index, name, isReliable, NetFieldDesc.TypeCode.Long);
-
+            _buffer = new NetFieldBuffer<long>(BufferSize);
             Receive = callback;
-            var bufferSize = IsReliable ? NetSettings.ReliableBufferDepth : NetSettings.UnreliableBufferDepth;
-            _buffer = new NetFieldBuffer<long>(bufferSize);
         }
 
         /// <inheritdoc />
-        public NetFieldLong(NetFieldDesc description, Action<long> callback)
+        public NetFieldLong(NetFieldDesc description, Action<long> callback = null) : base (description)
         {
-            IsReliable = description.IsReliable;
-            Description = description;
-
+            _buffer = new NetFieldBuffer<long>(BufferSize);
             Receive = callback;
-            var bufferSize = IsReliable ? NetSettings.ReliableBufferDepth : NetSettings.UnreliableBufferDepth;
-            _buffer = new NetFieldBuffer<long>(bufferSize);
         }
 
         /// <inheritdoc />
