@@ -185,7 +185,7 @@ This example uses an "actor database" which maps ActorDb.ActorId enum (uint) val
 
 The stream group is a bitmask set on both the session and element, it can be used to filter elements to a session for different scenes or visibility groups (Lobby or Loading vs. Game).
 
-Using the above approach the **ElementCreated** event will be invoked on the server. Generally, from this point, the server would instantiate a prefab and add the object to the scene. A reference to the **Element** and **Stream** is useful to cache in the prefab script for later use. For this caching one approach is to extend **Script** and create a**NetScript** and then set Element and Server properties.
+Using the above approach the **ElementCreated** event will be invoked on the server. Generally, from this point, the server would instantiate a prefab and add the object to the scene. A reference to the **Element** and **Stream** is useful to cache in the prefab script for later use. For this caching one approach is to extend **Script** and create a **NetScript** and then set Element and Server properties.
 
 ```
 private void OnElementCreated(INetElement element)
@@ -245,7 +245,7 @@ private void OnElementDeleted(INetElement element)
 }
 ```
 
-After gaining an understanding of elements, there is one helpful property called **Sibling**. This property can be used to cache a reference on the seerver to a separate element from _this stream or another stream_. This can be leveraged in various design patterns, for coupling different streams together (registration and advertisement).
+After gaining an understanding of elements, there is one helpful property called **Sibling**. This property can be used to cache a reference on the server to a separate element from _this stream or another stream_. This can be leveraged in various design patterns, for coupling different streams together (registration and advertisement).
 
 ---
 
@@ -274,7 +274,7 @@ public override void OnStart()
         Element.Enabled = true;
     } else {
         _playerName = Element.GetString("Name");
-        _direction = Element.GetBytes("Direction");
+        _direction = Element.GetVector3("Direction");
         _attack = Element.GetByte("Attack");
     }
 }
@@ -351,7 +351,7 @@ Element.SetAction("Test", OnCallBack);
 
 To filter elements from sessions there are two options. 
 
-* The first option is to set the **Recipient** of an **Element** to the session.Id of the intended target session. If the **Recipient** is zer, the **Element** will be sent to _all_ clients. 
+* The first option is to set the **Recipient** of an **Element** to the session.Id of the intended target session. If the **Recipient** is zero, the **Element** will be sent to _all_ clients. 
 
 * The second option is to use the **Element.Filter.StreamGroup** property which is a bitmask of type **NetStreamGroup**. Setting this property on an element provides an efficient and capable means of filtering at a macro level. Below are the default options for setting the stream group and what it looks like to set this on the session.
 
@@ -450,9 +450,9 @@ This plugin is considered a "plugin project," documentation for plugin projects 
 
 To add HeroCrabPlugin to your game complete the following:
 
-1) Clone the repositority or download it to /<your-game>/Plugins/ directory.
+1) Clone the repositority or download it to /your-game/Plugins/ directory.
 
-2) Update <your-game>.flaxproj file as follows:
+2) Update your-game.flaxproj file as follows:
 
 ```
     "References": [
