@@ -10,36 +10,36 @@ namespace HeroCrabPlugin.Field
     /// <summary>
     /// Network Vector2 field.
     /// </summary>
-    public class NetFieldVector4 : NetField, INetField<Vector4>
+    public class NetFieldBool : NetField, INetField<bool>
     {
-        internal Action<Vector4> Receive { get; set; }
+        internal Action<bool> Receive { get; set; }
 
-        private readonly NetFieldBuffer<Vector4> _buffer;
+        private readonly NetFieldBuffer<bool> _buffer;
 
         /// <inheritdoc />
-        public NetFieldVector4(byte index, string name, bool isReliable, Action<Vector4> callback = null) : base (isReliable)
+        public NetFieldBool(byte index, string name, bool isReliable, Action<bool> callback = null) : base (isReliable)
         {
-            Description = new NetFieldDesc(index, name, isReliable, NetFieldDesc.TypeCode.Vector4);
-            _buffer = new NetFieldBuffer<Vector4>(BufferSize);
+            Description = new NetFieldDesc(index, name, isReliable, NetFieldDesc.TypeCode.Bool);
+            _buffer = new NetFieldBuffer<bool>(BufferSize);
             Receive = callback;
         }
 
         /// <inheritdoc />
-        public NetFieldVector4(NetFieldDesc description, Action<Vector4> callback = null) : base (description)
+        public NetFieldBool(NetFieldDesc description, Action<bool> callback = null) : base (description)
         {
-            _buffer = new NetFieldBuffer<Vector4>(BufferSize);
+            _buffer = new NetFieldBuffer<bool>(BufferSize);
             Receive = callback;
         }
 
         /// <inheritdoc />
-        public void Set(Vector4 value)
+        public void Set(bool value)
         {
             _buffer.Add(value);
-            TxQueue.WriteVector4(value);
+            TxQueue.WriteBool(value);
             IsUpdated = true;
 
             LastQueue.Clear();
-            LastQueue.WriteVector4(value);
+            LastQueue.WriteBool(value);
         }
 
         /// <inheritdoc />
@@ -57,7 +57,7 @@ namespace HeroCrabPlugin.Field
             var count = rxQueue.ReadByte();
 
             for (var i = 0; i < count; i++) {
-                _buffer.Add(rxQueue.ReadVector4());
+                _buffer.Add(rxQueue.ReadBool());
             }
         }
     }

@@ -50,6 +50,7 @@ namespace HeroCrabPlugin.Field
             Vector3,
             Vector4,
             Quaternion,
+            Bool,
             #pragma warning restore 1591
         }
 

@@ -224,6 +224,18 @@ namespace HeroCrabPlugin.Element
         }
 
         /// <inheritdoc />
+        public INetField<bool> AddBool(string name, bool isReliable, Action<bool> callback = null)
+        {
+            ResolveDuplicate(name);
+            var field = new NetFieldBool(_fieldIndex, name, isReliable, callback);
+            AddField(field);
+            _fieldIndex++;
+
+            Description.WriteLedger(_ledger);
+            return field;
+        }
+
+        /// <inheritdoc />
         public INetField<byte> GetByte(string name)
         {
             if (_fields.ContainsKey(name) && _fields[name] is INetField<byte>) {
@@ -306,7 +318,7 @@ namespace HeroCrabPlugin.Element
         /// <inheritdoc />
         public INetField<Vector2> GetVector2(string name)
         {
-            if (_fields.ContainsKey(name) && _fields[name] is INetField<ushort>) {
+            if (_fields.ContainsKey(name) && _fields[name] is INetField<Vector2>) {
                 return _fields[name] as INetField<Vector2>;
             }
 
@@ -316,7 +328,7 @@ namespace HeroCrabPlugin.Element
         /// <inheritdoc />
         public INetField<Vector3> GetVector3(string name)
         {
-            if (_fields.ContainsKey(name) && _fields[name] is INetField<ushort>) {
+            if (_fields.ContainsKey(name) && _fields[name] is INetField<Vector3>) {
                 return _fields[name] as INetField<Vector3>;
             }
 
@@ -326,7 +338,7 @@ namespace HeroCrabPlugin.Element
         /// <inheritdoc />
         public INetField<Vector4> GetVector4(string name)
         {
-            if (_fields.ContainsKey(name) && _fields[name] is INetField<ushort>) {
+            if (_fields.ContainsKey(name) && _fields[name] is INetField<Vector4>) {
                 return _fields[name] as INetField<Vector4>;
             }
 
@@ -336,8 +348,18 @@ namespace HeroCrabPlugin.Element
         /// <inheritdoc />
         public INetField<Quaternion> GetQuaternion(string name)
         {
-            if (_fields.ContainsKey(name) && _fields[name] is INetField<ushort>) {
+            if (_fields.ContainsKey(name) && _fields[name] is INetField<Quaternion>) {
                 return _fields[name] as INetField<Quaternion>;
+            }
+
+            return null;
+        }
+
+        /// <inheritdoc />
+        public INetField<bool> GetBool(string name)
+        {
+            if (_fields.ContainsKey(name) && _fields[name] is INetField<bool>) {
+                return _fields[name] as INetField<bool>;
             }
 
             return null;
@@ -523,6 +545,20 @@ namespace HeroCrabPlugin.Element
             return true;
         }
 
+        /// <inheritdoc />
+        public bool SetActionBool(string name, Action<bool> callback)
+        {
+            if (!_fields.ContainsKey(name)) {
+                return false;
+            }
+
+            if (!(_fields[name] is NetFieldBool field)) {
+                return false;
+            }
+
+            field.Receive = callback;
+            return true;
+        }
 
         /// <summary>
         /// Process each of the fields in this element, called by host.
@@ -680,6 +716,10 @@ namespace HeroCrabPlugin.Element
 
                     case NetFieldDesc.TypeCode.Quaternion:
                         AddField(new NetFieldQuaternion(field.Index, field.Name, field.IsReliable));
+                        break;
+
+                    case NetFieldDesc.TypeCode.Bool:
+                        AddField(new NetFieldBool(field.Index, field.Name, field.IsReliable));
                         break;
 
                     default:

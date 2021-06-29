@@ -166,6 +166,15 @@ namespace HeroCrabPlugin.Element
         INetField<Quaternion> AddQuaternion(string name, bool isReliable, Action<Quaternion> callback);
 
         /// <summary>
+        /// Add a bool network field to this element.
+        /// </summary>
+        /// <param name="name">Field name</param>
+        /// <param name="isReliable">If true this field is sent reliably</param>
+        /// <param name="callback">Call back method invoked when receiving this field</param>
+        /// <returns>Field</returns>
+        INetField<bool> AddBool(string name, bool isReliable, Action<bool> callback);
+
+        /// <summary>
         /// Set the call back action for a named byte field, typically used on the client.
         /// </summary>
         /// <param name="name">Field name</param>
@@ -262,6 +271,14 @@ namespace HeroCrabPlugin.Element
         bool SetActionQuaternion(string name, Action<Quaternion> callback);
 
         /// <summary>
+        /// Set the call back action for a named bool field, typically used on the client.
+        /// </summary>
+        /// <param name="name">Field name</param>
+        /// <param name="callback">Call back method invoked when receiving this field</param>
+        /// <returns>Field</returns>
+        bool SetActionBool(string name, Action<bool> callback);
+
+        /// <summary>
         /// Retrieves the setter for a byte field.
         /// </summary>
         /// <param name="name">Field name</param>
@@ -344,5 +361,12 @@ namespace HeroCrabPlugin.Element
         /// <param name="name">Field name</param>
         /// <returns>Field</returns>
         INetField<Quaternion> GetQuaternion(string name);
+
+        /// <summary>
+        /// Retrieves the setter for a bool field.
+        /// </summary>
+        /// <param name="name">Field name</param>
+        /// <returns>Field</returns>
+        INetField<bool> GetBool(string name);
     }
 }

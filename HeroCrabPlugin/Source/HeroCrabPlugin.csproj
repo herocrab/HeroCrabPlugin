@@ -259,6 +259,7 @@
     <Compile Include="HeroCrabPlugin\Element\NetElementFilter.cs" />
     <Compile Include="HeroCrabPlugin\Field\INetField.cs" />
     <Compile Include="HeroCrabPlugin\Field\NetField.cs" />
+    <Compile Include="HeroCrabPlugin\Field\NetFieldBool.cs" />
     <Compile Include="HeroCrabPlugin\Field\NetFieldBuffer.cs" />
     <Compile Include="HeroCrabPlugin\Field\NetFieldByte.cs" />
     <Compile Include="HeroCrabPlugin\Field\NetFieldBytes.cs" />

@@ -1,11 +1,12 @@
-﻿using HeroCrabPlugin.Core;
+﻿using FlaxEngine;
+using HeroCrabPlugin.Core;
 using HeroCrabPlugin.Field;
 using NUnit.Framework;
 
 namespace HeroCrabPluginTestsUnit.Field
 {
     [TestFixture]
-    public class NetFieldFloatTests
+    public class NetFieldVector3Tests
     {
         [SetUp]
         public void SetUp()
@@ -19,75 +20,75 @@ namespace HeroCrabPluginTestsUnit.Field
         public void Set_ConstructAndSetValueThenProcess_VerifyCountAndValueIsCorrect()
         {
             var count = 0;
-            var lastValue = float.MinValue;
-            void Callback(float value)
+            var lastValue = Vector3.Zero;
+            void Callback(Vector3 value)
             {
                 count++;
                 lastValue = value;
             }
 
-            var field = new NetFieldFloat(0, "Test", false, Callback);
-            field.Set(float.MaxValue);
+            var field = new NetFieldVector3(0, "Test", false, Callback);
+            field.Set(Vector3.Maximum);
             field.Process();
 
             Assert.That(count, Is.EqualTo(1));
-            Assert.That(lastValue, Is.EqualTo(float.MaxValue));
+            Assert.That(lastValue, Is.EqualTo(Vector3.Maximum));
         }
 
         [Test]
         public void Serialize_SerializeAndDeserialize_CompareResultsAreEqual()
         {
             var count = 0;
-            var lastValue = float.MinValue;
-            void Callback(float value)
+            var lastValue = Vector3.Zero;
+            void Callback(Vector3 value)
             {
                 count++;
                 lastValue = value;
             }
 
-            var field = new NetFieldFloat(0, "Test", false);
-            field.Set(float.MaxValue);
+            var field = new NetFieldVector3(0, "Test", false);
+            field.Set(Vector3.Maximum);
 
             var serializedBytes = field.Serialize();
             var receivingQueue = new NetByteQueue();
             receivingQueue.WriteRaw(serializedBytes);
 
-            var receivingField = new NetFieldFloat(field.Description, Callback);
+            var receivingField = new NetFieldVector3(field.Description, Callback);
             receivingField.Deserialize(receivingQueue);
             receivingField.Process();
 
             Assert.That(count, Is.EqualTo(1));
-            Assert.That(lastValue, Is.EqualTo(float.MaxValue));
+            Assert.That(lastValue, Is.EqualTo(Vector3.Maximum));
         }
 
         [Test]
         public void Serialize_SetFieldThreeTimesSerializeAndDeserialize_CompareTheCountAndLastResult()
         {
             var count = 0;
-            var lastValue = float.MinValue;
-            void Callback(float value)
+            var lastValue = Vector3.Zero;
+            void Callback(Vector3 value)
             {
                 count++;
                 lastValue = value;
             }
 
-            var field = new NetFieldFloat(0, "Test", false);
-            field.Set(float.MaxValue);
-            field.Set(0);
-            field.Set(1);
+            var field = new NetFieldVector3(0, "Test", false);
+            field.Set(Vector3.Maximum);
+            field.Set(Vector3.Zero);
+            field.Set(Vector3.One);
 
             var serializedBytes = field.Serialize();
             var receivingQueue = new NetByteQueue();
             receivingQueue.WriteRaw(serializedBytes);
 
-            var receivingField = new NetFieldFloat(field.Description, Callback);
+            var receivingField = new NetFieldVector3(field.Description, Callback);
             receivingField.Deserialize(receivingQueue);
             receivingField.Process();
             receivingField.Process();
             receivingField.Process();
 
             Assert.That(count, Is.EqualTo(3));
-            Assert.That(lastValue, Is.EqualTo(1));
+            Assert.That(lastValue, Is.EqualTo(Vector3.One));
         }
     }
 }

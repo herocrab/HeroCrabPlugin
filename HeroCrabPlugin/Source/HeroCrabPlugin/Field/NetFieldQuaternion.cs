@@ -19,7 +19,7 @@ namespace HeroCrabPlugin.Field
         /// <inheritdoc />
         public NetFieldQuaternion(byte index, string name, bool isReliable, Action<Quaternion> callback = null) : base (isReliable)
         {
-            Description = new NetFieldDesc(index, name, isReliable, NetFieldDesc.TypeCode.Vector3);
+            Description = new NetFieldDesc(index, name, isReliable, NetFieldDesc.TypeCode.Quaternion);
             _buffer = new NetFieldBuffer<Quaternion>(BufferSize);
             Receive = callback;
         }

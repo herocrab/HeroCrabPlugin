@@ -19,7 +19,7 @@ namespace HeroCrabPluginTestsUnit.Field
         [Test]
         public void Clear_SetValuesAndClear_VerifyLengthAndDepthAre0()
         {
-            var field = new NetFieldByte(0, "Test", false, null);
+            var field = new NetFieldByte(0, "Test", false);
             field.Set(byte.MaxValue);
             field.Set(0);
             field.Set(1);
@@ -33,7 +33,7 @@ namespace HeroCrabPluginTestsUnit.Field
         [Test]
         public void Serialize_AttemptToSerializeFieldWithGreaterThan255Entries_ThrowNotSupportedException()
         {
-            var field = new NetFieldByte(0, "Test", false, null);
+            var field = new NetFieldByte(0, "Test", false);
 
             for (var i = 0; i < 256; i++) {
                 field.Set((byte)i);
