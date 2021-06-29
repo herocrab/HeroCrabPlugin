@@ -82,488 +82,156 @@ namespace HeroCrabPlugin.Element
         /// <inheritdoc />
         public INetField<byte> AddByte(string name, bool isReliable, Action<byte> callback = null)
         {
-            // TODO reduce repetition by refactoring this.
-            ResolveDuplicate(name);
-            var field = new NetFieldByte(_fieldIndex, name, isReliable, callback);
-            AddField(field);
-            _fieldIndex++;
-
-            Description.WriteLedger(_ledger);
-            return field;
+            return AddField<byte>(new NetFieldByte(_fieldIndex, name, isReliable, callback));
         }
 
         /// <inheritdoc />
         public INetField<byte[]> AddBytes(string name, bool isReliable, Action<byte[]> callback = null)
         {
-            ResolveDuplicate(name);
-            var field = new NetFieldBytes(_fieldIndex, name, isReliable, callback);
-            AddField(field);
-            _fieldIndex++;
-
-            Description.WriteLedger(_ledger);
-            return field;
+            return AddField<byte[]>(new NetFieldBytes(_fieldIndex, name, isReliable, callback));
         }
 
         /// <inheritdoc />
         public INetField<float> AddFloat(string name, bool isReliable, Action<float> callback = null)
         {
-            ResolveDuplicate(name);
-            var field = new NetFieldFloat(_fieldIndex, name, isReliable, callback);
-            AddField(field);
-            _fieldIndex++;
-
-            Description.WriteLedger(_ledger);
-            return field;
+            return AddField<float>(new NetFieldFloat(_fieldIndex, name, isReliable, callback));
         }
 
         /// <inheritdoc />
         public INetField<int> AddInt(string name, bool isReliable, Action<int> callback = null)
         {
-            ResolveDuplicate(name);
-            var field = new NetFieldInt(_fieldIndex, name, isReliable, callback);
-            AddField(field);
-            _fieldIndex++;
-
-            Description.WriteLedger(_ledger);
-            return field;
+            return AddField<int>(new NetFieldInt(_fieldIndex, name, isReliable, callback));
         }
 
         /// <inheritdoc />
         public INetField<long> AddLong(string name, bool isReliable, Action<long> callback = null)
         {
-            ResolveDuplicate(name);
-            var field = new NetFieldLong(_fieldIndex, name, isReliable, callback);
-            AddField(field);
-            _fieldIndex++;
-
-            Description.WriteLedger(_ledger);
-            return field;
+            return AddField<long>(new NetFieldLong(_fieldIndex, name, isReliable, callback));
         }
 
         /// <inheritdoc />
         public INetField<string> AddString(string name, bool isReliable, Action<string> callback = null)
         {
-            ResolveDuplicate(name);
-            var field = new NetFieldString(_fieldIndex, name, isReliable, callback);
-            AddField(field);
-            _fieldIndex++;
-
-            Description.WriteLedger(_ledger);
-            return field;
+            return AddField<string>(new NetFieldString(_fieldIndex, name, isReliable, callback));
         }
 
         /// <inheritdoc />
         public INetField<uint> AddUInt(string name, bool isReliable, Action<uint> callback = null)
         {
-            ResolveDuplicate(name);
-            var field = new NetFieldUInt(_fieldIndex, name, isReliable, callback);
-            AddField(field);
-            _fieldIndex++;
-
-            Description.WriteLedger(_ledger);
-            return field;
+            return AddField<uint>(new NetFieldUInt(_fieldIndex, name, isReliable, callback));
         }
 
         /// <inheritdoc />
         public INetField<ushort> AddUShort(string name, bool isReliable, Action<ushort> callback = null)
         {
-            ResolveDuplicate(name);
-            var field = new NetFieldUShort(_fieldIndex, name, isReliable, callback);
-            AddField(field);
-            _fieldIndex++;
-
-            Description.WriteLedger(_ledger);
-            return field;
+            return AddField<ushort>(new NetFieldUShort(_fieldIndex, name, isReliable, callback));
         }
 
         /// <inheritdoc />
         public INetField<Vector2> AddVector2(string name, bool isReliable, Action<Vector2> callback = null)
         {
-            ResolveDuplicate(name);
-            var field = new NetFieldVector2(_fieldIndex, name, isReliable, callback);
-            AddField(field);
-            _fieldIndex++;
-
-            Description.WriteLedger(_ledger);
-            return field;
+            return AddField<Vector2>(new NetFieldVector2(_fieldIndex, name, isReliable, callback));
         }
 
         /// <inheritdoc />
         public INetField<Vector3> AddVector3(string name, bool isReliable, Action<Vector3> callback = null)
         {
-            ResolveDuplicate(name);
-            var field = new NetFieldVector3(_fieldIndex, name, isReliable, callback);
-            AddField(field);
-            _fieldIndex++;
-
-            Description.WriteLedger(_ledger);
-            return field;
+            return AddField<Vector3>(new NetFieldVector3(_fieldIndex, name, isReliable, callback));
         }
 
         /// <inheritdoc />
         public INetField<Vector4> AddVector4(string name, bool isReliable, Action<Vector4> callback = null)
         {
-            ResolveDuplicate(name);
-            var field = new NetFieldVector4(_fieldIndex, name, isReliable, callback);
-            AddField(field);
-            _fieldIndex++;
-
-            Description.WriteLedger(_ledger);
-            return field;
+            return AddField<Vector4>(new NetFieldVector4(_fieldIndex, name, isReliable, callback));
         }
 
         /// <inheritdoc />
         public INetField<Quaternion> AddQuaternion(string name, bool isReliable, Action<Quaternion> callback = null)
         {
-            ResolveDuplicate(name);
-            var field = new NetFieldQuaternion(_fieldIndex, name, isReliable, callback);
-            AddField(field);
-            _fieldIndex++;
-
-            Description.WriteLedger(_ledger);
-            return field;
+            return AddField<Quaternion>(new NetFieldQuaternion(_fieldIndex, name, isReliable, callback));
         }
 
         /// <inheritdoc />
         public INetField<bool> AddBool(string name, bool isReliable, Action<bool> callback = null)
         {
-            ResolveDuplicate(name);
-            var field = new NetFieldBool(_fieldIndex, name, isReliable, callback);
-            AddField(field);
-            _fieldIndex++;
-
-            Description.WriteLedger(_ledger);
-            return field;
+            return AddField<bool>(new NetFieldBool(_fieldIndex, name, isReliable, callback));
         }
 
         /// <inheritdoc />
-        public INetField<byte> GetByte(string name)
-        {
-            // TODO reduce repetition by refactoring this.
-
-            if (_fields.ContainsKey(name) && _fields[name] is INetField<byte>) {
-                return _fields[name] as INetField<byte>;
-            }
-
-            return null;
-        }
+        public INetField<byte> GetByte(string name) => GetField<byte>(name);
 
         /// <inheritdoc />
-        public INetField<byte[]> GetBytes(string name)
-        {
-            if (_fields.ContainsKey(name) && _fields[name] is INetField<byte[]>) {
-                return _fields[name] as INetField<byte[]>;
-            }
-
-            return null;
-        }
+        public INetField<byte[]> GetBytes(string name) => GetField<byte[]>(name);
 
         /// <inheritdoc />
-        public INetField<float> GetFloat(string name)
-        {
-            if (_fields.ContainsKey(name) && _fields[name] is INetField<float>) {
-                return _fields[name] as INetField<float>;
-            }
-
-            return null;
-        }
+        public INetField<float> GetFloat(string name) => GetField<float>(name);
 
         /// <inheritdoc />
-        public INetField<int> GetInt(string name)
-        {
-            if (_fields.ContainsKey(name) && _fields[name] is INetField<int>) {
-                return _fields[name] as INetField<int>;
-            }
-
-            return null;
-        }
+        public INetField<int> GetInt(string name) => GetField<int>(name);
+        /// <inheritdoc />
+        public INetField<long> GetLong(string name) => GetField<long>(name);
 
         /// <inheritdoc />
-        public INetField<long> GetLong(string name)
-        {
-            if (_fields.ContainsKey(name) && _fields[name] is INetField<long>) {
-                return _fields[name] as INetField<long>;
-            }
-
-            return null;
-        }
+        public INetField<string> GetString(string name) => GetField<string>(name);
 
         /// <inheritdoc />
-        public INetField<string> GetString(string name)
-        {
-            if (_fields.ContainsKey(name) && _fields[name] is INetField<string>) {
-                return _fields[name] as INetField<string>;
-            }
-
-            return null;
-        }
+        public INetField<uint> GetUInt(string name) => GetField<uint>(name);
 
         /// <inheritdoc />
-        public INetField<uint> GetUInt(string name)
-        {
-            if (_fields.ContainsKey(name) && _fields[name] is INetField<uint>) {
-                return _fields[name] as INetField<uint>;
-            }
-
-            return null;
-        }
+        public INetField<ushort> GetUShort(string name) => GetField<ushort>(name);
 
         /// <inheritdoc />
-        public INetField<ushort> GetUShort(string name)
-        {
-            if (_fields.ContainsKey(name) && _fields[name] is INetField<ushort>) {
-                return _fields[name] as INetField<ushort>;
-            }
-
-            return null;
-        }
+        public INetField<Vector2> GetVector2(string name) => GetField<Vector2>(name);
 
         /// <inheritdoc />
-        public INetField<Vector2> GetVector2(string name)
-        {
-            if (_fields.ContainsKey(name) && _fields[name] is INetField<Vector2>) {
-                return _fields[name] as INetField<Vector2>;
-            }
-
-            return null;
-        }
+        public INetField<Vector3> GetVector3(string name) => GetField<Vector3>(name);
 
         /// <inheritdoc />
-        public INetField<Vector3> GetVector3(string name)
-        {
-            if (_fields.ContainsKey(name) && _fields[name] is INetField<Vector3>) {
-                return _fields[name] as INetField<Vector3>;
-            }
-
-            return null;
-        }
+        public INetField<Vector4> GetVector4(string name) => GetField<Vector4>(name);
 
         /// <inheritdoc />
-        public INetField<Vector4> GetVector4(string name)
-        {
-            if (_fields.ContainsKey(name) && _fields[name] is INetField<Vector4>) {
-                return _fields[name] as INetField<Vector4>;
-            }
-
-            return null;
-        }
+        public INetField<Quaternion> GetQuaternion(string name) => GetField<Quaternion>(name);
 
         /// <inheritdoc />
-        public INetField<Quaternion> GetQuaternion(string name)
-        {
-            if (_fields.ContainsKey(name) && _fields[name] is INetField<Quaternion>) {
-                return _fields[name] as INetField<Quaternion>;
-            }
-
-            return null;
-        }
+        public INetField<bool> GetBool(string name) => GetField<bool>(name);
 
         /// <inheritdoc />
-        public INetField<bool> GetBool(string name)
-        {
-            if (_fields.ContainsKey(name) && _fields[name] is INetField<bool>) {
-                return _fields[name] as INetField<bool>;
-            }
-
-            return null;
-        }
+        public bool SetActionByte(string name, Action<byte> callback) => SetAction(name, callback);
 
         /// <inheritdoc />
-        public bool SetActionByte(string name, Action<byte> callback)
-        {
-            // TODO reduce repetition by refactoring this.
-
-            if (!_fields.ContainsKey(name)) {
-                return false;
-            }
-
-            if (!(_fields[name] is NetFieldByte field)) {
-                return false;
-            }
-
-            field.Receive = callback;
-            return true;
-        }
+        public bool SetActionBytes(string name, Action<byte[]> callback) => SetAction(name, callback);
 
         /// <inheritdoc />
-        public bool SetActionBytes(string name, Action<byte[]> callback)
-        {
-            if (!_fields.ContainsKey(name)) {
-                return false;
-            }
-
-            if (!(_fields[name] is NetFieldBytes field)) {
-                return false;
-            }
-
-            field.Receive = callback;
-            return true;
-        }
+        public bool SetActionFloat(string name, Action<float> callback) => SetAction(name, callback);
 
         /// <inheritdoc />
-        public bool SetActionFloat(string name, Action<float> callback)
-        {
-            if (!_fields.ContainsKey(name)) {
-                return false;
-            }
-
-            if (!(_fields[name] is NetFieldFloat field)) {
-                return false;
-            }
-
-            field.Receive = callback;
-            return true;
-        }
+        public bool SetActionInt(string name, Action<int> callback) => SetAction(name, callback);
 
         /// <inheritdoc />
-        public bool SetActionInt(string name, Action<int> callback)
-        {
-            if (!_fields.ContainsKey(name)) {
-                return false;
-            }
-
-            if (!(_fields[name] is NetFieldInt field)) {
-                return false;
-            }
-
-            field.Receive = callback;
-            return true;
-        }
+        public bool SetActionLong(string name, Action<long> callback) => SetAction(name, callback);
 
         /// <inheritdoc />
-        public bool SetActionLong(string name, Action<long> callback)
-        {
-            if (!_fields.ContainsKey(name)) {
-                return false;
-            }
-
-            if (!(_fields[name] is NetFieldLong field)) {
-                return false;
-            }
-
-            field.Receive = callback;
-            return true;
-        }
+        public bool SetActionString(string name, Action<string> callback) => SetAction(name, callback);
 
         /// <inheritdoc />
-        public bool SetActionString(string name, Action<string> callback)
-        {
-            if (!_fields.ContainsKey(name)) {
-                return false;
-            }
-
-            if (!(_fields[name] is NetFieldString field)) {
-                return false;
-            }
-
-            field.Receive = callback;
-            return true;
-        }
+        public bool SetActionUInt(string name, Action<uint> callback) => SetAction(name, callback);
+        /// <inheritdoc />
+        public bool SetActionUShort(string name, Action<ushort> callback) => SetAction(name, callback);
 
         /// <inheritdoc />
-        public bool SetActionUInt(string name, Action<uint> callback)
-        {
-            if (!_fields.ContainsKey(name)) {
-                return false;
-            }
-
-            if (!(_fields[name] is NetFieldUInt field)) {
-                return false;
-            }
-
-            field.Receive = callback;
-            return true;
-        }
+        public bool SetActionVector2(string name, Action<Vector2> callback) => SetAction(name, callback);
 
         /// <inheritdoc />
-        public bool SetActionUShort(string name, Action<ushort> callback)
-        {
-            if (!_fields.ContainsKey(name)) {
-                return false;
-            }
-
-            if (!(_fields[name] is NetFieldUShort field)) {
-                return false;
-            }
-
-            field.Receive = callback;
-            return true;
-        }
+        public bool SetActionVector3(string name, Action<Vector3> callback) => SetAction(name, callback);
 
         /// <inheritdoc />
-        public bool SetActionVector2(string name, Action<Vector2> callback)
-        {
-            if (!_fields.ContainsKey(name)) {
-                return false;
-            }
-
-            if (!(_fields[name] is NetFieldVector2 field)) {
-                return false;
-            }
-
-            field.Receive = callback;
-            return true;
-        }
+        public bool SetActionVector4(string name, Action<Vector4> callback) => SetAction(name, callback);
 
         /// <inheritdoc />
-        public bool SetActionVector3(string name, Action<Vector3> callback)
-        {
-            if (!_fields.ContainsKey(name)) {
-                return false;
-            }
-
-            if (!(_fields[name] is NetFieldVector3 field)) {
-                return false;
-            }
-
-            field.Receive = callback;
-            return true;
-        }
+        public bool SetActionQuaternion(string name, Action<Quaternion> callback) => SetAction(name, callback);
 
         /// <inheritdoc />
-        public bool SetActionVector4(string name, Action<Vector4> callback)
-        {
-            if (!_fields.ContainsKey(name)) {
-                return false;
-            }
-
-            if (!(_fields[name] is NetFieldVector4 field)) {
-                return false;
-            }
-
-            field.Receive = callback;
-            return true;
-        }
-
-        /// <inheritdoc />
-        public bool SetActionQuaternion(string name, Action<Quaternion> callback)
-        {
-            if (!_fields.ContainsKey(name)) {
-                return false;
-            }
-
-            if (!(_fields[name] is NetFieldQuaternion field)) {
-                return false;
-            }
-
-            field.Receive = callback;
-            return true;
-        }
-
-        /// <inheritdoc />
-        public bool SetActionBool(string name, Action<bool> callback)
-        {
-            if (!_fields.ContainsKey(name)) {
-                return false;
-            }
-
-            if (!(_fields[name] is NetFieldBool field)) {
-                return false;
-            }
-
-            field.Receive = callback;
-            return true;
-        }
+        public bool SetActionBool(string name, Action<bool> callback) => SetAction(name, callback);
 
         /// <summary>
         /// Process each of the fields in this element, called by host.
@@ -738,6 +406,39 @@ namespace HeroCrabPlugin.Element
         {
             _fields.Add(field.Description.Name, field);
             _ledger.Add(field.Description.Index, field.Description);
+        }
+
+        private INetField<T> AddField<T>(NetField field)
+        {
+            ResolveDuplicate(field.Description.Name);
+            AddField(field);
+            _fieldIndex++;
+
+            Description.WriteLedger(_ledger);
+            return field as INetField<T>;
+        }
+
+        private INetField<T> GetField<T>(string name)
+        {
+            if (_fields.ContainsKey(name) && _fields[name] is INetField<T>) {
+                return _fields[name] as INetField<T>;
+            }
+
+            return null;
+        }
+
+        private bool SetAction<T>(string name, Action<T> callback)
+        {
+            if (!_fields.ContainsKey(name)) {
+                return false;
+            }
+
+            if (!(_fields[name] is INetFieldReceiver<T> field)) {
+                return false;
+            }
+
+            field.Receive = callback;
+            return true;
         }
     }
 }

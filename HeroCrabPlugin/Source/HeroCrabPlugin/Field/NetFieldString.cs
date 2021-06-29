@@ -8,9 +8,10 @@ namespace HeroCrabPlugin.Field
     /// <summary>
     /// Network string field.
     /// </summary>
-    public class NetFieldString : NetField, INetField<string>
+    public class NetFieldString : NetField, INetField<string>, INetFieldReceiver<string>
     {
-        internal Action<string> Receive { get; set; }
+        /// <inheritdoc />
+        public Action<string> Receive { get; set; }
 
         private readonly NetFieldBuffer<string> _buffer;
 

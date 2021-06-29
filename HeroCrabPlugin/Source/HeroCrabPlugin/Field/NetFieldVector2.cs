@@ -10,9 +10,10 @@ namespace HeroCrabPlugin.Field
     /// <summary>
     /// Network Vector2 field.
     /// </summary>
-    public class NetFieldVector2 : NetField, INetField<Vector2>
+    public class NetFieldVector2 : NetField, INetField<Vector2>, INetFieldReceiver<Vector2>
     {
-        internal Action<Vector2> Receive { get; set; }
+        /// <inheritdoc />
+        public Action<Vector2> Receive { get; set; }
 
         private readonly NetFieldBuffer<Vector2> _buffer;
 

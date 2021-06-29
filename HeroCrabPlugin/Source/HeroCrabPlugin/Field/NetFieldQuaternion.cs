@@ -10,9 +10,10 @@ namespace HeroCrabPlugin.Field
     /// <summary>
     /// Network Vector2 field.
     /// </summary>
-    public class NetFieldQuaternion : NetField, INetField<Quaternion>
+    public class NetFieldQuaternion : NetField, INetField<Quaternion>, INetFieldReceiver<Quaternion>
     {
-        internal Action<Quaternion> Receive { get; set; }
+        /// <inheritdoc />
+        public Action<Quaternion> Receive { get; set; }
 
         private readonly NetFieldBuffer<Quaternion> _buffer;
 

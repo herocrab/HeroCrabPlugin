@@ -8,9 +8,10 @@ namespace HeroCrabPlugin.Field
     /// <summary>
     /// Network float field.
     /// </summary>
-    public class NetFieldFloat: NetField, INetField<float>
+    public class NetFieldFloat: NetField, INetField<float>, INetFieldReceiver<float>
     {
-        internal Action<float> Receive { get; set; }
+        /// <inheritdoc />
+        public Action<float> Receive { get; set; }
 
         private readonly NetFieldBuffer<float> _buffer;
 
