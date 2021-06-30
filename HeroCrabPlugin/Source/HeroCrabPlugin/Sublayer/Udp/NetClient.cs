@@ -18,7 +18,6 @@ namespace HeroCrabPlugin.Sublayer.Udp
 
         private readonly Host _client;
         private NetSublayer _sublayer;
-        private NetSessionClient _session;
 
         private Event _netEvent;
         private bool _polled;
@@ -126,10 +125,10 @@ namespace HeroCrabPlugin.Sublayer.Udp
 
             NetLogger.Write(NetLogger.LoggingGroup.Status, this, "[STOP] Client is stopping..." );
 
-            _session?.Disconnect();
+            Stream.KickAll();
+            Stream.Clear();
             _client?.Flush();
             _client?.Dispose();
-            Stream.Clear();
         }
 
         private void OnReceivePacket(Event netEvent)
@@ -150,8 +149,7 @@ namespace HeroCrabPlugin.Sublayer.Udp
         {
             _sublayer = NetSublayer.Create(netEvent.Peer);
             _sublayer.DisconnectCallback = OnDisconnectedEvent;
-
-            _session = Stream.CreateSession(_sublayer);
+            Stream.CreateSession(_sublayer);
         }
 
         /// <inheritdoc />

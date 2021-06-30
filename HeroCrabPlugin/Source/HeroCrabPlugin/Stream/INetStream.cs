@@ -56,5 +56,10 @@ namespace HeroCrabPlugin.Stream
         /// Clear the network stream.
         /// </summary>
         void Clear();
+
+        /// <summary>
+        /// Kick all connected sessions.
+        /// </summary>
+        void KickAll();
     }
 }

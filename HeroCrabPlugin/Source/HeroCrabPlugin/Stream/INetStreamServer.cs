@@ -12,11 +12,6 @@ namespace HeroCrabPlugin.Stream
     public interface INetStreamServer : INetStream
     {
         /// <summary>
-        /// Kick all connected sessions.
-        /// </summary>
-        void KickAll();
-
-        /// <summary>
         /// Create a network session given a sublayer.
         /// </summary>
         /// <param name="netSublayer">Sublayer</param>

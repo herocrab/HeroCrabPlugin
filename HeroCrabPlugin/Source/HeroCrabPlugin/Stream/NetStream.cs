@@ -72,8 +72,8 @@ namespace HeroCrabPlugin.Stream
         /// </summary>
         public void KickAll()
         {
-            foreach (var networkSession in Sessions.Values.ToArray()) {
-                networkSession.Disconnect();
+            foreach (var session in Sessions.Values.ToArray()) {
+                session.Disconnect();
             }
         }
 
