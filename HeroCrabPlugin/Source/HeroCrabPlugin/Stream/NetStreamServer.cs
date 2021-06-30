@@ -44,7 +44,7 @@ namespace HeroCrabPlugin.Stream
             // Candidate Matrix:
             // Server(0) to All Recipient(0) with no Exclude = Queue "0"
             // Author(X) to All Recipient(0) with Exclude = Individual queues minus excluded queue
-            // Any Author to Recipient(Y) - Individual queue
+            // Any Author to Recipient(Y) = Individual queue
 
             // Reserved Session Id (0) is the server
             // Recipient(0) is destined for all recipients
@@ -84,7 +84,7 @@ namespace HeroCrabPlugin.Stream
                 }
             }
 
-            // Send the elements, the send and exclude lists are injected at constructor
+            // Send the elements, the _send and _exclude lists are injected into session(s) at constructor
             foreach (var session in Sessions.Values) {
                 session.Send();
             }
@@ -122,6 +122,7 @@ namespace HeroCrabPlugin.Stream
             session.SessionCreated += AddSession;
             session.SessionDeleted += DeleteSession;
 
+            // Skip session "0" for server designation
             if (_sessionId == uint.MaxValue) {
                 _sessionId = 1;
             }

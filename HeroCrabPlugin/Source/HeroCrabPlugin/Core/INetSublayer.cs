@@ -31,11 +31,6 @@ namespace HeroCrabPlugin.Core
         Action<uint> ReceiveIdCallback { get; set; }
 
         /// <summary>
-        /// Disconnect call back; this method is invoked when a sublayer is disconnected.
-        /// </summary>
-        Action<Peer> DisconnectCallback { get; set; }
-
-        /// <summary>
         /// Disconnect the sub-layer.
         /// </summary>
         void Disconnect();

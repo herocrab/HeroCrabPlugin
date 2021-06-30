@@ -25,7 +25,9 @@ namespace HeroCrabPlugin.Sublayer.Udp
         /// <inheritdoc />
         public Action<uint> ReceiveIdCallback { get; set; }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Disconnect callback.
+        /// </summary>
         public Action<Peer> DisconnectCallback { get; set; }
 
         private enum Channels : byte
