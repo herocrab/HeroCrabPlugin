@@ -44,7 +44,6 @@ namespace HeroCrabPlugin.Sublayer.Udp
         private bool _isAssignedId;
         private string _xxteaPskTeK = string.Empty;
 
-        private const ushort MaximumPacketLength = 1456;
         private const string XxteaPskKek = "!!Xxtea_P$K_K3K";
 
         /// <summary>
@@ -63,7 +62,7 @@ namespace HeroCrabPlugin.Sublayer.Udp
             _cryptoModule = new XxteaCryptoModule();
             _txQueue = new NetByteQueue();
             _rxQueue = new NetByteQueue();
-            _rxBuffer = new byte[MaximumPacketLength];
+            _rxBuffer = new byte[ushort.MaxValue];
         }
 
         /// <inheritdoc />
@@ -93,12 +92,6 @@ namespace HeroCrabPlugin.Sublayer.Udp
         /// <inheritdoc />
         public void Send(float time, byte[] data, bool isReliable)
         {
-            if (data.Length > MaximumPacketLength) {
-                NetLogger.Write(NetLogger.LoggingGroup.Error, this,
-                    $"[ERROR] Attempted to send a packet larger than {MaximumPacketLength}.");
-                return;
-            }
-
             var encryptedData = _cryptoModule.Encrypt(data, _xxteaPskTeK);
 
             var packet = default(Packet);

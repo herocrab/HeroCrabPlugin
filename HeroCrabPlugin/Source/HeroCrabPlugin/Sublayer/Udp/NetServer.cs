@@ -156,9 +156,18 @@ namespace HeroCrabPlugin.Sublayer.Udp
 
         private void OnReceivePacket(Event netEvent)
         {
-            if (_connections.ContainsKey(netEvent.Peer.ID)) {
-                _connections[netEvent.Peer.ID].ReceivePacket(netEvent.ChannelID, netEvent.Packet);
+            if (!_connections.ContainsKey(netEvent.Peer.ID)) {
+                return;
             }
+
+            if (netEvent.Packet.Length > ushort.MaxValue) {
+                NetLogger.Write(NetLogger.LoggingGroup.Error, this,
+                    $"ERROR: Server received a packet larger than PDU, disconnecting.");
+                netEvent.Peer.Disconnect(0);
+                return;
+            }
+
+            _connections[netEvent.Peer.ID].ReceivePacket(netEvent.ChannelID, netEvent.Packet);
         }
 
         private void OnConnectedEvent(Event netEvent)

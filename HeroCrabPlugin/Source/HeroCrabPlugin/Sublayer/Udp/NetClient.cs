@@ -3,7 +3,6 @@
 using System;
 using ENet;
 using HeroCrabPlugin.Core;
-using HeroCrabPlugin.Session;
 using HeroCrabPlugin.Stream;
 
 namespace HeroCrabPlugin.Sublayer.Udp

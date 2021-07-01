@@ -2,7 +2,7 @@
 // Distributed under the MIT license. See the LICENSE.md file in the project root for more information.
 using HeroCrabPlugin.Stream;
 
-namespace HeroCrabPlugin.Core
+namespace HeroCrabPlugin.Sublayer
 {
     /// <summary>
     /// Network server.

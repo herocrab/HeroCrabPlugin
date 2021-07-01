@@ -1,11 +1,17 @@
 ﻿// Copyright (c) Jeremy Buck "Jarmo" - HeroCrab Ltd. (https://github.com/herocrab)
 // Distributed under the MIT license. See the LICENSE.md file in the project root for more information.
 using System;
-using HeroCrabPlugin.Sublayer.Udp;
+
 // ReSharper disable UnusedMemberInSuper.Global
 
-namespace HeroCrabPlugin.Core
+namespace HeroCrabPlugin.Sublayer
 {
+    /// <summary>
+    /// Handler for the logger.
+    /// </summary>
+    /// <param name="message">Log message text.</param>
+    public delegate void NetLogWriteHandler(string message);
+
     /// <summary>
     /// Network host.
     /// </summary>
@@ -14,7 +20,7 @@ namespace HeroCrabPlugin.Core
         /// <summary>
         /// Logger event.
         /// </summary>
-        event NetHost.NetLogWriteHandler LogWrite;
+        event NetLogWriteHandler LogWrite;
 
         /// <summary>
         /// Start a network host.

@@ -1,6 +1,6 @@
 ﻿using HeroCrabPlugin.Stream;
 
-namespace HeroCrabPlugin.Core
+namespace HeroCrabPlugin.Sublayer
 {
     /// <summary>
     /// Network client.

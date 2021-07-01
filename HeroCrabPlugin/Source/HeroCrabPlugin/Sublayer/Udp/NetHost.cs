@@ -10,12 +10,6 @@ namespace HeroCrabPlugin.Sublayer.Udp
     public class NetHost
     {
         /// <summary>
-        /// Handler for the logger.
-        /// </summary>
-        /// <param name="message">Log message text.</param>
-        public delegate void NetLogWriteHandler(string message);
-
-        /// <summary>
         /// Event that is invoked when a log message is written.
         /// </summary>
         public event NetLogWriteHandler LogWrite;

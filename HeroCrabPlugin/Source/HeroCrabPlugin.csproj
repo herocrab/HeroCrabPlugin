@@ -238,10 +238,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HeroCrabPlugin.Gen.cs" />
-    <Compile Include="HeroCrabPlugin\Core\INetClient.cs" />
-    <Compile Include="HeroCrabPlugin\Core\INetHost.cs" />
     <Compile Include="HeroCrabPlugin\Core\INetLogger.cs" />
-    <Compile Include="HeroCrabPlugin\Core\INetServer.cs" />
     <Compile Include="HeroCrabPlugin\Core\NetBoot.cs" />
     <Compile Include="HeroCrabPlugin\Core\NetByteQueue.cs" />
     <Compile Include="HeroCrabPlugin\Core\NetConfig.cs" />
@@ -285,6 +282,9 @@
     <Compile Include="HeroCrabPlugin\Stream\NetStreamClient.cs" />
     <Compile Include="HeroCrabPlugin\Stream\NetStreamGroup.cs" />
     <Compile Include="HeroCrabPlugin\Stream\NetStreamServer.cs" />
+    <Compile Include="HeroCrabPlugin\Sublayer\INetClient.cs" />
+    <Compile Include="HeroCrabPlugin\Sublayer\INetHost.cs" />
+    <Compile Include="HeroCrabPlugin\Sublayer\INetServer.cs" />
     <Compile Include="HeroCrabPlugin\Sublayer\INetSublayer.cs" />
     <Compile Include="HeroCrabPlugin\Sublayer\Replay\NetReplay.cs" />
     <Compile Include="HeroCrabPlugin\Sublayer\Replay\NetRecorder.cs" />
