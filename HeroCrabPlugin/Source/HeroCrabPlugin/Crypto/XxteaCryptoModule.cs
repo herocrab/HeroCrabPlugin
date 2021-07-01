@@ -1,4 +1,5 @@
 ﻿// Copyright (c) Jeremy Buck "Jarmo" - HeroCrab Ltd. (https://github.com/herocrab). Distributed under the MIT license.
+
 using System;
 using System.Collections.Generic;
 using System.Text;

@@ -1,4 +1,5 @@
 ﻿// Copyright (c) Jeremy Buck "Jarmo" - HeroCrab Ltd. (https://github.com/herocrab). Distributed under the MIT license.
+
 using HeroCrabPlugin.Core;
 using HeroCrabPlugin.Field;
 using NUnit.Framework;
