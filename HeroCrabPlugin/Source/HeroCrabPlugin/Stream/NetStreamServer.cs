@@ -1,13 +1,12 @@
 ﻿// Copyright (c) Jeremy Buck "Jarmo" - HeroCrab Ltd. (https://github.com/herocrab)
 // Distributed under the MIT license. See the LICENSE.md file in the project root for more information.
-// ReSharper disable SuggestBaseTypeForParameter
-
 using System.Collections.Generic;
 using System.Linq;
 using HeroCrabPlugin.Core;
 using HeroCrabPlugin.Element;
 using HeroCrabPlugin.Session;
 using HeroCrabPlugin.Sublayer;
+// ReSharper disable SuggestBaseTypeForParameter
 
 namespace HeroCrabPlugin.Stream
 {
@@ -35,6 +34,8 @@ namespace HeroCrabPlugin.Stream
 
             _send = new SortedDictionary<uint, List<NetElement>> {{0, new List<NetElement>()}};
             _exclude = new SortedDictionary<uint, List<NetElement>> {{0, new List<NetElement>()}};
+
+            // TODO add a session for the recorder using CreateSession
         }
 
         /// <inheritdoc />
@@ -123,12 +124,21 @@ namespace HeroCrabPlugin.Stream
             session.SessionCreated += AddSession;
             session.SessionDeleted += DeleteSession;
 
-            // Skip session "0" for server designation
+            // Skip session "0" for server/network recorder
             if (_sessionId == uint.MaxValue) {
                 _sessionId = 1;
             }
             else {
                 _sessionId++;
+            }
+
+            // Account for possibility of rolling over session id's and still having active sessions
+            if (Sessions.ContainsKey(_sessionId)) {
+                NetLogger.Write(NetLogger.LoggingGroup.Stream, this,
+                    $"Server attempted to assign an existing session id, time for maintenance " +
+                    $"or better denial of service protection!");
+                netSublayer.Disconnect();
+                return null;
             }
 
             netSublayer.SendId(_sessionId);

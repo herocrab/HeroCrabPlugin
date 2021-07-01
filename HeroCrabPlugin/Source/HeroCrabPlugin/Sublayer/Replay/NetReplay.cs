@@ -4,9 +4,9 @@
 namespace HeroCrabPlugin.Sublayer.Replay
 {
     /// <summary>
-    /// Network player for recorded games.
+    /// Network replay for recorded games.
     /// </summary>
-    public class NetPlayer
+    public class NetReplay
     {
 
     }

@@ -2,7 +2,6 @@
 // Distributed under the MIT license. See the LICENSE.md file in the project root for more information.
 using System;
 using System.Collections.Generic;
-using FlaxEngine;
 using HeroCrabPlugin.Core;
 // ReSharper disable MemberCanBePrivate.Global
 
@@ -43,6 +42,7 @@ namespace HeroCrabPlugin.Sublayer.Replay
         /// </summary>
         public NetRecorder()
         {
+            Ip = "0.0.0.0";
             _data = new SortedDictionary<float, byte[]>();
             _bytes = new NetByteQueue();
         }
@@ -53,7 +53,8 @@ namespace HeroCrabPlugin.Sublayer.Replay
         public void Start()
         {
             if (IsRecording) {
-                NetLogger.Write(NetLogger.LoggingGroup.Error, this, "ERROR: Recorder attempted to start but is already running.");
+                NetLogger.Write(NetLogger.LoggingGroup.Error, this,
+                    "ERROR: Recorder attempted to start but is already running.");
                 return;
             }
 

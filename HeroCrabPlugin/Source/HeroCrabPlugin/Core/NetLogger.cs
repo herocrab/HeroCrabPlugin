@@ -40,7 +40,8 @@ namespace HeroCrabPlugin.Core
             Session = 4,
             Element = 8,
             Field = 16,
-            Custom = 32,
+            Stream = 32,
+            Custom = 64,
             #pragma warning restore 1591
         }
 

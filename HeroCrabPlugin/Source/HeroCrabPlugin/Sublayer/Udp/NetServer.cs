@@ -166,7 +166,10 @@ namespace HeroCrabPlugin.Sublayer.Udp
             var sublayer = NetSublayer.Create(netEvent.Peer);
             sublayer.DisconnectCallback = OnDisconnectedEvent;
 
-            Stream.CreateSession(sublayer);
+            var session = Stream.CreateSession(sublayer);
+            if (session == null) {
+                return;
+            }
 
             _connections.Add(netEvent.Peer.ID, sublayer);
             NetLogger.Write(NetLogger.LoggingGroup.Session,this,
