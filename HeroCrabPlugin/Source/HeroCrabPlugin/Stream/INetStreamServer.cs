@@ -3,6 +3,7 @@
 using HeroCrabPlugin.Element;
 using HeroCrabPlugin.Session;
 using HeroCrabPlugin.Sublayer;
+using HeroCrabPlugin.Sublayer.Replay;
 
 // ReSharper disable UnusedMember.Global
 // ReSharper disable UnusedMemberInSuper.Global
@@ -12,13 +13,6 @@ namespace HeroCrabPlugin.Stream
     /// <inheritdoc />
     public interface INetStreamServer : INetStream
     {
-        /// <summary>
-        /// Create a network session given a sublayer.
-        /// </summary>
-        /// <param name="netSublayer">Sublayer</param>
-        /// <returns></returns>
-        NetSessionServer CreateSession(INetSublayer netSublayer);
-
         /// <summary>
         /// Create a network element on the server for the stream.
         /// </summary>
@@ -37,5 +31,10 @@ namespace HeroCrabPlugin.Stream
         /// <param name="session">Target session by id</param>
         /// <returns></returns>
         bool FindSession(uint id, out INetSession session);
+
+        /// <summary>
+        /// Network recorder for replay system.
+        /// </summary>
+        INetRecorder Recorder { get; }
     }
 }

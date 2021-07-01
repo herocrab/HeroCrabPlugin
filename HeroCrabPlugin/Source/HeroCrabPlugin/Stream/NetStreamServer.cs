@@ -6,6 +6,8 @@ using HeroCrabPlugin.Core;
 using HeroCrabPlugin.Element;
 using HeroCrabPlugin.Session;
 using HeroCrabPlugin.Sublayer;
+using HeroCrabPlugin.Sublayer.Replay;
+
 // ReSharper disable SuggestBaseTypeForParameter
 
 namespace HeroCrabPlugin.Stream
@@ -21,6 +23,10 @@ namespace HeroCrabPlugin.Stream
         /// <inheritdoc />
         public event ElementDeletedHandler ElementDeleted;
 
+        /// <inheritdoc />
+        public INetRecorder Recorder => _recorder;
+
+        private readonly NetRecorder _recorder;
         private readonly SortedDictionary<uint, List<NetElement>> _send;
         private readonly SortedDictionary<uint, List<NetElement>> _exclude;
 
@@ -35,7 +41,8 @@ namespace HeroCrabPlugin.Stream
             _send = new SortedDictionary<uint, List<NetElement>> {{0, new List<NetElement>()}};
             _exclude = new SortedDictionary<uint, List<NetElement>> {{0, new List<NetElement>()}};
 
-            // TODO add a session for the recorder using CreateSession
+            //_recorder = new NetRecorder();
+            //CreateSession(_recorder);
         }
 
         /// <inheritdoc />
@@ -113,10 +120,14 @@ namespace HeroCrabPlugin.Stream
             base.DeleteSession(sublayer);
         }
 
-        /// <inheritdoc />
-        public NetSessionServer CreateSession(INetSublayer netSublayer)
+        /// <summary>
+        /// Create a session on the server given a sublayer.
+        /// </summary>
+        /// <param name="sublayer"></param>
+        /// <returns>Server session</returns>
+        public NetSessionServer CreateSession(INetSublayer sublayer)
         {
-            var session = new NetSessionServer(netSublayer, _send, _exclude)
+            var session = new NetSessionServer(sublayer, _send, _exclude)
             {
                 ElementCreated = createdElement => ElementCreated?.Invoke(createdElement),
                 ElementDeleted = deletedElement => ElementDeleted?.Invoke(deletedElement)
@@ -137,11 +148,11 @@ namespace HeroCrabPlugin.Stream
                 NetLogger.Write(NetLogger.LoggingGroup.Stream, this,
                     $"Server attempted to assign an existing session id, time for maintenance " +
                     $"or better denial of service protection!");
-                netSublayer.Disconnect();
+                sublayer.Disconnect();
                 return null;
             }
 
-            netSublayer.SendId(_sessionId);
+            sublayer.SendId(_sessionId);
             return session;
         }
 

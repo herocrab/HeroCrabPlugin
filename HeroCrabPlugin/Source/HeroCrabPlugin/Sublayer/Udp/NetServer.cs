@@ -15,9 +15,10 @@ namespace HeroCrabPlugin.Sublayer.Udp
     public class NetServer : NetHost, INetServer
     {
         /// <inheritdoc />
-        public INetStreamServer Stream { get; }
+        public INetStreamServer Stream => _stream;
 
         private readonly Host _server;
+        private readonly NetStreamServer _stream;
         private readonly SortedDictionary<uint, NetSublayer> _connections;
 
         private Event _netEvent;
@@ -48,7 +49,7 @@ namespace HeroCrabPlugin.Sublayer.Udp
             _connections = new SortedDictionary<uint, NetSublayer>();
 
             // Super-layer
-            Stream = new NetStreamServer();
+            _stream = new NetStreamServer();
         }
 
         /// <summary>
@@ -175,7 +176,7 @@ namespace HeroCrabPlugin.Sublayer.Udp
             var sublayer = NetSublayer.Create(netEvent.Peer);
             sublayer.DisconnectCallback = OnDisconnectedEvent;
 
-            var session = Stream.CreateSession(sublayer);
+            var session = _stream.CreateSession(sublayer);
             if (session == null) {
                 return;
             }

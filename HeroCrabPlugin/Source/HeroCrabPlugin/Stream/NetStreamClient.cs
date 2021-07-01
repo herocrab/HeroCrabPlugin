@@ -42,11 +42,11 @@ namespace HeroCrabPlugin.Stream
         /// <summary>
         /// Create a session from a sublayer and add it ot the client.
         /// </summary>
-        /// <param name="netSublayer"></param>
-        /// <returns></returns>
-        public NetSessionClient CreateSession(INetSublayer netSublayer)
+        /// <param name="sublayer"></param>
+        /// <returns>Client session</returns>
+        public NetSessionClient CreateSession(INetSublayer sublayer)
         {
-            var session = new NetSessionClient(netSublayer, Elements)
+            var session = new NetSessionClient(sublayer, Elements)
             {
                 ElementCreated = createdElement => ElementCreated?.Invoke(createdElement),
                 ElementDeleted = deletedElement => ElementDeleted?.Invoke(deletedElement)

@@ -286,6 +286,7 @@
     <Compile Include="HeroCrabPlugin\Sublayer\INetHost.cs" />
     <Compile Include="HeroCrabPlugin\Sublayer\INetServer.cs" />
     <Compile Include="HeroCrabPlugin\Sublayer\INetSublayer.cs" />
+    <Compile Include="HeroCrabPlugin\Sublayer\Replay\INetRecorder.cs" />
     <Compile Include="HeroCrabPlugin\Sublayer\Replay\NetReplay.cs" />
     <Compile Include="HeroCrabPlugin\Sublayer\Replay\NetRecorder.cs" />
     <Compile Include="HeroCrabPlugin\Sublayer\Udp\NetClient.cs" />

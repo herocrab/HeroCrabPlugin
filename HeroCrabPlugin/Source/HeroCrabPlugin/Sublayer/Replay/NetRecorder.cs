@@ -10,7 +10,7 @@ namespace HeroCrabPlugin.Sublayer.Replay
     /// <summary>
     /// Network recorder for replay system.
     /// </summary>
-    public class NetRecorder : NetObject, INetSublayer
+    public class NetRecorder : NetObject, INetSublayer, INetRecorder
     {
         /// <inheritdoc />
         public uint Id { get; set; }

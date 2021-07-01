@@ -13,9 +13,10 @@ namespace HeroCrabPlugin.Sublayer.Udp
     public class NetClient : NetHost, INetClient
     {
         /// <inheritdoc />
-        public INetStreamClient Stream { get; }
+        public INetStreamClient Stream => _stream;
 
         private readonly Host _client;
+        private readonly NetStreamClient _stream;
         private NetSublayer _sublayer;
 
         private Event _netEvent;
@@ -43,14 +44,12 @@ namespace HeroCrabPlugin.Sublayer.Udp
             _client = new Host();
 
             // Super-layer
-            Stream = new NetStreamClient();
+            _stream = new NetStreamClient();
         }
 
         /// <inheritdoc />
         public void Process(float time)
         {
-            // TODO entry for network replay playback
-
             if (!_client.IsSet) {
                 return;
             }
@@ -150,7 +149,7 @@ namespace HeroCrabPlugin.Sublayer.Udp
         {
             _sublayer = NetSublayer.Create(netEvent.Peer);
             _sublayer.DisconnectCallback = OnDisconnectedEvent;
-            Stream.CreateSession(_sublayer);
+            _stream.CreateSession(_sublayer);
         }
 
         /// <inheritdoc />
