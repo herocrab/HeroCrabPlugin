@@ -283,7 +283,7 @@ namespace HeroCrabPluginTestsIntegration
         }
 
         [Test, Apartment(ApartmentState.STA)]
-        public void MaxConnectionTest()
+        public void EndToEndMaxConnectionTest()
         {
             _server = NetServer.Create(new NetSettings(maxConnections:1));
 
@@ -299,7 +299,7 @@ namespace HeroCrabPluginTestsIntegration
         }
 
         [Test, Apartment(ApartmentState.STA)]
-        public void TestAddingFieldsMoreThanOnce()
+        public void EndToEndTestAddingFieldsMoreThanOnce()
         {
             Process(100);
             StartServer();

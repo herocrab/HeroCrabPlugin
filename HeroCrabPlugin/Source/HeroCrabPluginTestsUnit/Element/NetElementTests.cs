@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿/* Copyright (c) Jeremy Buck "Jarmo" - HeroCrab Ltd. (https://github.com/herocrab)
+Distributed under the MIT license. See the LICENSE.md file in the project root for more information. */
 using HeroCrabPlugin.Core;
 using HeroCrabPlugin.Element;
-using HeroCrabPlugin.Field;
 using HeroCrabPlugin.Stream;
 using NUnit.Framework; // ReSharper disable ObjectCreationAsStatement
 
@@ -82,13 +81,14 @@ namespace HeroCrabPluginTestsUnit.Element
         {
             var count = 0;
             var lastValue = byte.MinValue;
+
             void Callback(byte value)
             {
                 count++;
                 lastValue = value;
             }
 
-            var elementDesc = new NetElementDesc(uint.MaxValue,"Test", uint.MaxValue, uint.MaxValue);
+            var elementDesc = new NetElementDesc(uint.MaxValue, "Test", uint.MaxValue, uint.MaxValue);
 
             var sendingElement = new NetElement(elementDesc);
             var byteField = sendingElement.AddByte("Byte", false);
@@ -123,7 +123,7 @@ namespace HeroCrabPluginTestsUnit.Element
         [Test]
         public void SetFieldAction_CreateNetElementWithAllFieldsSerializeDeserialize_VerifySetFieldActionTrueAll()
         {
-            var elementDesc = new NetElementDesc(uint.MaxValue,"Test", uint.MaxValue, uint.MaxValue);
+            var elementDesc = new NetElementDesc(uint.MaxValue, "Test", uint.MaxValue, uint.MaxValue);
 
             var sendingElement = new NetElement(elementDesc);
             sendingElement.AddByte("Byte", false);
@@ -164,9 +164,11 @@ namespace HeroCrabPluginTestsUnit.Element
         }
 
         [Test]
-        public void SetFieldAction_CreateNetElementWithNoFieldsSerializeDeserializeAttemptToSetField_VerifySetFieldActionFalseAll()
+        public void
+            SetFieldAction_CreateNetElementWithNoFieldsSerializeDeserializeAttemptToSetField_VerifySetFieldActionFalseAll
+            ()
         {
-            var elementDesc = new NetElementDesc(uint.MaxValue,"Test", uint.MaxValue, uint.MaxValue);
+            var elementDesc = new NetElementDesc(uint.MaxValue, "Test", uint.MaxValue, uint.MaxValue);
             var sendingElement = new NetElement(elementDesc);
 
             sendingElement.PrepareDelta();
@@ -198,9 +200,11 @@ namespace HeroCrabPluginTestsUnit.Element
         }
 
         [Test]
-        public void SetFieldAction_CreateNetElementWithAllFieldsSerializeDeserializeAttemptToSetInaccurately_VerifySetFieldActionFalseAll()
+        public void
+            SetFieldAction_CreateNetElementWithAllFieldsSerializeDeserializeAttemptToSetInaccurately_VerifySetFieldActionFalseAll
+            ()
         {
-            var elementDesc = new NetElementDesc(uint.MaxValue,"Test", uint.MaxValue, uint.MaxValue);
+            var elementDesc = new NetElementDesc(uint.MaxValue, "Test", uint.MaxValue, uint.MaxValue);
             var sendingElement = new NetElement(elementDesc);
             sendingElement.AddByte("Byte", false);
             sendingElement.AddBytes("Bytes", false);
@@ -244,10 +248,12 @@ namespace HeroCrabPluginTestsUnit.Element
         [Test]
         public void Constructor_CreateNetElementAddAFieldSerializeAndDeserializeIntoWrongElement_VerifyNoDamageIsDone()
         {
-            void Callback(byte value) { }
+            void Callback(byte value)
+            {
+            }
 
-            var elementDescTx = new NetElementDesc(uint.MaxValue,"Test", uint.MaxValue, uint.MaxValue);
-            var elementDescRx = new NetElementDesc(uint.MaxValue,"Test", uint.MaxValue, uint.MaxValue);
+            var elementDescTx = new NetElementDesc(uint.MaxValue, "Test", uint.MaxValue, uint.MaxValue);
+            var elementDescRx = new NetElementDesc(uint.MaxValue, "Test", uint.MaxValue, uint.MaxValue);
 
             var sendingElement = new NetElement(elementDescTx);
             var byteField = sendingElement.AddByte("Byte", false);
@@ -279,7 +285,7 @@ namespace HeroCrabPluginTestsUnit.Element
         [Test]
         public void Get_CreateNetElementWithAllFields_VerifyGetWorks()
         {
-            var elementDesc = new NetElementDesc(uint.MaxValue,"Test", uint.MaxValue, uint.MaxValue);
+            var elementDesc = new NetElementDesc(uint.MaxValue, "Test", uint.MaxValue, uint.MaxValue);
             var sendingElement = new NetElement(elementDesc);
             sendingElement.AddByte("Byte", false);
             sendingElement.AddBytes("Bytes", false);
@@ -314,7 +320,7 @@ namespace HeroCrabPluginTestsUnit.Element
         [Test]
         public void Get_CreateNetElementWithAllFieldsTryToRetrieveIncorrectly_VerifyGetIsNull()
         {
-            var elementDesc = new NetElementDesc(uint.MaxValue,"Test", uint.MaxValue, uint.MaxValue);
+            var elementDesc = new NetElementDesc(uint.MaxValue, "Test", uint.MaxValue, uint.MaxValue);
             var sendingElement = new NetElement(elementDesc);
             sendingElement.AddByte("Byte", false);
             sendingElement.AddBytes("Bytes", false);

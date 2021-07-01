@@ -1,5 +1,5 @@
-﻿// Copyright (c) Jeremy Buck "Jarmo" - HeroCrab Ltd. (https://github.com/herocrab)
-// Distributed under the MIT license. See the LICENSE.md file in the project root for more information.
+﻿/* Copyright (c) Jeremy Buck "Jarmo" - HeroCrab Ltd. (https://github.com/herocrab)
+Distributed under the MIT license. See the LICENSE.md file in the project root for more information. */
 using System;
 // ReSharper disable UnusedMember.Global
 
@@ -12,6 +12,7 @@ namespace HeroCrabPlugin.Stream
     public enum NetStreamGroup
     {
         #pragma warning disable 1591
+        Record = 0,
         Default = 1,
         Lobby = 2,
         Load = 4,

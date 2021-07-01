@@ -1,4 +1,6 @@
-﻿using HeroCrabPlugin.Core;
+﻿/* Copyright (c) Jeremy Buck "Jarmo" - HeroCrab Ltd. (https://github.com/herocrab)
+Distributed under the MIT license. See the LICENSE.md file in the project root for more information. */
+using HeroCrabPlugin.Core;
 using HeroCrabPlugin.Field;
 using NUnit.Framework;
 
@@ -20,6 +22,7 @@ namespace HeroCrabPluginTestsUnit.Field
         {
             var count = 0;
             var lastValue = string.Empty;
+
             void Callback(string value)
             {
                 count++;
@@ -39,6 +42,7 @@ namespace HeroCrabPluginTestsUnit.Field
         {
             var count = 0;
             var lastValue = string.Empty;
+
             void Callback(string value)
             {
                 count++;
@@ -65,6 +69,7 @@ namespace HeroCrabPluginTestsUnit.Field
         {
             var count = 0;
             var lastValue = string.Empty;
+
             void Callback(string value)
             {
                 count++;

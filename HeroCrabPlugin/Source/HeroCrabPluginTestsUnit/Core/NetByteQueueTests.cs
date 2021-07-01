@@ -1,18 +1,20 @@
-﻿using System;
+﻿/* Copyright (c) Jeremy Buck "Jarmo" - HeroCrab Ltd. (https://github.com/herocrab)
+Distributed under the MIT license. See the LICENSE.md file in the project root for more information. */
+using System;
 using System.Linq;
 using FlaxEngine;
 using HeroCrabPlugin.Core;
 using NUnit.Framework;
 
-namespace HeroCrabPlugin.Tests.Unit.Core
+namespace HeroCrabPluginTestsUnit.Core
 {
     [TestFixture]
     public class NetByteQueueTests
     {
         [Test]
-        [TestCase((uint) 0, "TestString1")]
-        [TestCase((uint) 1, "TestString2")]
-        [TestCase((uint) 3, "TestString3")]
+        [TestCase((uint)0, "TestString1")]
+        [TestCase((uint)1, "TestString2")]
+        [TestCase((uint)3, "TestString3")]
         public void WriteString_WriteTestStringAfterUIntAndTransfer_ReturnsUIntAndTestString(uint a, string b)
         {
             var sendingByteQueue = new NetByteQueue();
@@ -56,7 +58,7 @@ namespace HeroCrabPlugin.Tests.Unit.Core
         public void WriteUShort_WriteTestUShortTransfer_ReturnsTestUShort()
         {
             var sendingBytes = new NetByteQueue();
-            const ushort sentUShort = (ushort) 15;
+            const ushort sentUShort = (ushort)15;
 
             sendingBytes.WriteUShort(sentUShort);
 
@@ -75,7 +77,7 @@ namespace HeroCrabPlugin.Tests.Unit.Core
         public void WriteUInt_WriteTestUintTAndTransfer_ReturnsTestUShort()
         {
             var sendingBytes = new NetByteQueue();
-            const uint sentUInt = (uint) 533;
+            const uint sentUInt = (uint)533;
 
             sendingBytes.WriteUInt(sentUInt);
 
@@ -215,7 +217,7 @@ namespace HeroCrabPlugin.Tests.Unit.Core
         public void WriteBytes_WriteTooManyBytes_VerifyReadBytesAreClamped()
         {
             var byteQueue = new NetByteQueue();
-            byteQueue.WriteBytes(new byte [600]);
+            byteQueue.WriteBytes(new byte[600]);
             var byteQueueLength = byteQueue.Length;
 
             var bytes = byteQueue.ReadBytes();
@@ -263,7 +265,7 @@ namespace HeroCrabPlugin.Tests.Unit.Core
         [Test]
         public void WriteVector4_ReadVector4_VerifyContentsAreSame()
         {
-            var writeVector = new Vector4(1, 2,3, 4);
+            var writeVector = new Vector4(1, 2, 3, 4);
             var byteQueue = new NetByteQueue();
             byteQueue.WriteVector4(writeVector);
 
@@ -274,7 +276,7 @@ namespace HeroCrabPlugin.Tests.Unit.Core
         [Test]
         public void WriteQuaternion_ReadQuaternion_VerifyContentsAreSame()
         {
-            var quaternion = new Quaternion(1, 2,3, 4);
+            var quaternion = new Quaternion(1, 2, 3, 4);
             var byteQueue = new NetByteQueue();
             byteQueue.WriteQuaternion(quaternion);
 

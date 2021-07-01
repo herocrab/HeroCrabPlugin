@@ -1,5 +1,5 @@
-﻿// Copyright (c) Jeremy Buck "Jarmo" - HeroCrab Ltd. (https://github.com/herocrab)
-// Distributed under the MIT license. See the LICENSE.md file in the project root for more information.
+﻿/* Copyright (c) Jeremy Buck "Jarmo" - HeroCrab Ltd. (https://github.com/herocrab)
+Distributed under the MIT license. See the LICENSE.md file in the project root for more information. */
 using System;
 using System.Collections.Generic;
 using HeroCrabPlugin.Core;
@@ -27,15 +27,17 @@ namespace HeroCrabPlugin.Sublayer.Replay
         /// <summary>
         /// Network recorder bytes, the result of stopping a recording.
         /// </summary>
-        public byte[] Bytes => _bytes.ToBytes();
+        public byte[] Bytes => _replayBytes.ToBytes();
 
         /// <summary>
         /// Returns true if the network recorder is recording.
         /// </summary>
         public bool IsRecording { get; private set; }
 
-        private readonly SortedDictionary<float, byte[]> _data;
-        private readonly NetByteQueue _bytes;
+        private float _startTime;
+
+        private readonly SortedDictionary<float, byte[]> _replayData;
+        private readonly NetByteQueue _replayBytes;
 
         /// <summary>
         /// Network recorder for replay system.
@@ -43,14 +45,14 @@ namespace HeroCrabPlugin.Sublayer.Replay
         public NetRecorder()
         {
             Ip = "0.0.0.0";
-            _data = new SortedDictionary<float, byte[]>();
-            _bytes = new NetByteQueue();
+            _replayData = new SortedDictionary<float, byte[]>();
+            _replayBytes = new NetByteQueue();
         }
 
         /// <summary>
         /// Start the network recorder.
         /// </summary>
-        public void Start()
+        public void Start(float time)
         {
             if (IsRecording) {
                 NetLogger.Write(NetLogger.LoggingGroup.Error, this,
@@ -58,9 +60,10 @@ namespace HeroCrabPlugin.Sublayer.Replay
                 return;
             }
 
-            _bytes.Clear();
-            _data.Clear();
+            _replayBytes.Clear();
+            _replayData.Clear();
             IsRecording = true;
+            _startTime = time;
         }
 
         /// <summary>
@@ -71,12 +74,12 @@ namespace HeroCrabPlugin.Sublayer.Replay
         {
             IsRecording = false;
 
-            _bytes.Clear();
-            _bytes.WriteInt(_data.Count);
+            _replayBytes.Clear();
+            _replayBytes.WriteInt(_replayData.Count);
 
-                foreach (var entry in _data) {
-                    _bytes.WriteFloat(entry.Key);
-                    _bytes.WriteBytes(entry.Value);
+                foreach (var entry in _replayData) {
+                    _replayBytes.WriteFloat(entry.Key);
+                    _replayBytes.WriteBytes(entry.Value);
                 }
         }
 
@@ -90,8 +93,8 @@ namespace HeroCrabPlugin.Sublayer.Replay
                 return;
             }
 
-            if (!_data.ContainsKey(time)) {
-                _data.Add(time, packet);
+            if (!_replayData.ContainsKey(time)) {
+                _replayData.Add(time - _startTime, packet);
             }
         }
 

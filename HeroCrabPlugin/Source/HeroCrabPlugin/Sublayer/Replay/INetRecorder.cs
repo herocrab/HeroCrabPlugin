@@ -10,7 +10,7 @@ namespace HeroCrabPlugin.Sublayer.Replay
         /// <summary>
         /// Start the network recorder.
         /// </summary>
-        void Start();
+        void Start(float time);
 
         /// <summary>
         /// Stop the network recorder.

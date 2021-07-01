@@ -346,8 +346,8 @@ dotnet_style_qualification_for_field = false:none
 dotnet_style_qualification_for_method = false:none
 dotnet_style_qualification_for_property = false:none
 dotnet_style_require_accessibility_modifiers = for_non_interface_members:none
-file_header_template = // Copyright (c) Jeremy Buck "Jarmo" - HeroCrab Ltd. (https://github.com/herocrab)
-// Distributed under the MIT license. See the LICENSE.md file in the project root for more information.
+file_header_template = /* Copyright (c) Jeremy Buck "Jarmo" - HeroCrab Ltd. (https://github.com/herocrab)
+Distributed under the MIT license. See the LICENSE.md file in the project root for more information. */
 
 # ReSharper properties
 resharper_alignment_tab_fill_style = use_spaces

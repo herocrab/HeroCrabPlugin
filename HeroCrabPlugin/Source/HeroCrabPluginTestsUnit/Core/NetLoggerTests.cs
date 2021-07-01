@@ -1,4 +1,6 @@
-﻿using HeroCrabPlugin.Core;
+﻿/* Copyright (c) Jeremy Buck "Jarmo" - HeroCrab Ltd. (https://github.com/herocrab)
+Distributed under the MIT license. See the LICENSE.md file in the project root for more information. */
+using HeroCrabPlugin.Core;
 using Moq;
 using NUnit.Framework;
 
@@ -23,7 +25,7 @@ namespace HeroCrabPluginTestsUnit.Core
 
             networkLogger.Add(loggerB.Object);
 
-            networkLogger.Write(NetLogger.LoggingGroup.Custom,this, "Test message...");
+            networkLogger.Write(NetLogger.LoggingGroup.Custom, this, "Test message...");
             loggerA.Verify(a => a.Write(It.IsAny<object>(),
                 It.IsAny<string>()), Times.Once());
 
@@ -44,7 +46,7 @@ namespace HeroCrabPluginTestsUnit.Core
 
             networkLogger.Add(loggerA.Object);
 
-            networkLogger.Write(NetLogger.LoggingGroup.Custom,this, "Test message...");
+            networkLogger.Write(NetLogger.LoggingGroup.Custom, this, "Test message...");
             loggerA.Verify(a => a.Write(It.IsAny<object>(),
                 It.IsAny<string>()), Times.Once());
 
@@ -63,7 +65,7 @@ namespace HeroCrabPluginTestsUnit.Core
             };
 
             networkLogger.Remove(loggerA.Object);
-            networkLogger.Write(NetLogger.LoggingGroup.Custom,this, "Test message...");
+            networkLogger.Write(NetLogger.LoggingGroup.Custom, this, "Test message...");
             Assert.That(networkLogger.Count, Is.EqualTo(0));
         }
 
@@ -71,6 +73,7 @@ namespace HeroCrabPluginTestsUnit.Core
         public void Write_WriteLogEntry_VerifyDelegateIsCalled()
         {
             var logWriteCount = 0;
+
             void OnLogWrite(object sender, string message)
             {
                 logWriteCount++;
@@ -85,7 +88,7 @@ namespace HeroCrabPluginTestsUnit.Core
             };
 
             networkLogger.LogWrite += OnLogWrite;
-            networkLogger.Write(NetLogger.LoggingGroup.Custom,this, "Test message...");
+            networkLogger.Write(NetLogger.LoggingGroup.Custom, this, "Test message...");
             Assert.That(logWriteCount, Is.EqualTo(1));
         }
 
@@ -93,6 +96,7 @@ namespace HeroCrabPluginTestsUnit.Core
         public void Write_WriteLogEntryFromGroupNotInMask_VerifyDelegateIsNotCalled()
         {
             var logWriteCount = 0;
+
             void OnLogWrite(object sender, string message)
             {
                 logWriteCount++;
@@ -107,7 +111,7 @@ namespace HeroCrabPluginTestsUnit.Core
             };
 
             networkLogger.LogWrite += OnLogWrite;
-            networkLogger.Write(NetLogger.LoggingGroup.Session,this, "Test message...");
+            networkLogger.Write(NetLogger.LoggingGroup.Session, this, "Test message...");
             Assert.That(logWriteCount, Is.EqualTo(0));
         }
 
@@ -116,6 +120,7 @@ namespace HeroCrabPluginTestsUnit.Core
         {
             var logWriteCount = 0;
             var senderName = string.Empty;
+
             void OnLogWrite(object sender, string message)
             {
                 logWriteCount++;
@@ -131,7 +136,7 @@ namespace HeroCrabPluginTestsUnit.Core
             };
 
             networkLogger.LogWrite += OnLogWrite;
-            networkLogger.Write(NetLogger.LoggingGroup.Custom,null, "Test message...");
+            networkLogger.Write(NetLogger.LoggingGroup.Custom, null, "Test message...");
             Assert.That(logWriteCount, Is.EqualTo(1));
             Assert.That(senderName, Is.EqualTo("Null"));
         }

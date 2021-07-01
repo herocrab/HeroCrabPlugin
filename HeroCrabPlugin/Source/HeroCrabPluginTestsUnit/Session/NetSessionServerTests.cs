@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿/* Copyright (c) Jeremy Buck "Jarmo" - HeroCrab Ltd. (https://github.com/herocrab)
+Distributed under the MIT license. See the LICENSE.md file in the project root for more information. */
+using System.Collections.Generic;
 using System.Linq;
 using HeroCrabPlugin.Core;
 using HeroCrabPlugin.Element;
 using HeroCrabPlugin.Session;
-using HeroCrabPlugin.Stream;
 using HeroCrabPlugin.Sublayer;
 using Moq;
 using NUnit.Framework; // ReSharper disable UnusedVariable
@@ -25,6 +26,7 @@ namespace HeroCrabPluginTestsUnit.Session
         public void Send_ReceiveZeroBytesInSession_AssertThatErrorIsThrown()
         {
             var logMessage = string.Empty;
+
             void LogWrite(object sender, string message)
             {
                 logMessage = message;
@@ -62,7 +64,7 @@ namespace HeroCrabPluginTestsUnit.Session
             var send = new SortedDictionary<uint, List<NetElement>>
             {
                 {0, elements.Values.ToList()},
-                {1, new List<NetElement>()},
+                {1, new List<NetElement>()}
             };
 
             var exclude = new SortedDictionary<uint, List<NetElement>>();
@@ -95,7 +97,7 @@ namespace HeroCrabPluginTestsUnit.Session
             var send = new SortedDictionary<uint, List<NetElement>>
             {
                 {0, elements.Values.ToList()},
-                {1, new List<NetElement>()},
+                {1, new List<NetElement>()}
             };
 
             var exclude = new SortedDictionary<uint, List<NetElement>>();
@@ -131,7 +133,7 @@ namespace HeroCrabPluginTestsUnit.Session
             var send = new SortedDictionary<uint, List<NetElement>>
             {
                 {0, new List<NetElement>()},
-                {1, new List<NetElement>()},
+                {1, new List<NetElement>()}
             };
 
             var exclude = new SortedDictionary<uint, List<NetElement>>();

@@ -1,4 +1,6 @@
-﻿using HeroCrabPlugin.Core;
+﻿/* Copyright (c) Jeremy Buck "Jarmo" - HeroCrab Ltd. (https://github.com/herocrab)
+Distributed under the MIT license. See the LICENSE.md file in the project root for more information. */
+using HeroCrabPlugin.Core;
 using HeroCrabPlugin.Field;
 using NUnit.Framework;
 
@@ -55,7 +57,7 @@ namespace HeroCrabPluginTestsUnit.Field
             buffer.Add(1);
             buffer.Add(2);
 
-            Assert.That(buffer.Dequeue(), Is.EqualTo(new []{0, 1, 2}));
+            Assert.That(buffer.Dequeue(), Is.EqualTo(new[] {0, 1, 2}));
         }
 
         [Test]
@@ -70,7 +72,7 @@ namespace HeroCrabPluginTestsUnit.Field
             var consumeBuffer = new NetFieldBuffer<int>(10);
             consumeBuffer.Consume(buffer);
 
-            Assert.That(consumeBuffer.Dequeue(), Is.EqualTo(new []{0, 1, 2}));
+            Assert.That(consumeBuffer.Dequeue(), Is.EqualTo(new[] {0, 1, 2}));
         }
 
         [Test]
@@ -84,7 +86,7 @@ namespace HeroCrabPluginTestsUnit.Field
 
             var otherBuffer = new NetFieldBuffer<int>(buffer);
 
-            Assert.That(otherBuffer.Dequeue(), Is.EqualTo(new []{0, 1, 2}));
+            Assert.That(otherBuffer.Dequeue(), Is.EqualTo(new[] {0, 1, 2}));
         }
 
         [Test]
@@ -92,7 +94,7 @@ namespace HeroCrabPluginTestsUnit.Field
         {
             // ReSharper disable once UseObjectOrCollectionInitializer
             var buffer = new NetFieldBuffer<int>(10);
-            for (int i = 0; i < 100; i++) {
+            for (var i = 0; i < 100; i++) {
                 buffer.Add(i);
             }
 

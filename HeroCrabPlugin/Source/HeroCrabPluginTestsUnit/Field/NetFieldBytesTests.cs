@@ -1,4 +1,6 @@
-﻿using System;
+﻿/* Copyright (c) Jeremy Buck "Jarmo" - HeroCrab Ltd. (https://github.com/herocrab)
+Distributed under the MIT license. See the LICENSE.md file in the project root for more information. */
+using System;
 using System.Linq;
 using HeroCrabPlugin.Core;
 using HeroCrabPlugin.Field;
@@ -22,6 +24,7 @@ namespace HeroCrabPluginTestsUnit.Field
         {
             var count = 0;
             var lastValue = new byte[0];
+
             void Callback(byte[] value)
             {
                 count++;
@@ -41,6 +44,7 @@ namespace HeroCrabPluginTestsUnit.Field
         {
             var count = 0;
             var lastValue = new byte[0];
+
             void Callback(byte[] value)
             {
                 count++;
@@ -67,6 +71,7 @@ namespace HeroCrabPluginTestsUnit.Field
         {
             var count = 0;
             var lastValue = new byte[0];
+
             void Callback(byte[] value)
             {
                 count++;
@@ -74,9 +79,9 @@ namespace HeroCrabPluginTestsUnit.Field
             }
 
             var field = new NetFieldBytes(0, "Test", false);
-            field.Set(new byte[]{0, 1, byte.MaxValue});
-            field.Set(new byte[]{1, 2, 3});
-            field.Set(new byte[]{2, 3, 4});
+            field.Set(new byte[] {0, 1, byte.MaxValue});
+            field.Set(new byte[] {1, 2, 3});
+            field.Set(new byte[] {2, 3, 4});
 
             var serializedBytes = field.Serialize();
             var receivingQueue = new NetByteQueue();
@@ -89,7 +94,7 @@ namespace HeroCrabPluginTestsUnit.Field
             receivingField.Process();
 
             Assert.That(count, Is.EqualTo(3));
-            Assert.That(lastValue.Take(3), Is.EqualTo(new byte[]{2, 3, 4}));
+            Assert.That(lastValue.Take(3), Is.EqualTo(new byte[] {2, 3, 4}));
         }
     }
 }

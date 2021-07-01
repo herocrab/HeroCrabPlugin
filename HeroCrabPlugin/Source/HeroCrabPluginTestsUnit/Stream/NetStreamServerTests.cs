@@ -1,4 +1,6 @@
-﻿using HeroCrabPlugin.Core;
+﻿/* Copyright (c) Jeremy Buck "Jarmo" - HeroCrab Ltd. (https://github.com/herocrab)
+Distributed under the MIT license. See the LICENSE.md file in the project root for more information. */
+using HeroCrabPlugin.Core;
 using HeroCrabPlugin.Element;
 using HeroCrabPlugin.Session;
 using HeroCrabPlugin.Stream;
@@ -35,6 +37,7 @@ namespace HeroCrabPluginTestsUnit.Stream
         public void CreateSession_CreateMaxPlusOneSessions_VerifySessionIdRollsOverToOneNotZero()
         {
             uint sentId = 0;
+
             void SendId(uint id)
             {
                 sentId = id;
@@ -224,6 +227,7 @@ namespace HeroCrabPluginTestsUnit.Stream
         {
             var serverSendIsReliable = false;
             var serverSendBytes = new byte[0];
+
             void Send(float time, byte[] bytes, bool isReliable)
             {
                 serverSendIsReliable = isReliable;
@@ -235,8 +239,8 @@ namespace HeroCrabPluginTestsUnit.Stream
             fakeSublayerA.SetupAllProperties();
             fakeSublayerA.Object.Id = 1;
             fakeSublayerA.Setup(x => x.Send(It.IsAny<float>(),
-                    It.IsAny<byte[]>(), It.IsAny<bool>()))
-                .Callback<float,byte[], bool>(Send);
+                It.IsAny<byte[]>(), It.IsAny<bool>()))
+                .Callback<float, byte[], bool>(Send);
 
             serverStream.CreateSession(fakeSublayerA.Object);
             fakeSublayerA.Object.ReceiveIdCallback.Invoke(1);
@@ -255,6 +259,7 @@ namespace HeroCrabPluginTestsUnit.Stream
             var serverSendCount = 0;
             var serverSendBytes = new byte[0];
             var serverSendReliable = false;
+
             void Send(float time, byte[] bytes, bool isReliable)
             {
                 serverSendCount++;
@@ -267,7 +272,7 @@ namespace HeroCrabPluginTestsUnit.Stream
             fakeSublayerA.SetupAllProperties();
             fakeSublayerA.Object.Id = 1;
             fakeSublayerA.Setup(x => x.Send(It.IsAny<float>(),
-                    It.IsAny<byte[]>(), It.IsAny<bool>()))
+                It.IsAny<byte[]>(), It.IsAny<bool>()))
                 .Callback<float, byte[], bool>(Send);
 
             serverStream.CreateSession(fakeSublayerA.Object);
@@ -297,6 +302,7 @@ namespace HeroCrabPluginTestsUnit.Stream
 
             var serverSendCount = 0;
             var serverSendBytes = new byte[0];
+
             void ServerSend(float time, byte[] bytes, bool isReliable)
             {
                 serverSendCount++;
@@ -309,7 +315,7 @@ namespace HeroCrabPluginTestsUnit.Stream
             fakeServerSublayerA.SetupAllProperties();
             fakeServerSublayerA.Object.Id = 1;
             fakeServerSublayerA.Setup(x => x.Send(It.IsAny<float>(),
-                    It.IsAny<byte[]>(), It.IsAny<bool>()))
+                It.IsAny<byte[]>(), It.IsAny<bool>()))
                 .Callback<float, byte[], bool>(ServerSend);
 
             serverStream.CreateSession(fakeServerSublayerA.Object);
@@ -332,7 +338,8 @@ namespace HeroCrabPluginTestsUnit.Stream
         }
 
         [Test]
-        public void Process_CreateServerAndElementsThenProcessDeleteTwoThenProcessReceive_VerifyAccuracyOfReceivedElements()
+        public void
+            Process_CreateServerAndElementsThenProcessDeleteTwoThenProcessReceive_VerifyAccuracyOfReceivedElements()
         {
             var clientStream = new NetStreamClient();
             var fakeClientSubLayerA = new Mock<INetSublayer>();
@@ -343,6 +350,7 @@ namespace HeroCrabPluginTestsUnit.Stream
 
             var serverSendCount = 0;
             var serverSendBytes = new byte[0];
+
             void ServerSend(float time, byte[] bytes, bool isReliable)
             {
                 serverSendCount++;
@@ -355,7 +363,7 @@ namespace HeroCrabPluginTestsUnit.Stream
             fakeServerSublayerA.SetupAllProperties();
             fakeServerSublayerA.Object.Id = 1;
             fakeServerSublayerA.Setup(x => x.Send(It.IsAny<float>(),
-                    It.IsAny<byte[]>(), It.IsAny<bool>()))
+                It.IsAny<byte[]>(), It.IsAny<bool>()))
                 .Callback<float, byte[], bool>(ServerSend);
 
             var session = serverStream.CreateSession(fakeServerSublayerA.Object);
@@ -387,7 +395,8 @@ namespace HeroCrabPluginTestsUnit.Stream
         }
 
         [Test]
-        public void Process_CreateServerAndDeferredElementsEnableOnlyOneThenProcessReceive_VerifyAccuracyOfReceivedElements()
+        public void
+            Process_CreateServerAndDeferredElementsEnableOnlyOneThenProcessReceive_VerifyAccuracyOfReceivedElements()
         {
             var clientStream = new NetStreamClient();
             var fakeClientSubLayerA = new Mock<INetSublayer>();
@@ -398,6 +407,7 @@ namespace HeroCrabPluginTestsUnit.Stream
 
             var serverSendCount = 0;
             var serverSendBytes = new byte[0];
+
             void ServerSend(float time, byte[] bytes, bool isReliable)
             {
                 serverSendCount++;
@@ -410,7 +420,7 @@ namespace HeroCrabPluginTestsUnit.Stream
             fakeServerSublayerA.SetupAllProperties();
             fakeServerSublayerA.Object.Id = 1;
             fakeServerSublayerA.Setup(x => x.Send(It.IsAny<float>(),
-                    It.IsAny<byte[]>(), It.IsAny<bool>()))
+                It.IsAny<byte[]>(), It.IsAny<bool>()))
                 .Callback<float, byte[], bool>(ServerSend);
 
             var session = serverStream.CreateSession(fakeServerSublayerA.Object);
@@ -445,6 +455,7 @@ namespace HeroCrabPluginTestsUnit.Stream
 
             var serverSendReliableCount = 0;
             var serverSendBytes = new byte[0];
+
             void ServerSend(float time, byte[] bytes, bool isReliable)
             {
                 serverSendReliableCount++;
@@ -457,7 +468,7 @@ namespace HeroCrabPluginTestsUnit.Stream
             fakeServerSublayerA.SetupAllProperties();
             fakeServerSublayerA.Object.Id = 1;
             fakeServerSublayerA.Setup(x => x.Send(It.IsAny<float>(),
-                    It.IsAny<byte[]>(), It.IsAny<bool>()))
+                It.IsAny<byte[]>(), It.IsAny<bool>()))
                 .Callback<float, byte[], bool>(ServerSend);
 
             serverStream.CreateSession(fakeServerSublayerA.Object);
@@ -494,7 +505,8 @@ namespace HeroCrabPluginTestsUnit.Stream
         }
 
         [Test]
-        public void Process_CreateServerAndElementsOneInputElementVerifyInputNotStreamed_VerifyInputElementIsNotStreamed()
+        public void Process_CreateServerAndElementsOneInputElementVerifyInputNotStreamed_VerifyInputElementIsNotStreamed
+            ()
         {
             var clientStream = new NetStreamClient();
             var fakeClientSubLayerA = new Mock<INetSublayer>();
@@ -506,6 +518,7 @@ namespace HeroCrabPluginTestsUnit.Stream
             var serverSendReliableCount = 0;
             var serverSendReliable = false;
             var serverSendBytes = new byte[0];
+
             void ServerSend(float time, byte[] bytes, bool isReliable)
             {
                 serverSendReliableCount++;
@@ -519,7 +532,7 @@ namespace HeroCrabPluginTestsUnit.Stream
             fakeServerSublayerA.SetupAllProperties();
             fakeServerSublayerA.Object.Id = 1;
             fakeServerSublayerA.Setup(x => x.Send(It.IsAny<float>(),
-                    It.IsAny<byte[]>(), It.IsAny<bool>()))
+                It.IsAny<byte[]>(), It.IsAny<bool>()))
                 .Callback<float, byte[], bool>(ServerSend);
 
             serverStream.CreateSession(fakeServerSublayerA.Object);
@@ -553,7 +566,8 @@ namespace HeroCrabPluginTestsUnit.Stream
         }
 
         [Test]
-        public void Process_TwoServerSessionsOneTeamOneOneTeamTwo_VerifyTeamTwoReceivesTwoElementsTeamOneReceivesOneElement()
+        public void
+            Process_TwoServerSessionsOneTeamOneOneTeamTwo_VerifyTeamTwoReceivesTwoElementsTeamOneReceivesOneElement()
         {
             var clientStreamA = new NetStreamClient();
             var fakeClientSubLayerA = new Mock<INetSublayer>();
@@ -573,6 +587,7 @@ namespace HeroCrabPluginTestsUnit.Stream
 
             var serverSendCount = 0;
             var serverSendBytes = new byte[0];
+
             void ServerSendA(float time, byte[] bytes, bool isReliable)
             {
                 serverSendCount++;
@@ -593,7 +608,7 @@ namespace HeroCrabPluginTestsUnit.Stream
             fakeServerSublayerA.Object.Id = 1;
 
             fakeServerSublayerA.Setup(x => x.Send(It.IsAny<float>(),
-                    It.IsAny<byte[]>(), It.IsAny<bool>()))
+                It.IsAny<byte[]>(), It.IsAny<bool>()))
                 .Callback<float, byte[], bool>(ServerSendA);
 
             var fakeServerSublayerB = new Mock<INetSublayer>();
@@ -601,7 +616,7 @@ namespace HeroCrabPluginTestsUnit.Stream
             fakeServerSublayerB.Object.Id = 2;
 
             fakeServerSublayerB.Setup(x => x.Send(It.IsAny<float>(),
-                    It.IsAny<byte[]>(), It.IsAny<bool>()))
+                It.IsAny<byte[]>(), It.IsAny<bool>()))
                 .Callback<float, byte[], bool>(ServerSendB);
 
             var serverSessionA = serverStream.CreateSession(fakeServerSublayerA.Object);
@@ -616,7 +631,7 @@ namespace HeroCrabPluginTestsUnit.Stream
             elementA.Filter.StreamGroup = NetStreamGroup.Team1;
 
             var elementB = serverStream.CreateElement("ElementB", 1);
-            elementB.Filter.StreamGroup = NetStreamGroup.Team2 ;
+            elementB.Filter.StreamGroup = NetStreamGroup.Team2;
 
             var elementC = serverStream.CreateElement("ElementC", 2);
             elementC.Filter.StreamGroup = NetStreamGroup.Team2;
@@ -645,6 +660,7 @@ namespace HeroCrabPluginTestsUnit.Stream
 
             var serverSendIsReliable = false;
             var serverSendBytes = new byte[0];
+
             void ServerSend(float time, byte[] bytes, bool isReliable)
             {
                 serverSendIsReliable = isReliable;
@@ -657,7 +673,7 @@ namespace HeroCrabPluginTestsUnit.Stream
             fakeServerSublayerA.SetupAllProperties();
             fakeServerSublayerA.Object.Id = 1;
             fakeServerSublayerA.Setup(x => x.Send(It.IsAny<float>(),
-                    It.IsAny<byte[]>(), It.IsAny<bool>()))
+                It.IsAny<byte[]>(), It.IsAny<bool>()))
                 .Callback<float, byte[], bool>(ServerSend);
 
             serverStream.CreateSession(fakeServerSublayerA.Object);
@@ -688,6 +704,7 @@ namespace HeroCrabPluginTestsUnit.Stream
 
             var serverSendIsReliable = false;
             var serverSendBytes = new byte[0];
+
             void ServerSend(float time, byte[] bytes, bool isReliable)
             {
                 serverSendIsReliable = isReliable;
@@ -700,7 +717,7 @@ namespace HeroCrabPluginTestsUnit.Stream
             fakeServerSublayerA.SetupAllProperties();
             fakeServerSublayerA.Object.Id = 1;
             fakeServerSublayerA.Setup(x => x.Send(It.IsAny<float>(),
-                    It.IsAny<byte[]>(), It.IsAny<bool>()))
+                It.IsAny<byte[]>(), It.IsAny<bool>()))
                 .Callback<float, byte[], bool>(ServerSend);
 
             serverStream.CreateSession(fakeServerSublayerA.Object);
@@ -735,6 +752,7 @@ namespace HeroCrabPluginTestsUnit.Stream
 
             var serverSendIsReliable = false;
             var serverSendBytes = new byte[0];
+
             void ServerSend(float time, byte[] bytes, bool isReliable)
             {
                 serverSendIsReliable = isReliable;
@@ -747,7 +765,7 @@ namespace HeroCrabPluginTestsUnit.Stream
             fakeServerSublayerA.SetupAllProperties();
             fakeServerSublayerA.Object.Id = 1;
             fakeServerSublayerA.Setup(x => x.Send(It.IsAny<float>(),
-                    It.IsAny<byte[]>(), It.IsAny<bool>()))
+                It.IsAny<byte[]>(), It.IsAny<bool>()))
                 .Callback<float, byte[], bool>(ServerSend);
 
             serverStream.CreateSession(fakeServerSublayerA.Object);
@@ -780,6 +798,7 @@ namespace HeroCrabPluginTestsUnit.Stream
         {
             var characterSelectedCount = 0;
             var characterSelection = string.Empty;
+
             void ServerCharacterSelection(string selection)
             {
                 characterSelectedCount++;
@@ -802,17 +821,24 @@ namespace HeroCrabPluginTestsUnit.Stream
             fakeClientSubLayer.SetupAllProperties();
             fakeClientSubLayer.Object.Id = 1;
             fakeClientSubLayer.Setup(x => x.Send(It.IsAny<float>(),
-                    It.IsAny<byte[]>(), It.IsAny<bool>()))
+                It.IsAny<byte[]>(), It.IsAny<bool>()))
                 .Callback<float, byte[], bool>(ServerReceive);
 
             fakeServerSublayer.SetupAllProperties();
             fakeServerSublayer.Object.Id = 1;
             fakeServerSublayer.Setup(x => x.Send(It.IsAny<float>(),
-                    It.IsAny<byte[]>(), It.IsAny<bool>()))
+                It.IsAny<byte[]>(), It.IsAny<bool>()))
                 .Callback<float, byte[], bool>(ClientReceive);
 
-            void ClientReceive(float time, byte[] bytes, bool isReliable) => fakeClientSubLayer.Object.ReceiveDataCallback.Invoke(bytes);
-            void ServerReceive(float time, byte[] bytes, bool isReliable) => fakeServerSublayer.Object.ReceiveDataCallback.Invoke(bytes);
+            void ClientReceive(float time, byte[] bytes, bool isReliable)
+            {
+                fakeClientSubLayer.Object.ReceiveDataCallback.Invoke(bytes);
+            }
+
+            void ServerReceive(float time, byte[] bytes, bool isReliable)
+            {
+                fakeServerSublayer.Object.ReceiveDataCallback.Invoke(bytes);
+            }
 
             clientStream.CreateSession(fakeClientSubLayer.Object);
             fakeClientSubLayer.Object.ReceiveIdCallback.Invoke(1);
@@ -849,14 +875,21 @@ namespace HeroCrabPluginTestsUnit.Stream
 
             fakeClientSubLayer.Setup(x => x.Send(It.IsAny<float>(),
                 It.IsAny<byte[]>(), It.IsAny<bool>()))
-                .Callback <float, byte[], bool>(ServerReceive);
+                .Callback<float, byte[], bool>(ServerReceive);
 
             fakeServerSublayer.Setup(x => x.Send(It.IsAny<float>(),
-                    It.IsAny<byte[]>(), It.IsAny<bool>()))
+                It.IsAny<byte[]>(), It.IsAny<bool>()))
                 .Callback<float, byte[], bool>(ClientReceive);
 
-            void ClientReceive(float time, byte[] bytes, bool isReliable) => fakeClientSubLayer.Object.ReceiveDataCallback.Invoke(bytes);
-            void ServerReceive(float time, byte[] bytes, bool isReliable) => fakeServerSublayer.Object.ReceiveDataCallback.Invoke(bytes);
+            void ClientReceive(float time, byte[] bytes, bool isReliable)
+            {
+                fakeClientSubLayer.Object.ReceiveDataCallback.Invoke(bytes);
+            }
+
+            void ServerReceive(float time, byte[] bytes, bool isReliable)
+            {
+                fakeServerSublayer.Object.ReceiveDataCallback.Invoke(bytes);
+            }
 
             clientStream.CreateSession(fakeClientSubLayer.Object);
             fakeClientSubLayer.Object.ReceiveIdCallback.Invoke(1);
@@ -874,13 +907,13 @@ namespace HeroCrabPluginTestsUnit.Stream
             }
 
             var rxQueue = new NetByteQueue();
-            rxQueue.WriteByte(3);           // Type Code
-            rxQueue.WriteInt(4);            // Element Count
+            rxQueue.WriteByte(3); // Type Code
+            rxQueue.WriteInt(4); // Element Count
 
             for (var i = 0; i < 4; i++) {
-                rxQueue.WriteUInt(0);   // Element Index
-                rxQueue.WriteInt(4);            // Field "Bytes"
-                rxQueue.WriteInt(0);            // Field Count
+                rxQueue.WriteUInt(0); // Element Index
+                rxQueue.WriteInt(4); // Field "Bytes"
+                rxQueue.WriteInt(0); // Field Count
             }
 
             // Emulate game tick

@@ -1,5 +1,5 @@
-﻿// Copyright (c) Jeremy Buck "Jarmo" - HeroCrab Ltd. (https://github.com/herocrab)
-// Distributed under the MIT license. See the LICENSE.md file in the project root for more information.
+﻿/* Copyright (c) Jeremy Buck "Jarmo" - HeroCrab Ltd. (https://github.com/herocrab)
+Distributed under the MIT license. See the LICENSE.md file in the project root for more information. */
 
 using System;
 using System.Collections.Generic;
@@ -132,7 +132,7 @@ namespace HeroCrabPlugin.Stream
         /// <returns>Server session</returns>
         public NetSessionServer CreateSession(INetSublayer sublayer)
         {
-            var session = new NetSessionServer(sublayer, _send, _exclude);
+            var session = new NetSessionServer(sublayer, _send, _exclude) {StreamGroup = NetStreamGroup.Default};
             session.SessionCreated += AddSession;
             session.SessionDeleted += DeleteSession;
 
@@ -221,7 +221,7 @@ namespace HeroCrabPlugin.Stream
 
         private void AddRecorder(NetRecorder recorder)
         {
-            var session = new NetSessionServer(recorder, _send, _exclude);
+            var session = new NetSessionServer(recorder, _send, _exclude) {StreamGroup = NetStreamGroup.Record};
             session.SessionCreated += AddSession;
             session.SessionDeleted += DeleteSession;
             recorder.SendId(0);

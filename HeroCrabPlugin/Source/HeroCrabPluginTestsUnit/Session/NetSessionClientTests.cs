@@ -1,4 +1,6 @@
-﻿using System;
+﻿/* Copyright (c) Jeremy Buck "Jarmo" - HeroCrab Ltd. (https://github.com/herocrab)
+Distributed under the MIT license. See the LICENSE.md file in the project root for more information. */
+using System;
 using System.Collections.Generic;
 using HeroCrabPlugin.Core;
 using HeroCrabPlugin.Element;
@@ -70,7 +72,8 @@ namespace HeroCrabPluginTestsUnit.Session
             var sessionA = new NetSessionClient(fakeSublayerA.Object, elements);
 
             var txQueue = new NetByteQueue();
-            Assert.Throws<ArgumentOutOfRangeException>(() => fakeSublayerA.Object.ReceiveDataCallback.Invoke(txQueue.ToBytes()));
+            Assert.Throws<ArgumentOutOfRangeException>(
+                () => fakeSublayerA.Object.ReceiveDataCallback.Invoke(txQueue.ToBytes()));
         }
 
         [Test]
@@ -90,7 +93,8 @@ namespace HeroCrabPluginTestsUnit.Session
             txQueue.WriteByte((byte)NetSession.InnerTypeCode.Modify);
             txQueue.WriteInt(0); // Count
 
-            Assert.Throws<ArgumentOutOfRangeException>(() => fakeSublayerA.Object.ReceiveDataCallback.Invoke(txQueue.ToBytes()));
+            Assert.Throws<ArgumentOutOfRangeException>(
+                () => fakeSublayerA.Object.ReceiveDataCallback.Invoke(txQueue.ToBytes()));
         }
 
         [Test]
@@ -110,7 +114,8 @@ namespace HeroCrabPluginTestsUnit.Session
             txQueue.WriteByte((byte)NetSession.InnerTypeCode.Modify);
             txQueue.WriteInt(0); // Count
 
-            Assert.Throws<ArgumentOutOfRangeException>(() => fakeSublayerA.Object.ReceiveDataCallback.Invoke(txQueue.ToBytes()));
+            Assert.Throws<ArgumentOutOfRangeException>(
+                () => fakeSublayerA.Object.ReceiveDataCallback.Invoke(txQueue.ToBytes()));
         }
 
         [Test]
@@ -130,7 +135,8 @@ namespace HeroCrabPluginTestsUnit.Session
             txQueue.WriteByte(9); // Invalid Type Code
             txQueue.WriteInt(0); // Count
 
-            Assert.Throws<ArgumentOutOfRangeException>(() => fakeSublayerA.Object.ReceiveDataCallback.Invoke(txQueue.ToBytes()));
+            Assert.Throws<ArgumentOutOfRangeException>(
+                () => fakeSublayerA.Object.ReceiveDataCallback.Invoke(txQueue.ToBytes()));
         }
 
         [Test]

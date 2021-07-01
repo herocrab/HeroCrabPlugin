@@ -1,9 +1,7 @@
-﻿// Copyright (c) Jeremy Buck "Jarmo" - HeroCrab Ltd. (https://github.com/herocrab)
-// Distributed under the MIT license. See the LICENSE.md file in the project root for more information.
+﻿/* Copyright (c) Jeremy Buck "Jarmo" - HeroCrab Ltd. (https://github.com/herocrab)
+Distributed under the MIT license. See the LICENSE.md file in the project root for more information. */
 
-using FlaxEngine;
 using HeroCrabPlugin.Core;
-using HeroCrabPlugin.Sublayer;
 using HeroCrabPlugin.Sublayer.Replay;
 using NUnit.Framework;
 
@@ -24,7 +22,7 @@ namespace HeroCrabPluginTestsUnit.Sublayer.Replay
         public void Start_StartRecordingThenDisconnect_VerifyIsRecordingFalse()
         {
             var recorder = new NetRecorder();
-            recorder.Start();
+            recorder.Start(0);
             Assert.That(recorder.IsRecording, Is.True);
 
             recorder.Disconnect();
@@ -36,8 +34,8 @@ namespace HeroCrabPluginTestsUnit.Sublayer.Replay
         {
             var recorder = new NetRecorder();
             recorder.SendId(uint.MaxValue);
-            recorder.Send(0, new byte[]{0,1,2,3}, false);
-            recorder.Send(1, new byte[]{4,5,6,7}, false);
+            recorder.Send(0, new byte[] {0, 1, 2, 3}, false);
+            recorder.Send(1, new byte[] {4, 5, 6, 7}, false);
             recorder.Stop();
 
             var bytes = recorder.Bytes;
@@ -49,6 +47,7 @@ namespace HeroCrabPluginTestsUnit.Sublayer.Replay
         {
             var logCount = 0;
             var logMessage = string.Empty;
+
             void LogWrite(object sender, string message)
             {
                 logCount++;
@@ -59,8 +58,8 @@ namespace HeroCrabPluginTestsUnit.Sublayer.Replay
             logger.LogWrite += LogWrite;
 
             var recorder = new NetRecorder();
-            recorder.Start();
-            recorder.Start();
+            recorder.Start(0);
+            recorder.Start(1);
 
             Assert.That(logCount, Is.EqualTo(1));
             Assert.That(logMessage, Contains.Substring("ERROR"));
@@ -71,6 +70,7 @@ namespace HeroCrabPluginTestsUnit.Sublayer.Replay
         {
             // ReSharper disable once NotAccessedVariable
             var logCount = 0;
+
             void LogWrite(object sender, string message)
             {
                 logCount++;
@@ -80,6 +80,7 @@ namespace HeroCrabPluginTestsUnit.Sublayer.Replay
             logger.LogWrite += LogWrite;
 
             var receivedId = uint.MinValue;
+
             void ReceiveId(uint id)
             {
                 receivedId = id;
@@ -87,10 +88,10 @@ namespace HeroCrabPluginTestsUnit.Sublayer.Replay
 
             var recorder = new NetRecorder {ReceiveIdCallback = ReceiveId};
 
-            recorder.Start();
+            recorder.Start(0);
             recorder.SendId(uint.MaxValue);
-            recorder.Send(0, new byte[]{0,1,2,3}, false);
-            recorder.Send(1, new byte[]{4,5,6,7}, false);
+            recorder.Send(0, new byte[] {0, 1, 2, 3}, false);
+            recorder.Send(1, new byte[] {4, 5, 6, 7}, false);
             recorder.Stop();
 
             var bytes = recorder.Bytes;
