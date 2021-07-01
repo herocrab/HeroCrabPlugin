@@ -72,7 +72,7 @@ namespace HeroCrabPluginTestsUnit.Stream
             networkStream.CreateSession(fakeSublayerB.Object);
             fakeSublayerA.Object.ReceiveIdCallback(2);
 
-            Assert.That(networkStream.SessionCount, Is.EqualTo(2));
+            Assert.That(networkStream.SessionCount, Is.EqualTo(3));
         }
 
         [Test]
@@ -105,7 +105,7 @@ namespace HeroCrabPluginTestsUnit.Stream
             serverStream.DeleteSession(fakeSublayerA.Object);
             serverStream.DeleteSession(fakeSublayerB.Object);
 
-            Assert.That(serverStream.SessionCount, Is.EqualTo(1));
+            Assert.That(serverStream.SessionCount, Is.EqualTo(2));
         }
 
         [Test]
@@ -174,7 +174,7 @@ namespace HeroCrabPluginTestsUnit.Stream
             fakeSublayerA.Object.ReceiveDataCallback?.Invoke(rxQueue.ToBytes());
             fakeSublayerB.Object.ReceiveDataCallback?.Invoke(rxQueue.ToBytes());
 
-            Assert.That(networkStream.SessionCount, Is.EqualTo(2));
+            Assert.That(networkStream.SessionCount, Is.EqualTo(3));
         }
 
         [Test]

@@ -139,6 +139,11 @@ namespace HeroCrabPlugin.Session
                 _candidateElements.Add(element.Description.Id, element);
             }
 
+            // Shortcut out of this process for the recorder
+            if (Id == 0) {
+                return;
+            }
+
             // Merge in and filter "single recipient" elements
             foreach (var element in _sendElements[Id].Where(element => element.Filter.Contains(StreamGroup))) {
                 _candidateElements.Add(element.Description.Id, element);

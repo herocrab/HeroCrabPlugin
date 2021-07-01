@@ -1,5 +1,7 @@
 ﻿// Copyright (c) Jeremy Buck "Jarmo" - HeroCrab Ltd. (https://github.com/herocrab)
 // Distributed under the MIT license. See the LICENSE.md file in the project root for more information.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using HeroCrabPlugin.Core;
@@ -41,8 +43,8 @@ namespace HeroCrabPlugin.Stream
             _send = new SortedDictionary<uint, List<NetElement>> {{0, new List<NetElement>()}};
             _exclude = new SortedDictionary<uint, List<NetElement>> {{0, new List<NetElement>()}};
 
-            //_recorder = new NetRecorder();
-            //CreateSession(_recorder);
+            _recorder = new NetRecorder();
+            AddRecorder(_recorder);
         }
 
         /// <inheritdoc />
@@ -102,8 +104,11 @@ namespace HeroCrabPlugin.Stream
         /// <inheritdoc />
         protected override void AddSession(NetSession session)
         {
-            _send.Add(session.Id, new List<NetElement>());
-            _exclude.Add(session.Id, new List<NetElement>());
+            if (session.Id != 0) {
+                _send.Add(session.Id, new List<NetElement>());
+                _exclude.Add(session.Id, new List<NetElement>());
+            }
+
             base.AddSession(session);
         }
 
@@ -127,11 +132,7 @@ namespace HeroCrabPlugin.Stream
         /// <returns>Server session</returns>
         public NetSessionServer CreateSession(INetSublayer sublayer)
         {
-            var session = new NetSessionServer(sublayer, _send, _exclude)
-            {
-                ElementCreated = createdElement => ElementCreated?.Invoke(createdElement),
-                ElementDeleted = deletedElement => ElementDeleted?.Invoke(deletedElement)
-            };
+            var session = new NetSessionServer(sublayer, _send, _exclude);
             session.SessionCreated += AddSession;
             session.SessionDeleted += DeleteSession;
 
@@ -216,6 +217,14 @@ namespace HeroCrabPlugin.Stream
             foreach (var element in authoredElements.ToArray()) {
                 OnDeleteElement(element);
             }
+        }
+
+        private void AddRecorder(NetRecorder recorder)
+        {
+            var session = new NetSessionServer(recorder, _send, _exclude);
+            session.SessionCreated += AddSession;
+            session.SessionDeleted += DeleteSession;
+            recorder.SendId(0);
         }
     }
 }

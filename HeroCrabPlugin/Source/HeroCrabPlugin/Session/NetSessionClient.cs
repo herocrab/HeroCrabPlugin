@@ -16,6 +16,16 @@ namespace HeroCrabPlugin.Session
     /// </summary>
     public class NetSessionClient : NetSession
     {
+        /// <summary>
+        /// Call back for element created.
+        /// </summary>
+        public Action<INetElement> ElementCreated { get; set; }
+
+        /// <summary>
+        /// Call back for element deleted.
+        /// </summary>
+        public Action<INetElement> ElementDeleted{ get; set; }
+
         private readonly SortedDictionary<uint, NetElement> _inputElements;
         private readonly SortedDictionary<uint, NetElement> _elements;
 

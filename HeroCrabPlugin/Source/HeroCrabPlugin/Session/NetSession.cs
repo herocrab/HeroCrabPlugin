@@ -32,16 +32,6 @@ namespace HeroCrabPlugin.Session
         public uint DupeCount { get; protected set; }
 
         /// <summary>
-        /// Call back for element created.
-        /// </summary>
-        public Action<INetElement> ElementCreated { get; set; }
-
-        /// <summary>
-        /// Call back for element deleted.
-        /// </summary>
-        public Action<INetElement> ElementDeleted{ get; set; }
-
-        /// <summary>
         /// Call back for session created.
         /// </summary>
         public Action<NetSession> SessionCreated { get; set; }

@@ -228,7 +228,7 @@ namespace HeroCrabPluginTestsIntegration
             Assert.That(_serverSessionConnectedCount, Is.EqualTo(2));
             Assert.That(_serverSessionDisconnectedCount, Is.EqualTo(1));
             Assert.That(_clientSessionDisconnectedCount, Is.EqualTo(1));
-            Assert.That(_server.Stream.SessionCount, Is.EqualTo(1));
+            Assert.That(_server.Stream.SessionCount, Is.EqualTo(2));
 
             Reset();
         }
@@ -293,7 +293,7 @@ namespace HeroCrabPluginTestsIntegration
             Process(100);
 
             Assert.That(_serverSessionConnectedCount, Is.EqualTo(1));
-            Assert.That(_server.Stream.SessionCount, Is.EqualTo(1));
+            Assert.That(_server.Stream.SessionCount, Is.EqualTo(2));
 
             Reset();
         }
@@ -329,7 +329,6 @@ namespace HeroCrabPluginTestsIntegration
             Assert.That(_clientB.Stream.ElementCount, Is.EqualTo(3));
 
             // Add more fields to the element
-
             _serverElementA.AddByte("SomethingAddedA", true);
             _serverElementA.AddByte("SomethingAddedB", true);
             _serverElementA.Enabled = true;
