@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using HeroCrabPlugin.Core;
 using HeroCrabPlugin.Element;
+using HeroCrabPlugin.Sublayer;
+
 // ReSharper disable NotResolvedInText
 
 namespace HeroCrabPlugin.Session
@@ -28,23 +30,23 @@ namespace HeroCrabPlugin.Session
         }
 
         /// <inheritdoc />
-        public override void Send()
+        public override void Send(float time)
         {
             IsPacketReliable = false;
             TxQueue.Clear();
 
             WriteInput();
-            SendPacket(TxQueue.ToBytes(), IsPacketReliable);
+            SendPacket(time, TxQueue.ToBytes(), IsPacketReliable);
         }
 
         /// <inheritdoc />
-        protected override void SendPacket(byte[] packet, bool isReliable)
+        protected override void SendPacket(float time, byte[] packet, bool isReliable)
         {
             if (packet.Length <= MinimumTxLength) {
                 return;
             }
 
-            base.SendPacket(packet, isReliable);
+            base.SendPacket(time, packet, isReliable);
         }
 
         /// <inheritdoc />

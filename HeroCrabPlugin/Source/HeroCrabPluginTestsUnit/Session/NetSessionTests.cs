@@ -2,6 +2,7 @@
 using HeroCrabPlugin.Core;
 using HeroCrabPlugin.Element;
 using HeroCrabPlugin.Session;
+using HeroCrabPlugin.Sublayer;
 using Moq;
 using NUnit.Framework;
 

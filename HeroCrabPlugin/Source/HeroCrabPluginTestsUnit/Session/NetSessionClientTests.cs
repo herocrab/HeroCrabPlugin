@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using HeroCrabPlugin.Core;
 using HeroCrabPlugin.Element;
 using HeroCrabPlugin.Session;
+using HeroCrabPlugin.Sublayer;
 using Moq;
 using NUnit.Framework; // ReSharper disable UnusedVariable
 
@@ -51,9 +52,9 @@ namespace HeroCrabPluginTestsUnit.Session
             var elements = new SortedDictionary<uint, NetElement>();
             var sessionA = new NetSessionClient(fakeSublayerA.Object, elements);
 
-            sessionA.Send();
+            sessionA.Send(0);
 
-            fakeSublayerA.Verify(a => a.Send(
+            fakeSublayerA.Verify(a => a.Send(It.IsAny<float>(),
                 It.IsAny<byte[]>(), It.IsAny<bool>()), Times.Exactly(0));
 
             Assert.That(sessionA.TxCount, Is.EqualTo(0));

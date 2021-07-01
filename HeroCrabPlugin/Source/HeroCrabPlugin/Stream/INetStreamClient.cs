@@ -2,6 +2,8 @@
 // Distributed under the MIT license. See the LICENSE.md file in the project root for more information.
 using HeroCrabPlugin.Core;
 using HeroCrabPlugin.Session;
+using HeroCrabPlugin.Sublayer;
+
 // ReSharper disable UnusedMember.Global
 
 namespace HeroCrabPlugin.Stream

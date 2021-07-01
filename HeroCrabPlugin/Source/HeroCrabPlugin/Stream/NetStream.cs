@@ -5,6 +5,7 @@ using System.Linq;
 using HeroCrabPlugin.Core;
 using HeroCrabPlugin.Element;
 using HeroCrabPlugin.Session;
+using HeroCrabPlugin.Sublayer;
 
 namespace HeroCrabPlugin.Stream
 {
@@ -116,7 +117,7 @@ namespace HeroCrabPlugin.Stream
         public virtual void Process(float time)
         {
             ProcessElements();
-            SendPacketSubRate();
+            SendPacketSubRate(time);
             _tick++;
         }
 
@@ -131,7 +132,7 @@ namespace HeroCrabPlugin.Stream
         /// <summary>
         /// Send elements to sessions, subject to filtering based on stream group.
         /// </summary>
-        protected abstract void SendElements();
+        protected abstract void SendElements(float time);
 
         private void ProcessElements()
         {
@@ -140,14 +141,14 @@ namespace HeroCrabPlugin.Stream
             }
         }
 
-        private void SendPacketSubRate()
+        private void SendPacketSubRate(float time)
         {
             if (_tick % (ulong) PacketInterval != 0) {
                 return;
             }
 
             PrepareDeltas();
-            SendElements();
+            SendElements(time);
             ResetFields();
         }
 

@@ -3,6 +3,7 @@
 using System.Linq;
 using HeroCrabPlugin.Core;
 using HeroCrabPlugin.Session;
+using HeroCrabPlugin.Sublayer;
 
 namespace HeroCrabPlugin.Stream
 {
@@ -32,10 +33,10 @@ namespace HeroCrabPlugin.Stream
         /// <summary>
         /// Send all elements to sessions, in this case from the client to the server.
         /// </summary>
-        protected override void SendElements()
+        protected override void SendElements(float time)
         {
             foreach (var session in Sessions.Values) {
-                session.Send();
+                session.Send(time);
             }
         }
 

@@ -4,6 +4,7 @@ using System;
 using HeroCrabPlugin.Core;
 using HeroCrabPlugin.Element;
 using HeroCrabPlugin.Stream;
+using HeroCrabPlugin.Sublayer;
 
 namespace HeroCrabPlugin.Session
 {
@@ -93,7 +94,7 @@ namespace HeroCrabPlugin.Session
         /// <summary>
         /// Send all elements to this session.
         /// </summary>
-        public abstract void Send();
+        public abstract void Send(float time);
 
         /// <summary>
         /// Called when a session receives a session id.
@@ -122,12 +123,13 @@ namespace HeroCrabPlugin.Session
         /// <summary>
         /// Send packet to this session through the sublayer.
         /// </summary>
+        /// <param name="time">Game time when this packet is sent</param>
         /// <param name="packet">Packets bytes</param>
         /// <param name="isReliable">Send this packet reliably</param>
-        protected virtual void SendPacket(byte[] packet, bool isReliable)
+        protected virtual void SendPacket(float time, byte[] packet, bool isReliable)
         {
             TxCount++;
-            _sublayer.Send(packet, isReliable);
+            _sublayer.Send(time, packet, isReliable);
         }
 
         /// <summary>

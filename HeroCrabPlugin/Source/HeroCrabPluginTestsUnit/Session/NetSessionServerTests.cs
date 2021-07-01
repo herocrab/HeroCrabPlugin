@@ -4,6 +4,7 @@ using HeroCrabPlugin.Core;
 using HeroCrabPlugin.Element;
 using HeroCrabPlugin.Session;
 using HeroCrabPlugin.Stream;
+using HeroCrabPlugin.Sublayer;
 using Moq;
 using NUnit.Framework; // ReSharper disable UnusedVariable
 
@@ -66,13 +67,13 @@ namespace HeroCrabPluginTestsUnit.Session
 
             var exclude = new SortedDictionary<uint, List<NetElement>>();
             var sessionA = new NetSessionServer(fakeSublayerA.Object, send, exclude);
-            sessionA.Send();
+            sessionA.Send(0);
 
             elements.Add(2, new NetElement(new NetElementDesc(2, "Test3", 0, 0)));
             send[0] = elements.Values.ToList();
-            sessionA.Send();
+            sessionA.Send(1);
 
-            fakeSublayerA.Verify(a => a.Send(
+            fakeSublayerA.Verify(a => a.Send(It.IsAny<float>(),
                 It.IsAny<byte[]>(), It.IsAny<bool>()), Times.Exactly(2));
 
             Assert.That(sessionA.TxCount, Is.EqualTo(2));
@@ -99,22 +100,22 @@ namespace HeroCrabPluginTestsUnit.Session
 
             var exclude = new SortedDictionary<uint, List<NetElement>>();
             var sessionA = new NetSessionServer(fakeSublayerA.Object, send, exclude);
-            sessionA.Send();
+            sessionA.Send(0);
 
             var testElement = new NetElement(new NetElementDesc(2, "Test3", 0, 0));
             var testSetter = testElement.AddByte("Byte", true);
             elements.Add(2, testElement);
 
             send[0] = elements.Values.ToList();
-            sessionA.Send();
+            sessionA.Send(1);
 
             testSetter.Set(byte.MaxValue);
             testElement.PrepareDelta();
 
             send[0] = elements.Values.ToList();
-            sessionA.Send();
+            sessionA.Send(2);
 
-            fakeSublayerA.Verify(a => a.Send(
+            fakeSublayerA.Verify(a => a.Send(It.IsAny<float>(),
                 It.IsAny<byte[]>(), It.IsAny<bool>()), Times.Exactly(3));
 
             Assert.That(sessionA.TxCount, Is.EqualTo(3));
@@ -135,9 +136,9 @@ namespace HeroCrabPluginTestsUnit.Session
 
             var exclude = new SortedDictionary<uint, List<NetElement>>();
             var sessionA = new NetSessionServer(fakeSublayerA.Object, send, exclude);
-            sessionA.Send();
+            sessionA.Send(0);
 
-            fakeSublayerA.Verify(a => a.Send(
+            fakeSublayerA.Verify(a => a.Send(It.IsAny<float>(),
                 It.IsAny<byte[]>(), It.IsAny<bool>()), Times.Exactly(0));
 
             Assert.That(sessionA.TxCount, Is.EqualTo(0));

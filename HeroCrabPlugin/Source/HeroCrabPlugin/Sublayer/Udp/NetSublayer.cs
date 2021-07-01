@@ -91,7 +91,7 @@ namespace HeroCrabPlugin.Sublayer.Udp
         }
 
         /// <inheritdoc />
-        public void Send(byte[] data, bool isReliable)
+        public void Send(float time, byte[] data, bool isReliable)
         {
             if (data.Length > MaximumPacketLength) {
                 NetLogger.Write(NetLogger.LoggingGroup.Error, this,

@@ -25,14 +25,14 @@ namespace HeroCrabPluginTestsUnit.Element
             var stream = new NetStreamServer();
 
             var element = stream.CreateElement("Player", 0);
-            element.AddByte("Byte", false, null);
-            element.AddBytes("Bytes", false, null);
-            element.AddFloat("Float", false, null);
-            element.AddInt("Int", false, null);
-            element.AddLong("Long", false, null);
-            element.AddString("String", false, null);
-            element.AddUInt("UInt", false, null);
-            element.AddUShort("UShort", false, null);
+            element.AddByte("Byte", false);
+            element.AddBytes("Bytes", false);
+            element.AddFloat("Float", false);
+            element.AddInt("Int", false);
+            element.AddLong("Long", false);
+            element.AddString("String", false);
+            element.AddUInt("UInt", false);
+            element.AddUShort("UShort", false);
 
             // The order here does not matter, this is just for testing
             Assert.That(element.FieldCount, Is.EqualTo(8));
@@ -44,23 +44,23 @@ namespace HeroCrabPluginTestsUnit.Element
             var stream = new NetStreamServer();
 
             var element = stream.CreateElement("Player", 0);
-            element.AddByte("Byte", false, null);
-            element.AddBytes("Bytes", false, null);
-            element.AddFloat("Float", false, null);
-            element.AddInt("Int", false, null);
-            element.AddLong("Long", false, null);
-            element.AddString("String", false, null);
-            element.AddUInt("UInt", false, null);
-            element.AddUShort("UShort", false, null);
+            element.AddByte("Byte", false);
+            element.AddBytes("Bytes", false);
+            element.AddFloat("Float", false);
+            element.AddInt("Int", false);
+            element.AddLong("Long", false);
+            element.AddString("String", false);
+            element.AddUInt("UInt", false);
+            element.AddUShort("UShort", false);
 
-            element.AddByte("Byte", false, null);
-            element.AddBytes("Bytes", false, null);
-            element.AddFloat("Float", false, null);
-            element.AddInt("Int", false, null);
-            element.AddLong("Long", false, null);
-            element.AddString("String", false, null);
-            element.AddUInt("UInt", false, null);
-            element.AddUShort("UShort", false, null);
+            element.AddByte("Byte", false);
+            element.AddBytes("Bytes", false);
+            element.AddFloat("Float", false);
+            element.AddInt("Int", false);
+            element.AddLong("Long", false);
+            element.AddString("String", false);
+            element.AddUInt("UInt", false);
+            element.AddUShort("UShort", false);
 
             // The order here does not matter, this is just for testing
             Assert.That(element.FieldCount, Is.EqualTo(8));
@@ -72,7 +72,7 @@ namespace HeroCrabPluginTestsUnit.Element
             var stream = new NetStreamServer();
 
             var element = stream.CreateElement("Player", 0);
-            element.AddByte("Byte", true, null);
+            element.AddByte("Byte", true);
 
             Assert.That(element.IsReliable, Is.EqualTo(true));
         }

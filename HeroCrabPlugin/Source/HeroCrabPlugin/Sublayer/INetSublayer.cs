@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Jeremy Buck "Jarmo" - HeroCrab Ltd. (https://github.com/herocrab)
 // Distributed under the MIT license. See the LICENSE.md file in the project root for more information.
-using System;
-using ENet;
 
-namespace HeroCrabPlugin.Core
+using System;
+
+namespace HeroCrabPlugin.Sublayer
 {
     /// <summary>
     /// Network sub-layer; Used for interface segregation and modularity.
@@ -38,9 +38,10 @@ namespace HeroCrabPlugin.Core
         /// <summary>
         /// Send a packet through the sub-layer.
         /// </summary>
+        /// <param name="time">Game time this packet is sent</param>
         /// <param name="packet">Packet data in raw bytes</param>
         /// <param name="isReliable">Reliable flag; set to true for packets that require reliable delivery</param>
-        void Send(byte[] packet, bool isReliable);
+        void Send(float time, byte[] packet, bool isReliable);
 
         /// <summary>
         /// Send a session id over this sublayer; Id's are assigned to the sub-layer when a session is created.

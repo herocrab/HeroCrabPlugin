@@ -7,6 +7,7 @@ using System.Linq;
 using HeroCrabPlugin.Core;
 using HeroCrabPlugin.Element;
 using HeroCrabPlugin.Session;
+using HeroCrabPlugin.Sublayer;
 
 namespace HeroCrabPlugin.Stream
 {
@@ -37,7 +38,7 @@ namespace HeroCrabPlugin.Stream
         }
 
         /// <inheritdoc />
-        protected override void SendElements()
+        protected override void SendElements(float time)
         {
             // This method prepares elements for sending using an optimized dictionary approach to reduce iteration
 
@@ -86,7 +87,7 @@ namespace HeroCrabPlugin.Stream
 
             // Send the elements, the _send and _exclude lists are injected into session(s) at constructor
             foreach (var session in Sessions.Values) {
-                session.Send();
+                session.Send(time);
             }
         }
 
