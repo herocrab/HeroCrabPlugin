@@ -138,8 +138,8 @@ namespace HeroCrabPlugin.Sublayer.Udp
 
             _server?.PreventConnections(true);
 
+            Stream?.Recorder.Stop();
             KickAll();
-
             _server?.Flush();
             _server?.Dispose();
         }

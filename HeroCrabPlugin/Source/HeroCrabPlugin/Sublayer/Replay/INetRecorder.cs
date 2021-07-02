@@ -17,5 +17,10 @@ namespace HeroCrabPlugin.Sublayer.Replay
         /// </summary>
         /// <returns>Recorded bytes</returns>
         void Stop();
+
+        /// <summary>
+        /// Network recorder bytes, the result of stopping a recording.
+        /// </summary>
+        byte[] Bytes { get; }
     }
 }

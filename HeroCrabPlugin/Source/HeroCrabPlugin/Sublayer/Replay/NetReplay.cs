@@ -3,9 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using FlaxEditor.CustomEditors;
 using HeroCrabPlugin.Core;
 using HeroCrabPlugin.Stream;
 
@@ -34,6 +33,11 @@ namespace HeroCrabPlugin.Sublayer.Replay
         /// <inheritdoc />
         public bool IsPlaying { get; private set; }
 
+        /// <summary>
+        /// True when unit testing, false when using stream.
+        /// </summary>
+        public bool DisableStream { get; set; }
+
         private float _startTime;
 
         private readonly NetStreamClient _stream;
@@ -55,6 +59,7 @@ namespace HeroCrabPlugin.Sublayer.Replay
 
         private NetReplay()
         {
+            Ip = "0.0.0.0";
             _stream = new NetStreamClient();
             _netByteQueue = new NetByteQueue();
             _replayData = new SortedDictionary<float, byte[]>();
@@ -77,14 +82,17 @@ namespace HeroCrabPlugin.Sublayer.Replay
                 }
 
                 // Evaluate the first chunk
-                if (_replayData.ElementAt(0).Key <= replayTime) {
-                    _dataChunk.Add(_replayData.ElementAt(0).Key, _replayData.ElementAt(0).Value);
+                if (_replayData.ElementAt(0).Key > replayTime) {
+                    continue;
                 }
+                _dataChunk.Add(_replayData.ElementAt(0).Key, _replayData.ElementAt(0).Value);
+                _replayData.Remove(_dataChunk.ElementAt(0).Key);
             }
 
             foreach (var packet in _dataChunk.Values) {
                 ReceiveDataCallback?.Invoke(packet);
             }
+            _stream.Process(time);
         }
 
         /// <inheritdoc />
@@ -101,17 +109,16 @@ namespace HeroCrabPlugin.Sublayer.Replay
             _stream.KickAll();
             _stream.Clear();
 
-            _stream.CreateSession(this);
+            if (!DisableStream) {
+                _stream.CreateSession(this);
+            }
+
             ReceiveIdCallback?.Invoke(0);
         }
 
         /// <inheritdoc />
         public void Stop()
         {
-            if (!IsPlaying) {
-                return;
-            }
-
             IsPlaying = false;
         }
 
@@ -119,9 +126,11 @@ namespace HeroCrabPlugin.Sublayer.Replay
         public void Disconnect() => Stop();
 
         /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
         public void Send(float time, byte[] packet, bool isReliable) {}
 
         /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
         public void SendId(uint id) {}
 
         private void UnreelBytes(byte[] bytes)

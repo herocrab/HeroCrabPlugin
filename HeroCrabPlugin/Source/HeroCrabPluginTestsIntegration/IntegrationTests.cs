@@ -1,8 +1,10 @@
+using System.Collections.Generic;
 using System.Threading;
 using HeroCrabPlugin.Core;
 using HeroCrabPlugin.Element;
 using HeroCrabPlugin.Session;
 using HeroCrabPlugin.Sublayer;
+using HeroCrabPlugin.Sublayer.Replay;
 using HeroCrabPlugin.Sublayer.Udp;
 using NUnit.Framework; // ReSharper disable NotAccessedField.Local
 
@@ -339,6 +341,63 @@ namespace HeroCrabPluginTestsIntegration
             Assert.That(_lastElement.FieldCount, Is.EqualTo(3));
 
             Reset();
+        }
+
+        [Test, Apartment(ApartmentState.STA)]
+        public void EndToEndReplayIntegrationTest()
+        {
+            const string firstMessage = "This is my first test message!";
+            const string secondMessage = "This is my second test message!";
+
+            var server = NetServer.Create(new NetSettings());
+            server.Start("127.0.0.1", 42056);
+            server.Stream.Recorder.Start(0);
+            var messageElement = server.Stream.CreateElement("Test", 0);
+            var messageField = messageElement.AddString("Message", true);
+
+            for (int i = 0; i < 10; i++) {
+                server.Process(i);
+            }
+            messageField.Set(firstMessage);
+
+            for (int i = 10; i < 20; i++) {
+                server.Process(i);
+            }
+            messageField.Set(secondMessage);
+
+            for (int i = 20; i < 30; i++) {
+                server.Process(i);
+            }
+
+            server.Stop();
+            var replayBytes = server.Stream.Recorder.Bytes;
+
+            var receivedMessages = new List<string>();
+            void ReceiveMessage(string receivedMessage)
+            {
+                receivedMessages.Add(receivedMessage);
+            }
+
+            void ElementCreated(INetElement createdElement)
+            {
+                if (createdElement.Description.Name == "Test") {
+                    var field = createdElement.SetActionString("Message", ReceiveMessage);
+                }
+            }
+
+            var replay = NetReplay.Create();
+            replay.Stream.ElementCreated += ElementCreated;
+            replay.Play(0, replayBytes);
+
+            for (int i = 0; i < 30; i++) {
+                replay.Process(i);
+            }
+
+            replay.Stop();
+
+            Assert.That(receivedMessages.Count, Is.EqualTo(2));
+            Assert.That(receivedMessages[0], Is.EqualTo(firstMessage));
+            Assert.That(receivedMessages[1], Is.EqualTo(secondMessage));
         }
     }
 }

@@ -39,7 +39,7 @@ namespace HeroCrabPluginTestsUnit.Sublayer.Replay
             recorder.Stop();
 
             var bytes = recorder.Bytes;
-            Assert.That(bytes.Length, Is.EqualTo(4)); // Length field is an int
+            Assert.That(bytes.Length, Is.EqualTo(4));
         }
 
         [Test]
@@ -98,14 +98,13 @@ namespace HeroCrabPluginTestsUnit.Sublayer.Replay
             var byteQueue = new NetByteQueue();
             byteQueue.WriteRaw(bytes);
 
-            var entryCount = byteQueue.ReadInt();
+            var count = byteQueue.ReadInt();
             var firstTime = byteQueue.ReadFloat();
             var firstData = byteQueue.ReadBytes();
             var secondTime = byteQueue.ReadFloat();
             var secondData = byteQueue.ReadBytes();
 
             Assert.That(receivedId, Is.EqualTo(uint.MaxValue));
-            Assert.That(entryCount, Is.EqualTo(2));
             Assert.That(firstTime, Is.EqualTo(0));
             Assert.That(firstData, Is.EqualTo(new byte[] {0, 1, 2, 3}));
             Assert.That(secondTime, Is.EqualTo(1));
