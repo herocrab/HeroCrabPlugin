@@ -39,8 +39,8 @@ HeroCrabPlugin is a _plugin project_ for Flax games that provides an authoritati
 | NetElement     | An element contains fields and provides an RPC-like messaging tunnel. This is typically associated to a game script. |
 | NetField       | A field is an RPC-end-point (example: bool, byte, int, string, Vector3, etc.).                                       |
 | NetSession     | A session uniquely identifies the client connection sublayer.                                                        |
-| NetSublayer    | Sublayer implementation for UDP; provides basic encryption.                                                       |
-| NetReplay      | Client sublayer implementation for replay system.                                                                           |
+| NetSublayer    | Sublayer implementation for UDP; provides basic encryption.                                                          |
+| NetReplay      | Client sublayer implementation for replay system.                                                                    |
 
 ## <a name="diagram">Diagram</a>
 
