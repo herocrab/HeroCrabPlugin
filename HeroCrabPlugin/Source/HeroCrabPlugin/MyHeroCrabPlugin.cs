@@ -20,7 +20,7 @@ public class MyHeroCrabPlugin : GamePlugin
 		AuthorUrl = "https://github.com/herocrab",
         HomepageUrl = "https://herocrab.com",
         RepositoryUrl = "https://github.com/herocrab/HeroCrabPlugin",
-        Version = new Version(1, 0),
+        Version = new Version(1, 1),
         IsAlpha = true,
         IsBeta = false
     };

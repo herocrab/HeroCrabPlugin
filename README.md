@@ -17,6 +17,7 @@ HeroCrabPlugin is a _plugin project_ for Flax games that provides an authoritati
   - [Fields](#fields)
   - [Filtering](#filtering)
   - [Sessions](#sessions)
+  - [Replays](#replays)
   - [Security](#security)
   - [Adding HeroCrabPlugin](#adding-herocrabplugin)
   - [Contributions](#contributions)
@@ -38,7 +39,8 @@ HeroCrabPlugin is a _plugin project_ for Flax games that provides an authoritati
 | NetElement     | An element contains fields and provides an RPC-like messaging tunnel. This is typically associated to a game script. |
 | NetField       | A field is an RPC-end-point (example: bool, byte, int, string, Vector3, etc.).                                       |
 | NetSession     | A session uniquely identifies the client connection sublayer.                                                        |
-| NetSublayer    | Sublayer implementation for UDP and provides basic encryption.                                                       |
+| NetSublayer    | Sublayer implementation for UDP; provides basic encryption.                                                       |
+| NetReplay      | Client sublayer implementation for replay system.                                                                           |
 
 ## <a name="diagram">Diagram</a>
 
@@ -425,6 +427,60 @@ There are a couple of important notes regarding sessions, these are:
 - Only deltas are streamed over a session, if there is no change in a field nothing is sent.
 
 - Elements with both reliable and unreliable fields will always be streamed over a session reliably only *IF* there are reliable fields with changes (deltas) queued.
+
+---
+
+### <a name="replays">Replays</a>
+
+HeroCrabPlugin includes a very basic replay system whereby the server stream can turn on recording and capture stream data. A client can then "replay" the stream locally.
+
+In order to make use of this system game logic must be designed such that everything needed to accurately recreate a simulation is streamed to recipient "0" or _all recipients_. This will generally exclude input from clients and infers that required game input will be applied to separate game script/network elements for rendering world events or player actions/movements.
+
+This system works through a stream **recorder** sublayer on the server which is set with a StreamGroup of _Record_ or "0" as a bitmask.
+
+To start recording on a server:
+
+```
+    server.Stream.Recorder.Start(time);
+```
+
+To stop recording on the server:
+
+```
+    server.Stream.Recorder.Stop();
+```
+
+This basic stream capability does not _presently_ include a means to save replay data to file, perhaps in a future version. 
+
+To access the replay data:
+
+```
+    var replayData = server.Stream.Recorder.Bytes;
+```
+
+Replaying a stream requires the creation of a special replay client. This is a client with no networking capability that unreels replay data and feeds it to the client stream. 
+
+To create a replay client:
+
+```
+    var replay = NetReplay.Create();
+    replay.Stream.ElementCreated += ElementCreated;
+    replay.Play(Time.GameTime, replayData);
+```
+
+It is required to process the replay client _per-tick_ just like with other hosts:
+
+```
+    replay.Process(Time.GameTime);
+```
+
+To stop the replay client use:
+
+```
+    replay.Stop();
+```
+
+In terms of connecting the replay client to your game logic, it works in the same manner as the default client. The only required task is to register for the **ElementCreated** and **ElementDeleted** events. 
 
 ---
 
