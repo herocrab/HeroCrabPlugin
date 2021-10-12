@@ -32,4 +32,4 @@ jobs:
            
     # Test the project
     - name: Test
-      run: dotnet test HeroCrabPlugin/Source/HeroCrabPluginTestsUnit/ --no-build --verbosity normal
+      run: dotnet test HeroCrabPlugin --no-build --verbosity normal
