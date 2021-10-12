@@ -128,27 +128,9 @@ namespace HeroCrabPlugin.Element
         }
 
         /// <inheritdoc />
-        public INetField<Vector2> AddVector2(string name, bool isReliable, Action<Vector2> callback = null)
+        public INetField<float[]> AddFloats(string name, bool isReliable, Action<float[]> callback = null)
         {
-            return AddField<Vector2>(new NetFieldVector2(_fieldIndex, name, isReliable, callback));
-        }
-
-        /// <inheritdoc />
-        public INetField<Vector3> AddVector3(string name, bool isReliable, Action<Vector3> callback = null)
-        {
-            return AddField<Vector3>(new NetFieldVector3(_fieldIndex, name, isReliable, callback));
-        }
-
-        /// <inheritdoc />
-        public INetField<Vector4> AddVector4(string name, bool isReliable, Action<Vector4> callback = null)
-        {
-            return AddField<Vector4>(new NetFieldVector4(_fieldIndex, name, isReliable, callback));
-        }
-
-        /// <inheritdoc />
-        public INetField<Quaternion> AddQuaternion(string name, bool isReliable, Action<Quaternion> callback = null)
-        {
-            return AddField<Quaternion>(new NetFieldQuaternion(_fieldIndex, name, isReliable, callback));
+            return AddField<float[]>(new NetFieldFloats(_fieldIndex, name, isReliable, callback));
         }
 
         /// <inheritdoc />
@@ -375,20 +357,8 @@ namespace HeroCrabPlugin.Element
                         AddField(new NetFieldUShort(field.Index, field.Name, field.IsReliable));
                         break;
 
-                    case NetFieldDesc.TypeCode.Vector2:
-                        AddField(new NetFieldVector2(field.Index, field.Name, field.IsReliable));
-                        break;
-
-                    case NetFieldDesc.TypeCode.Vector3:
-                        AddField(new NetFieldVector3(field.Index, field.Name, field.IsReliable));
-                        break;
-
-                    case NetFieldDesc.TypeCode.Vector4:
-                        AddField(new NetFieldVector4(field.Index, field.Name, field.IsReliable));
-                        break;
-
-                    case NetFieldDesc.TypeCode.Quaternion:
-                        AddField(new NetFieldQuaternion(field.Index, field.Name, field.IsReliable));
+                    case NetFieldDesc.TypeCode.Floats:
+                        AddField(new NetFieldFloats(field.Index, field.Name, field.IsReliable));
                         break;
 
                     case NetFieldDesc.TypeCode.Bool:

@@ -1,10 +1,10 @@
 ﻿/* Copyright (c) Jeremy Buck "Jarmo" - HeroCrab Ltd. (https://github.com/herocrab)
  Distributed under the MIT license. See the LICENSE.md file in the project root for more information.*/
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using FlaxEngine;
 
 // ReSharper disable ConvertToAutoPropertyWithPrivateSetter
 
@@ -57,6 +57,27 @@ namespace HeroCrabPlugin.Core
         public byte[] ToBytes()
         {
             return _byteQueue.ToArray();
+        }
+
+        /// <summary>
+        /// Write an array of float values to the queue, maximum length of 255.
+        /// </summary>
+        /// <param name="floatArray">Array of floats, less than 255 in length.</param>
+        public void WriteFloats(float[] floatArray)
+        {
+            var length = floatArray.Length;
+            if (length > byte.MaxValue) {
+                throw new ArgumentOutOfRangeException($"[ERROR]: Array of floats greater than 255.");
+            }
+
+            _byteQueue.Enqueue((byte)length);
+            foreach (var floatValue in floatArray) {
+                var bytes = BitConverter.GetBytes(floatValue);
+                foreach (var b in bytes) {
+                    _byteQueue.Enqueue(b);
+                }
+            }
+            _depth++;
         }
 
         /// <summary>
@@ -196,30 +217,6 @@ namespace HeroCrabPlugin.Core
         }
 
         /// <summary>
-        /// Add a Vector to this queue.
-        /// </summary>
-        /// <param name="vector">Vector</param>
-        public void WriteVector2(Vector2 vector) => WriteFloatArray(vector.ToArray());
-
-        /// <summary>
-        /// Add a Vector to this queue.
-        /// </summary>
-        /// <param name="vector">Vector</param>
-        public void WriteVector3(Vector3 vector) => WriteFloatArray(vector.ToArray());
-
-        /// <summary>
-        /// Add a Vector to this queue.
-        /// </summary>
-        /// <param name="vector">Vector</param>
-        public void WriteVector4(Vector4 vector) => WriteFloatArray(vector.ToArray());
-
-        /// <summary>
-        /// Add a Quaternion to this queue.
-        /// </summary>
-        /// <param name="quaternion">Quaternion</param>
-        public void WriteQuaternion(Quaternion quaternion) => WriteFloatArray(quaternion.ToArray());
-
-        /// <summary>
         /// Write a bool to this queue.
         /// </summary>
         /// <param name="value"></param>
@@ -321,30 +318,6 @@ namespace HeroCrabPlugin.Core
         }
 
         /// <summary>
-        /// Read a vector 2 from this queue.
-        /// </summary>
-        /// <returns></returns>
-        public Vector2 ReadVector2() => new Vector2(ReadFloatArray(2));
-
-        /// <summary>
-        /// Read a vector 2 from this queue.
-        /// </summary>
-        /// <returns></returns>
-        public Vector3 ReadVector3() => new Vector3(ReadFloatArray(3));
-
-        /// <summary>
-        /// Read a vector 2 from this queue.
-        /// </summary>
-        /// <returns></returns>
-        public Vector4 ReadVector4() => new Vector4(ReadFloatArray(4));
-
-        /// <summary>
-        /// Read a vector 2 from this queue.
-        /// </summary>
-        /// <returns></returns>
-        public Quaternion ReadQuaternion() => new Quaternion(ReadFloatArray(4));
-
-        /// <summary>
         /// Read a bool from this queue.
         /// </summary>
         /// <returns>Byte</returns>
@@ -388,19 +361,13 @@ namespace HeroCrabPlugin.Core
         /// <returns>Bool</returns>
         public bool Any() => _byteQueue.Any();
 
-        private void WriteFloatArray(IEnumerable<float> floatArray)
+        /// <summary>
+        /// Read an array of float values from the queue.
+        /// </summary>
+        /// <returns>An array of floats</returns>
+        public float[] ReadFloats()
         {
-            foreach (var floatValue in floatArray) {
-                var bytes = BitConverter.GetBytes(floatValue);
-                foreach (var b in bytes) {
-                    _byteQueue.Enqueue(b);
-                }
-            }
-            _depth++;
-        }
-
-        private float[] ReadFloatArray(int length)
-        {
+            var length = ReadByte();
             var floatArray = new float[length];
             for (int i = 0; i < length; i++) {
                 floatArray[i] = ReadFloat();

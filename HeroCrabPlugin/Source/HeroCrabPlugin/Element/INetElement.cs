@@ -130,40 +130,13 @@ namespace HeroCrabPlugin.Element
         INetField<ushort> AddUShort(string name, bool isReliable, Action<ushort> callback = null);
 
         /// <summary>
-        /// Add a Vector2 network field to this element.
+        /// Add an array of floats network field to this element.
         /// </summary>
         /// <param name="name">Field name</param>
         /// <param name="isReliable">If true this field is sent reliably</param>
         /// <param name="callback">Call back method invoked when receiving this field</param>
         /// <returns>Field</returns>
-        INetField<Vector2> AddVector2(string name, bool isReliable, Action<Vector2> callback = null);
-
-        /// <summary>
-        /// Add a Vector3 network field to this element.
-        /// </summary>
-        /// <param name="name">Field name</param>
-        /// <param name="isReliable">If true this field is sent reliably</param>
-        /// <param name="callback">Call back method invoked when receiving this field</param>
-        /// <returns>Field</returns>
-        INetField<Vector3> AddVector3(string name, bool isReliable, Action<Vector3> callback = null);
-
-        /// <summary>
-        /// Add a Vector4 network field to this element.
-        /// </summary>
-        /// <param name="name">Field name</param>
-        /// <param name="isReliable">If true this field is sent reliably</param>
-        /// <param name="callback">Call back method invoked when receiving this field</param>
-        /// <returns>Field</returns>
-        INetField<Vector4> AddVector4(string name, bool isReliable, Action<Vector4> callback = null);
-
-        /// <summary>
-        /// Add a Quaternion network field to this element.
-        /// </summary>
-        /// <param name="name">Field name</param>
-        /// <param name="isReliable">If true this field is sent reliably</param>
-        /// <param name="callback">Call back method invoked when receiving this field</param>
-        /// <returns>Field</returns>
-        INetField<Quaternion> AddQuaternion(string name, bool isReliable, Action<Quaternion> callback = null);
+        INetField<float[]> AddFloats(string name, bool isReliable, Action<float[]> callback = null);
 
         /// <summary>
         /// Add a bool network field to this element.

@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Jeremy Buck "Jarmo" - HeroCrab Ltd. (https://github.com/herocrab). Distributed under the MIT license.
 
-using FlaxEngine;
 using HeroCrabPlugin.Core;
 using HeroCrabPlugin.Field;
 using NUnit.Framework;
@@ -8,7 +7,7 @@ using NUnit.Framework;
 namespace HeroCrabPluginTestsUnit.Field
 {
     [TestFixture]
-    public class NetFieldVector2Tests
+    public class NetFieldFloatsTests
     {
         [SetUp]
         public void SetUp()
@@ -22,78 +21,83 @@ namespace HeroCrabPluginTestsUnit.Field
         public void Set_ConstructAndSetValueThenProcess_VerifyCountAndValueIsCorrect()
         {
             var count = 0;
-            var lastValue = Vector2.Zero;
+            var lastValue = new float[]{};
 
-            void Callback(Vector2 value)
+            void Callback(float[] value)
             {
                 count++;
                 lastValue = value;
             }
 
-            var field = new NetFieldVector2(0, "Test", false, Callback);
-            field.Set(Vector2.Maximum);
+            var field = new NetFieldFloats(0, "Test", false, Callback);
+            var vector = new float[] {0, 1, 2};
+            field.Set(vector);
             field.Process();
 
             Assert.That(count, Is.EqualTo(1));
-            Assert.That(lastValue, Is.EqualTo(Vector2.Maximum));
+            Assert.That(lastValue, Is.EqualTo(vector));
         }
 
         [Test]
         public void Serialize_SerializeAndDeserialize_CompareResultsAreEqual()
         {
             var count = 0;
-            var lastValue = Vector2.Zero;
+            var lastValue = new float[]{};
 
-            void Callback(Vector2 value)
+            void Callback(float[] value)
             {
                 count++;
                 lastValue = value;
             }
 
-            var field = new NetFieldVector2(0, "Test", false);
-            field.Set(Vector2.Maximum);
+            var field = new NetFieldFloats(0, "Test", false);
+            var vector = new float[] {0, 1, 2};
+            field.Set(vector);
 
             var serializedBytes = field.Serialize();
             var receivingQueue = new NetByteQueue();
             receivingQueue.WriteRaw(serializedBytes);
 
-            var receivingField = new NetFieldVector2(field.Description, Callback);
+            var receivingField = new NetFieldFloats(field.Description, Callback);
             receivingField.Deserialize(receivingQueue);
             receivingField.Process();
 
             Assert.That(count, Is.EqualTo(1));
-            Assert.That(lastValue, Is.EqualTo(Vector2.Maximum));
+            Assert.That(lastValue, Is.EqualTo(vector));
         }
 
         [Test]
         public void Serialize_SetFieldThreeTimesSerializeAndDeserialize_CompareTheCountAndLastResult()
         {
             var count = 0;
-            var lastValue = Vector2.Zero;
+            var lastValue = new float[]{};
 
-            void Callback(Vector2 value)
+            void Callback(float[] value)
             {
                 count++;
                 lastValue = value;
             }
 
-            var field = new NetFieldVector2(0, "Test", false);
-            field.Set(Vector2.Maximum);
-            field.Set(Vector2.Zero);
-            field.Set(Vector2.One);
+            var field = new NetFieldFloats(0, "Test", false);
+            var vector1 = new float[] {0, 1, 2};
+            var vector2 = new float[] {1, 2, 3};
+            var vector3 = new float[] {2, 3, 4};
+            field.Set(vector1);
+            field.Set(vector2);
+            field.Set(vector3);
 
             var serializedBytes = field.Serialize();
             var receivingQueue = new NetByteQueue();
             receivingQueue.WriteRaw(serializedBytes);
 
-            var receivingField = new NetFieldVector2(field.Description, Callback);
+            var receivingField = new NetFieldFloats(field.Description, Callback);
             receivingField.Deserialize(receivingQueue);
             receivingField.Process();
             receivingField.Process();
             receivingField.Process();
 
             Assert.That(count, Is.EqualTo(3));
-            Assert.That(lastValue, Is.EqualTo(Vector2.One));
+            Assert.That(lastValue, Is.EqualTo(vector3));
         }
     }
 }

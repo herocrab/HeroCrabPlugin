@@ -46,10 +46,7 @@ namespace HeroCrabPlugin.Field
             String,
             UInt,
             UShort,
-            Vector2,
-            Vector3,
-            Vector4,
-            Quaternion,
+            Floats,
             Bool,
             #pragma warning restore 1591
         }

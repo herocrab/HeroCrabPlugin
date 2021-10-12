@@ -2,7 +2,6 @@
 
 
 using System;
-using FlaxEngine;
 using HeroCrabPlugin.Core;
 
 namespace HeroCrabPlugin.Field
@@ -10,37 +9,37 @@ namespace HeroCrabPlugin.Field
     /// <summary>
     /// Network Vector2 field.
     /// </summary>
-    public class NetFieldVector3 : NetField, INetField<Vector3>, INetFieldReceiver<Vector3>
+    public class NetFieldFloats : NetField, INetField<float[]>, INetFieldReceiver<float[]>
     {
         /// <inheritdoc />
-        public Action<Vector3> Receive { get; set; }
+        public Action<float[]> Receive { get; set; }
 
-        private readonly NetFieldBuffer<Vector3> _buffer;
+        private readonly NetFieldBuffer<float[]> _buffer;
 
         /// <inheritdoc />
-        public NetFieldVector3(byte index, string name, bool isReliable, Action<Vector3> callback = null) : base (isReliable)
+        public NetFieldFloats(byte index, string name, bool isReliable, Action<float[]> callback = null) : base (isReliable)
         {
-            Description = new NetFieldDesc(index, name, isReliable, NetFieldDesc.TypeCode.Vector3);
-            _buffer = new NetFieldBuffer<Vector3>(BufferSize);
+            Description = new NetFieldDesc(index, name, isReliable, NetFieldDesc.TypeCode.Floats);
+            _buffer = new NetFieldBuffer<float[]>(BufferSize);
             Receive = callback;
         }
 
         /// <inheritdoc />
-        public NetFieldVector3(NetFieldDesc description, Action<Vector3> callback = null) : base (description)
+        public NetFieldFloats(NetFieldDesc description, Action<float[]> callback = null) : base (description)
         {
-            _buffer = new NetFieldBuffer<Vector3>(BufferSize);
+            _buffer = new NetFieldBuffer<float[]>(BufferSize);
             Receive = callback;
         }
 
         /// <inheritdoc />
-        public void Set(Vector3 value)
+        public void Set(float[] value)
         {
             _buffer.Add(value);
-            TxQueue.WriteVector3(value);
+            TxQueue.WriteFloats(value);
             IsUpdated = true;
 
             LastQueue.Clear();
-            LastQueue.WriteVector3(value);
+            LastQueue.WriteFloats(value);
         }
 
         /// <inheritdoc />
@@ -58,7 +57,7 @@ namespace HeroCrabPlugin.Field
             var count = rxQueue.ReadByte();
 
             for (var i = 0; i < count; i++) {
-                _buffer.Add(rxQueue.ReadVector3());
+                _buffer.Add(rxQueue.ReadFloats());
             }
         }
     }
