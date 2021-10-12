@@ -1,0 +1,4 @@
+C:\Projects\Flax\FlaxWars\Plugins\HeroCrabPlugin\Source\HeroCrabPlugin.Tests.Unit\obj\Debug\net45\HeroCrabPlugin.Tests.Unit.csprojAssemblyReference.cache
+C:\Projects\Flax\FlaxWars\Plugins\HeroCrabPlugin\Source\HeroCrabPlugin.Tests.Unit\obj\Debug\net45\HeroCrabPlugin.Tests.Unit.csproj.CoreCompileInputs.cache
+C:\Projects\Flax\FlaxWars\Plugins\HeroCrabPlugin\Source\HeroCrabPlugin.Tests.Unit\obj\Debug\net45\HeroCrabPlugin.Tests.Unit.AssemblyInfoInputs.cache
+C:\Projects\Flax\FlaxWars\Plugins\HeroCrabPlugin\Source\HeroCrabPlugin.Tests.Unit\obj\Debug\net45\HeroCrabPlugin.Tests.Unit.AssemblyInfo.cs

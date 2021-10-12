@@ -1,0 +1,112 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Projects\\Flax\\FlaxWars\\Plugins\\HeroCrabPlugin\\Source\\HeroCrabPluginTestsIntegration\\HeroCrabPluginTestsIntegration.csproj": {}
+  },
+  "projects": {
+    "C:\\Projects\\Flax\\FlaxEngine\\Source\\Tools\\Flax.Build\\Flax.Build.csproj": {
+      "restore": {
+        "projectUniqueName": "C:\\Projects\\Flax\\FlaxEngine\\Source\\Tools\\Flax.Build\\Flax.Build.csproj",
+        "projectName": "Flax.Build",
+        "projectPath": "C:\\Projects\\Flax\\FlaxEngine\\Source\\Tools\\Flax.Build\\Flax.Build.csproj"
+      },
+      "frameworks": {
+        "net45": {}
+      }
+    },
+    "C:\\Projects\\Flax\\FlaxWars\\Cache\\Projects\\FlaxEngine.csproj": {
+      "restore": {
+        "projectUniqueName": "C:\\Projects\\Flax\\FlaxWars\\Cache\\Projects\\FlaxEngine.csproj",
+        "projectName": "FlaxEngine",
+        "projectPath": "C:\\Projects\\Flax\\FlaxWars\\Cache\\Projects\\FlaxEngine.csproj"
+      },
+      "frameworks": {
+        "net45": {}
+      }
+    },
+    "C:\\Projects\\Flax\\FlaxWars\\Plugins\\HeroCrabPlugin\\Source\\HeroCrabPlugin.csproj": {
+      "restore": {
+        "projectUniqueName": "C:\\Projects\\Flax\\FlaxWars\\Plugins\\HeroCrabPlugin\\Source\\HeroCrabPlugin.csproj",
+        "projectName": "HeroCrabPlugin",
+        "projectPath": "C:\\Projects\\Flax\\FlaxWars\\Plugins\\HeroCrabPlugin\\Source\\HeroCrabPlugin.csproj",
+        "frameworks": {
+          "net45": {
+            "projectReferences": {
+              "C:\\Projects\\Flax\\FlaxWars\\Cache\\Projects\\FlaxEngine.csproj": {
+                "projectPath": "C:\\Projects\\Flax\\FlaxWars\\Cache\\Projects\\FlaxEngine.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net45": {}
+      }
+    },
+    "C:\\Projects\\Flax\\FlaxWars\\Plugins\\HeroCrabPlugin\\Source\\HeroCrabPluginTestsIntegration\\HeroCrabPluginTestsIntegration.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Projects\\Flax\\FlaxWars\\Plugins\\HeroCrabPlugin\\Source\\HeroCrabPluginTestsIntegration\\HeroCrabPluginTestsIntegration.csproj",
+        "projectName": "HeroCrabPluginTestsIntegration",
+        "projectPath": "C:\\Projects\\Flax\\FlaxWars\\Plugins\\HeroCrabPlugin\\Source\\HeroCrabPluginTestsIntegration\\HeroCrabPluginTestsIntegration.csproj",
+        "packagesPath": "C:\\Users\\jerem\\.nuget\\packages\\",
+        "outputPath": "C:\\Projects\\Flax\\FlaxWars\\Plugins\\HeroCrabPlugin\\Source\\HeroCrabPluginTestsIntegration\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\jerem\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net45"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Users\\jerem\\AppData\\Local\\Stride\\NugetDev": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://packages.stride3d.net/nuget": {}
+        },
+        "frameworks": {
+          "net45": {
+            "targetAlias": "net45",
+            "projectReferences": {
+              "C:\\Projects\\Flax\\FlaxEngine\\Source\\Tools\\Flax.Build\\Flax.Build.csproj": {
+                "projectPath": "C:\\Projects\\Flax\\FlaxEngine\\Source\\Tools\\Flax.Build\\Flax.Build.csproj"
+              },
+              "C:\\Projects\\Flax\\FlaxWars\\Plugins\\HeroCrabPlugin\\Source\\HeroCrabPlugin.csproj": {
+                "projectPath": "C:\\Projects\\Flax\\FlaxWars\\Plugins\\HeroCrabPlugin\\Source\\HeroCrabPlugin.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net45": {
+          "targetAlias": "net45",
+          "dependencies": {
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[16.5.0, )"
+            },
+            "NUnit": {
+              "target": "Package",
+              "version": "[3.12.0, )"
+            },
+            "NUnit3TestAdapter": {
+              "target": "Package",
+              "version": "[3.16.1, )"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
