@@ -25,9 +25,7 @@
 
     <ItemGroup>
       <None Remove="enet.dll" />
-      <Content Include="enet.dll">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
+      <None Remove=".gitignore" />
     </ItemGroup>
 
 </Project>

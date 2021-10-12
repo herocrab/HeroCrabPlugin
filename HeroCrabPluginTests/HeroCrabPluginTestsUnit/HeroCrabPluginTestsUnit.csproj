@@ -18,4 +18,8 @@
       <ProjectReference Include="..\HeroCrabPlugin.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove=".gitignore" />
+    </ItemGroup>
+
 </Project>
