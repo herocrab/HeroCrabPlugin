@@ -33,5 +33,5 @@ jobs:
            
     # Test the project
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --no-build --verbosity detailed
       working-directory: "HeroCrabPlugin/Source/HeroCrabPluginTestsUnit/"
