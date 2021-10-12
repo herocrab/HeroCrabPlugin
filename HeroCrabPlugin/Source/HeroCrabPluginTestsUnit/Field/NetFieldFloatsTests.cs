@@ -64,6 +64,7 @@ namespace HeroCrabPluginTestsUnit.Field
 
             Assert.That(count, Is.EqualTo(1));
             Assert.That(lastValue, Is.EqualTo(vector));
+            Assert.Fail();
         }
 
         [Test]
