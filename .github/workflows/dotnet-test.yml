@@ -27,7 +27,7 @@ jobs:
     - name: Install .NET 4.5.2
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 4.5.x
+        dotnet-version: 5.0.x
         
     # Install Dependencies
     - name: Install Moq
