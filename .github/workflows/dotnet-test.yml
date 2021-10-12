@@ -17,26 +17,26 @@ jobs:
     runs-on: windows-latest  # For a list of available runner types, refer to
                              # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
 
-    env:
-      Solution_Name: HeroCrabPlugin
-      Test_Project_Path: HeroCrabPlugin/HeroCrabPlugin/Source/HeroCrabPluginTestsUnit/HeroCrabPluginTestsUnit.csproj
-
     steps:
     - name: Checkout
       uses: actions/checkout@v2
       with:
         fetch-depth: 0
 
-    # Install the .NET Core workload
-    - name: Install .NET Core
+    # Install .NET 4.5.2
+    - name: Install .NET 4.5.2
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 5.0.x
-
+        dotnet-version: 4.5.x
+        
+    # Install Dependencies
+    - name: Install Moq
+      run: |
+        dotnet add package Moq --version 4.16.1
+        dotnet add package NUnit --version 3.12.0
+        dotnet add package NUnit3TestAdapater --version 3.16.1
+        dotnet add package Microsoft.NET.Test.Sdk --version 16.5.0
+        
     # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
     - name: Setup MSBuild.exe
       uses: microsoft/setup-msbuild@v1.0.2
-
-    # Execute all unit tests in the solution
-    - name: Execute unit tests
-      run: dotnet test
