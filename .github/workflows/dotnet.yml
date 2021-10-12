@@ -10,16 +10,26 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
+  
     steps:
+    # Checkout 
     - uses: actions/checkout@v2
+    
+    # Setup .Net 
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.x
+    
+    # Restore dependencies 
     - name: Restore dependencies
       run: dotnet restore
+      working-directory: Plugins/HeroCrabPlugin/Source/HeroCrabPluginTestsUnit
+      
+    # Build the project 
     - name: Build
       run: dotnet build --no-restore
+      
+    # Test the project
     - name: Test
       run: dotnet test --no-build --verbosity normal
