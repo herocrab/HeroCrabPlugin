@@ -24,7 +24,7 @@ jobs:
     # Restore dependencies 
     - name: Restore dependencies
       run: dotnet restore
-      working-directory: "HeroCrabPlugin/Source/HeroCrabPluginTestsUnit/HeroCrabPluginTestsUnit.csproj"
+      working-directory: "HeroCrabPlugin/Source/HeroCrabPluginTestsUnit/"
            
     # Build the project 
     - name: Build
