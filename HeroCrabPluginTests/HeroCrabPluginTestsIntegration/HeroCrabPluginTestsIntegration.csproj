@@ -4,6 +4,10 @@
         <TargetFramework>net45</TargetFramework>
 
         <IsPackable>false</IsPackable>
+
+        <Configurations>Release;Debug</Configurations>
+
+        <Platforms>x64</Platforms>
     </PropertyGroup>
 
     <ItemGroup>
@@ -13,19 +17,14 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\..\..\FlaxEngine\Source\Tools\Flax.Build\Flax.Build.csproj" />
-      <ProjectReference Include="..\HeroCrabPlugin.csproj" />
+      <ProjectReference Include="..\HeroCrabPluginTests.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <Reference Include="ENet-CSharp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-        <HintPath>..\..\Lib\ENet-CSharp.dll</HintPath>
-      </Reference>
-    </ItemGroup>
-
-    <ItemGroup>
-      <None Remove="enet.dll" />
       <None Remove=".gitignore" />
+      <None Update="enet.dll">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>

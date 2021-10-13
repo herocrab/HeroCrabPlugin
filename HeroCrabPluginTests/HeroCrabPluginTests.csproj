@@ -1,0 +1,211 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+    <PropertyGroup>
+        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+        <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+        <ProjectGuid>{E14BA81F-F454-4A99-8C0E-BFB9442A2001}</ProjectGuid>
+        <OutputType>Library</OutputType>
+        <AppDesignerFolder>Properties</AppDesignerFolder>
+        <RootNamespace>HeroCrabPluginTests</RootNamespace>
+        <AssemblyName>HeroCrabPluginTests</AssemblyName>
+        <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+        <FileAlignment>512</FileAlignment>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+      <DebugType>pdbonly</DebugType>
+      <Optimize>true</Optimize>
+      <DefineConstants>TRACE</DefineConstants>
+      <ErrorReport>prompt</ErrorReport>
+      <WarningLevel>4</WarningLevel>
+      <OutputPath>bin\x64\Release\</OutputPath>
+      <PlatformTarget>x64</PlatformTarget>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+      <DebugSymbols>true</DebugSymbols>
+      <DebugType>full</DebugType>
+      <Optimize>false</Optimize>
+      <DefineConstants>DEBUG;TRACE</DefineConstants>
+      <ErrorReport>prompt</ErrorReport>
+      <WarningLevel>4</WarningLevel>
+      <OutputPath>bin\x64\Debug\</OutputPath>
+      <PlatformTarget>x64</PlatformTarget>
+    </PropertyGroup>
+    <ItemGroup>
+        <Reference Include="ENet-CSharp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>..\HeroCrabPlugin\Lib\ENet-CSharp.dll</HintPath>
+        </Reference>
+        <Reference Include="System" />
+        <Reference Include="System.Core" />
+        <Reference Include="System.Data" />
+        <Reference Include="System.Xml" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Core\INetLogger.cs">
+          <Link>HeroCrabPlugin\Core\INetLogger.cs</Link>
+        </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Core\NetBoot.cs">
+          <Link>HeroCrabPlugin\Core\NetBoot.cs</Link>
+        </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Core\NetByteQueue.cs">
+          <Link>HeroCrabPlugin\Core\NetByteQueue.cs</Link>
+        </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Core\NetConfig.cs">
+          <Link>HeroCrabPlugin\Core\NetConfig.cs</Link>
+        </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Core\NetLogger.cs">
+          <Link>HeroCrabPlugin\Core\NetLogger.cs</Link>
+        </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Core\NetLoggerBuffer.cs">
+          <Link>HeroCrabPlugin\Core\NetLoggerBuffer.cs</Link>
+        </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Core\NetObject.cs">
+          <Link>HeroCrabPlugin\Core\NetObject.cs</Link>
+        </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Core\NetServices.cs">
+          <Link>HeroCrabPlugin\Core\NetServices.cs</Link>
+        </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Core\NetSettings.cs">
+          <Link>HeroCrabPlugin\Core\NetSettings.cs</Link>
+        </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Crypto\ICryptoModule.cs">
+          <Link>HeroCrabPlugin\Crypto\ICryptoModule.cs</Link>
+        </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Crypto\XxteaCryptoModule.cs">
+          <Link>HeroCrabPlugin\Crypto\XxteaCryptoModule.cs</Link>
+        </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Element\INetElement.cs">
+          <Link>HeroCrabPlugin\Element\INetElement.cs</Link>
+        </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Element\NetElement.cs">
+          <Link>HeroCrabPlugin\Element\NetElement.cs</Link>
+        </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Element\NetElementDesc.cs">
+          <Link>HeroCrabPlugin\Element\NetElementDesc.cs</Link>
+        </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Element\NetElementFilter.cs">
+          <Link>HeroCrabPlugin\Element\NetElementFilter.cs</Link>
+        </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Field\INetField.cs">
+          <Link>HeroCrabPlugin\Field\INetField.cs</Link>
+        </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Field\NetField.cs">
+          <Link>HeroCrabPlugin\Field\NetField.cs</Link>
+        </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Field\NetFieldBool.cs">
+          <Link>HeroCrabPlugin\Field\NetFieldBool.cs</Link>
+        </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Field\NetFieldBuffer.cs">
+          <Link>HeroCrabPlugin\Field\NetFieldBuffer.cs</Link>
+        </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Field\NetFieldByte.cs">
+          <Link>HeroCrabPlugin\Field\NetFieldByte.cs</Link>
+        </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Field\NetFieldBytes.cs">
+          <Link>HeroCrabPlugin\Field\NetFieldBytes.cs</Link>
+        </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Field\NetFieldDesc.cs">
+          <Link>HeroCrabPlugin\Field\NetFieldDesc.cs</Link>
+        </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Field\NetFieldFloat.cs">
+          <Link>HeroCrabPlugin\Field\NetFieldFloat.cs</Link>
+        </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Field\NetFieldFloats.cs">
+          <Link>HeroCrabPlugin\Field\NetFieldFloats.cs</Link>
+        </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Field\NetFieldInt.cs">
+          <Link>HeroCrabPlugin\Field\NetFieldInt.cs</Link>
+        </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Field\NetFieldLong.cs">
+          <Link>HeroCrabPlugin\Field\NetFieldLong.cs</Link>
+        </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Field\NetFieldString.cs">
+          <Link>HeroCrabPlugin\Field\NetFieldString.cs</Link>
+        </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Field\NetFieldUInt.cs">
+          <Link>HeroCrabPlugin\Field\NetFieldUInt.cs</Link>
+        </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Field\NetFieldUShort.cs">
+          <Link>HeroCrabPlugin\Field\NetFieldUShort.cs</Link>
+        </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Session\INetSession.cs">
+          <Link>HeroCrabPlugin\Session\INetSession.cs</Link>
+        </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Session\NetSession.cs">
+          <Link>HeroCrabPlugin\Session\NetSession.cs</Link>
+        </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Session\NetSessionClient.cs">
+          <Link>HeroCrabPlugin\Session\NetSessionClient.cs</Link>
+        </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Session\NetSessionServer.cs">
+          <Link>HeroCrabPlugin\Session\NetSessionServer.cs</Link>
+        </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Stream\INetStream.cs">
+          <Link>HeroCrabPlugin\Stream\INetStream.cs</Link>
+        </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Stream\INetStreamClient.cs">
+          <Link>HeroCrabPlugin\Stream\INetStreamClient.cs</Link>
+        </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Stream\INetStreamServer.cs">
+          <Link>HeroCrabPlugin\Stream\INetStreamServer.cs</Link>
+        </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Stream\NetStream.cs">
+          <Link>HeroCrabPlugin\Stream\NetStream.cs</Link>
+        </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Stream\NetStreamClient.cs">
+          <Link>HeroCrabPlugin\Stream\NetStreamClient.cs</Link>
+        </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Stream\NetStreamGroup.cs">
+          <Link>HeroCrabPlugin\Stream\NetStreamGroup.cs</Link>
+        </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Stream\NetStreamServer.cs">
+          <Link>HeroCrabPlugin\Stream\NetStreamServer.cs</Link>
+        </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Sublayer\INetClient.cs">
+          <Link>HeroCrabPlugin\Sublayer\INetClient.cs</Link>
+        </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Sublayer\INetHost.cs">
+          <Link>HeroCrabPlugin\Sublayer\INetHost.cs</Link>
+        </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Sublayer\INetServer.cs">
+          <Link>HeroCrabPlugin\Sublayer\INetServer.cs</Link>
+        </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Sublayer\INetSublayer.cs">
+          <Link>HeroCrabPlugin\Sublayer\INetSublayer.cs</Link>
+        </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Sublayer\Replay\INetRecorder.cs">
+          <Link>HeroCrabPlugin\Sublayer\Replay\INetRecorder.cs</Link>
+        </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Sublayer\Replay\INetReplay.cs">
+          <Link>HeroCrabPlugin\Sublayer\Replay\INetReplay.cs</Link>
+        </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Sublayer\Replay\NetRecorder.cs">
+          <Link>HeroCrabPlugin\Sublayer\Replay\NetRecorder.cs</Link>
+        </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Sublayer\Replay\NetReplay.cs">
+          <Link>HeroCrabPlugin\Sublayer\Replay\NetReplay.cs</Link>
+        </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Sublayer\Udp\NetClient.cs">
+          <Link>HeroCrabPlugin\Sublayer\Udp\NetClient.cs</Link>
+        </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Sublayer\Udp\NetHost.cs">
+          <Link>HeroCrabPlugin\Sublayer\Udp\NetHost.cs</Link>
+        </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Sublayer\Udp\NetServer.cs">
+          <Link>HeroCrabPlugin\Sublayer\Udp\NetServer.cs</Link>
+        </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Sublayer\Udp\NetSublayer.cs">
+          <Link>HeroCrabPlugin\Sublayer\Udp\NetSublayer.cs</Link>
+        </Compile>
+        <Compile Include="Properties\AssemblyInfo.cs" />
+    </ItemGroup>
+    <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+    <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+         Other similar extension points exist, see Microsoft.Common.targets.
+    <Target Name="BeforeBuild">
+    </Target>
+    <Target Name="AfterBuild">
+    </Target>
+    -->
+
+</Project>
