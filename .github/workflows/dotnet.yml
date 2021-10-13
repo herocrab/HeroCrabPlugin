@@ -9,7 +9,7 @@ on:
 jobs:
   build:
 
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
     # Checkout 
@@ -23,12 +23,12 @@ jobs:
 
     # Restore dependencies 
     - name: Restore dependencies
-      run: dotnet restore HeroCrabPluginTests/HeroCrabPluginTests.csproj
+      run: dotnet restore HeroCrabPluginTests/
 
     # Build the project 
     - name: Build
-      run:  dotnet build HeroCrabPluginTests/HeroCrabPluginTests.sln --no-restore --verbosity normal
+      run:  dotnet build HeroCrabPluginTests/HeroCrabPluginTests.sln --no-restore --verbosity detailed
 
     # Test the project
     - name: Test
-      run: dotnet test HeroCrabPluginTests/HeroCrabPluginTests.sln --no-build --verbosity normal
+      run: dotnet test HeroCrabPluginTests --no-build --verbosity normal
