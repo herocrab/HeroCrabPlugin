@@ -2,7 +2,7 @@
 
 ![example branch parameter](https://github.com/herocrab/HeroCrabPlugin/actions/workflows/dotnet.yml/badge.svg?branch=main)
 
-HeroCrabPlugin is a _plugin project_ for Flax games that provides an authoritative network messaging framework for use in multi-player games developed with [Flax Engine](https://flaxengine.com/). It was designed to be simple, flexible, and modular with a primary use-case of distributed player-owned servers and centralized catalog server(s). This README provides an introduction to the core components and general API examples.
+HeroCrabPlugin is a _plugin project_ that provides an authoritative network messaging framework for use in multi-player games developed with [Flax Engine](https://flaxengine.com/). It was designed to be simple, flexible, and modular with a primary use-case of distributed player-owned servers and centralized catalog server(s). This README provides an introduction to the core components and general API examples.
 
 ---
 
@@ -39,7 +39,7 @@ HeroCrabPlugin is a _plugin project_ for Flax games that provides an authoritati
 | NetStream      | A stream is a collection of Elements and Sessions.                                                                   |
 | NetStreamGroup | A stream group is a bitmask for filtering elements from sessions.                                                    |
 | NetElement     | An element contains fields and provides an RPC-like messaging tunnel. This is typically associated to a game script. |
-| NetField       | A field is an RPC-end-point (example: bool, byte, int, string, Vector3, etc.).                                       |
+| NetField       | A field is an RPC-end-point (example: bool, byte, int, string, float[], etc.).                                       |
 | NetSession     | A session uniquely identifies the client connection sublayer.                                                        |
 | NetSublayer    | Sublayer implementation for UDP; provides basic encryption.                                                          |
 | NetReplay      | Client sublayer implementation for replay system.                                                                    |
@@ -265,20 +265,20 @@ Once an element has been enabled, **you cannot add fields to it unless you first
 
 ```
 private INetField<string> _playerName;
-private INetField<Vector3> _direction;
+private INetField<float[]> _direction;
 private INetField<byte> _attack;
 
 public override void OnStart()
 {
     if (Element.IsServer) {
         Element.AddString("Name", true, OnNameReceived);
-        Element.AddVector3("Direction", false, OnDirectionReceived);
+        Element.AddFloats("Direction", false, OnDirectionReceived);
         Element.AddByte("Attack", true, OnAttackReceived);        
         Element.Filter.StreamGroup = NetStreamGroup.Default;
         Element.Enabled = true;
     } else {
         _playerName = Element.GetString("Name");
-        _direction = Element.GetVector3("Direction");
+        _direction = Element.GetFloats("Direction");
         _attack = Element.GetByte("Attack");
     }
 }
@@ -288,7 +288,7 @@ private void OnNameReceived(string name)
     // Do something here
 }
 
-private void OnDirectionReceived(Vector3 vector)
+private void OnDirectionReceived(float[] vector)
 {
     // Do something here
 }
