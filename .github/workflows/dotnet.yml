@@ -27,7 +27,7 @@ jobs:
 
     # Build the project 
     - name: Build
-      run:  dotnet build HeroCrabPluginTests/HeroCrabPluginTests.sln --no-restore --verbosity detailed
+      run:  dotnet build HeroCrabPluginTests --no-restore --verbosity detailed
 
     # Test the project
     - name: Test
