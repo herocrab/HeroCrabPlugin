@@ -5,9 +5,9 @@
 
         <IsPackable>false</IsPackable>
 
-        <Configurations>Release;Debug</Configurations>
+        <Configurations>Debug;Release</Configurations>
 
-        <Platforms>x64</Platforms>
+        <Platforms>AnyCPU</Platforms>
     </PropertyGroup>
 
     <ItemGroup>
