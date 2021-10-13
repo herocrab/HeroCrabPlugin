@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using FlaxEngine;
 using HeroCrabPlugin.Core;
 using HeroCrabPlugin.Field;
 // ReSharper disable NotResolvedInText
@@ -163,16 +162,7 @@ namespace HeroCrabPlugin.Element
         public INetField<ushort> GetUShort(string name) => GetField<ushort>(name);
 
         /// <inheritdoc />
-        public INetField<Vector2> GetVector2(string name) => GetField<Vector2>(name);
-
-        /// <inheritdoc />
-        public INetField<Vector3> GetVector3(string name) => GetField<Vector3>(name);
-
-        /// <inheritdoc />
-        public INetField<Vector4> GetVector4(string name) => GetField<Vector4>(name);
-
-        /// <inheritdoc />
-        public INetField<Quaternion> GetQuaternion(string name) => GetField<Quaternion>(name);
+        public INetField<float[]> GetFloats(string name) => GetField<float[]>(name);
 
         /// <inheritdoc />
         public INetField<bool> GetBool(string name) => GetField<bool>(name);
@@ -201,16 +191,7 @@ namespace HeroCrabPlugin.Element
         public bool SetActionUShort(string name, Action<ushort> callback) => SetAction(name, callback);
 
         /// <inheritdoc />
-        public bool SetActionVector2(string name, Action<Vector2> callback) => SetAction(name, callback);
-
-        /// <inheritdoc />
-        public bool SetActionVector3(string name, Action<Vector3> callback) => SetAction(name, callback);
-
-        /// <inheritdoc />
-        public bool SetActionVector4(string name, Action<Vector4> callback) => SetAction(name, callback);
-
-        /// <inheritdoc />
-        public bool SetActionQuaternion(string name, Action<Quaternion> callback) => SetAction(name, callback);
+        public bool SetActionFloats(string name, Action<float[]> callback) => SetAction(name, callback);
 
         /// <inheritdoc />
         public bool SetActionBool(string name, Action<bool> callback) => SetAction(name, callback);

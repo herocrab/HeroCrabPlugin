@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Jeremy Buck "Jarmo" - HeroCrab Ltd. (https://github.com/herocrab). Distributed under the MIT license.
 
 using System;
-using FlaxEngine;
 using HeroCrabPlugin.Field;
 // ReSharper disable UnusedMemberInSuper.Global
 
@@ -212,36 +211,12 @@ namespace HeroCrabPlugin.Element
         bool SetActionUShort(string name, Action<ushort> callback);
 
         /// <summary>
-        /// Set the call back action for a named Vector2 field, typically used on the client.
+        /// Set the call back action for an array of floats field, typically used on the client.
         /// </summary>
         /// <param name="name">Field name</param>
         /// <param name="callback">Call back method invoked when receiving this field</param>
         /// <returns>Field</returns>
-        bool SetActionVector2(string name, Action<Vector2> callback);
-
-        /// <summary>
-        /// Set the call back action for a named Vector3 field, typically used on the client.
-        /// </summary>
-        /// <param name="name">Field name</param>
-        /// <param name="callback">Call back method invoked when receiving this field</param>
-        /// <returns>Field</returns>
-        bool SetActionVector3(string name, Action<Vector3> callback);
-
-        /// <summary>
-        /// Set the call back action for a named Vector4 field, typically used on the client.
-        /// </summary>
-        /// <param name="name">Field name</param>
-        /// <param name="callback">Call back method invoked when receiving this field</param>
-        /// <returns>Field</returns>
-        bool SetActionVector4(string name, Action<Vector4> callback);
-
-        /// <summary>
-        /// Set the call back action for a named Quaternion field, typically used on the client.
-        /// </summary>
-        /// <param name="name">Field name</param>
-        /// <param name="callback">Call back method invoked when receiving this field</param>
-        /// <returns>Field</returns>
-        bool SetActionQuaternion(string name, Action<Quaternion> callback);
+        bool SetActionFloats(string name, Action<float[]> callback);
 
         /// <summary>
         /// Set the call back action for a named bool field, typically used on the client.
@@ -308,32 +283,11 @@ namespace HeroCrabPlugin.Element
         INetField<ushort> GetUShort(string name);
 
         /// <summary>
-        /// Retrieves the setter for a Vector2 field.
+        /// Retrieves the setter for an array of floats field.
         /// </summary>
         /// <param name="name">Field name</param>
         /// <returns>Field</returns>
-        INetField<Vector2> GetVector2(string name);
-
-        /// <summary>
-        /// Retrieves the setter for a Vector3 field.
-        /// </summary>
-        /// <param name="name">Field name</param>
-        /// <returns>Field</returns>
-        INetField<Vector3> GetVector3(string name);
-
-        /// <summary>
-        /// Retrieves the setter for a Vector4 field.
-        /// </summary>
-        /// <param name="name">Field name</param>
-        /// <returns>Field</returns>
-        INetField<Vector4> GetVector4(string name);
-
-        /// <summary>
-        /// Retrieves the setter for a Quaternion field.
-        /// </summary>
-        /// <param name="name">Field name</param>
-        /// <returns>Field</returns>
-        INetField<Quaternion> GetQuaternion(string name);
+        INetField<float[]> GetFloats(string name);
 
         /// <summary>
         /// Retrieves the setter for a bool field.
