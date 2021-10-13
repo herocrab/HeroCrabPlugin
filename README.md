@@ -559,5 +559,3 @@ If you are in need of additional examples other than what is provided here check
 Hope this may be of service to you. 
 
 -Jarmo "HeroCrab"
-
-![HeroCrab](HeroCrab.png)

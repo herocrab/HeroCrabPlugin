@@ -190,7 +190,7 @@
       <HintPath>HeroCrabPlugin\..\..\Lib\ENet-CSharp.dll</HintPath>
     </Reference>
     <ProjectReference Include="..\..\..\Cache\Projects\FlaxEngine.csproj">
-      <Project>{9FFAD5BC-3B2A-4F78-9275-3CE60A9A2CE8}</Project>
+      <Project>{0A7FCBE9-BDC0-40F0-8ADF-35A9D4AB11F8}</Project>
       <Name>FlaxEngine</Name>
     </ProjectReference>
   </ItemGroup>
