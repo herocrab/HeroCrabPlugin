@@ -63,7 +63,7 @@ namespace HeroCrabPluginTestsUnit.Field
             receivingField.Process();
 
             Assert.That(count, Is.EqualTo(1));
-            Assert.That(BitConverter.ToInt32(lastValue.Take(4).ToArray(), 0), Is.EqualTo(int.MaxValue));
+            Assert.That(BitConverter.ToInt32(lastValue.ToArray(), 0), Is.EqualTo(int.MaxValue));
         }
 
         [Test]

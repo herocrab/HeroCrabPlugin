@@ -36,6 +36,9 @@ namespace HeroCrabPlugin.Field
             _buffer.Add(value);
             TxQueue.WriteBytes(value);
             IsUpdated = true;
+
+            LastQueue.Clear();
+            LastQueue.WriteBytes(value);
         }
 
         /// <inheritdoc />
