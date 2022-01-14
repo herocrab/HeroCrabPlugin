@@ -18,6 +18,9 @@ namespace HeroCrabPlugin.Element
         public NetElementDesc Description { get; }
 
         /// <inheritdoc />
+        public NetElementMeta Meta { get; internal set; }
+
+        /// <inheritdoc />
         public NetElementFilter Filter { get; }
 
         /// <inheritdoc />
@@ -61,6 +64,8 @@ namespace HeroCrabPlugin.Element
         public NetElement(NetElementDesc description)
         {
             Description = description;
+            Meta = new NetElementMeta();
+
             Filter = new NetElementFilter();
 
             _ledger = new SortedDictionary<byte, NetFieldDesc>();

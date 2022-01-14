@@ -86,6 +86,9 @@
         <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Element\NetElementFilter.cs">
           <Link>HeroCrabPlugin\Element\NetElementFilter.cs</Link>
         </Compile>
+        <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Element\NetElementMeta.cs">
+          <Link>HeroCrabPlugin\Element\NetElementMeta.cs</Link>
+        </Compile>
         <Compile Include="..\HeroCrabPlugin\Source\HeroCrabPlugin\Field\INetField.cs">
           <Link>HeroCrabPlugin\Field\INetField.cs</Link>
         </Compile>

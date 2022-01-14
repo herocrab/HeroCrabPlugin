@@ -159,11 +159,12 @@ namespace HeroCrabPlugin.Stream
 
         /// <inheritdoc />
         public INetElement CreateElement(string name, uint assetId, uint authorId = 0, bool isEnabled = true,
-            INetElement sibling = null)
+            INetElement sibling = null, NetElementMeta meta = null)
         {
             var elementDesc = new NetElementDesc(_elementIndex, name, authorId, assetId);
             var element = new NetElement(elementDesc)
             {
+                Meta = meta ?? new NetElementMeta(),
                 DeleteElement = OnDeleteElement,
                 Enabled = isEnabled,
                 Sibling = sibling,

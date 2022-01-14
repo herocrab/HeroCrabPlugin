@@ -17,6 +17,11 @@ namespace HeroCrabPlugin.Element
         NetElementDesc Description { get; }
 
         /// <summary>
+        /// Network element meta data--provides contextual data for the element; for server side processing only.
+        /// </summary>
+        NetElementMeta Meta { get; }
+
+        /// <summary>
         /// Network element filter, used to filter or mask by sessions.
         /// </summary>
         NetElementFilter Filter { get; }
