@@ -65,7 +65,6 @@ namespace HeroCrabPlugin.Element
         {
             Description = description;
             Meta = new NetElementMeta();
-
             Filter = new NetElementFilter();
 
             _ledger = new SortedDictionary<byte, NetFieldDesc>();

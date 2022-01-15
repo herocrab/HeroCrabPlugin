@@ -159,7 +159,7 @@ namespace HeroCrabPlugin.Stream
 
         /// <inheritdoc />
         public INetElement CreateElement(string name, uint assetId, uint authorId = 0, bool isEnabled = true,
-            INetElement sibling = null, NetElementMeta meta = null)
+            INetElement sibling = null, NetElementMeta meta = null, NetStreamGroup streamGroup = NetStreamGroup.Default)
         {
             var elementDesc = new NetElementDesc(_elementIndex, name, authorId, assetId);
             var element = new NetElement(elementDesc)
@@ -171,6 +171,8 @@ namespace HeroCrabPlugin.Stream
                 IsServer = true,
                 IsClient = false,
             };
+
+            element.Filter.StreamGroup = streamGroup;
 
             Elements.Add(_elementIndex, element);
             _elementIndex++;

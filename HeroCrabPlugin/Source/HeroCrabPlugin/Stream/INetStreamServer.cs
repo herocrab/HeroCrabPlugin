@@ -21,10 +21,11 @@ namespace HeroCrabPlugin.Stream
         /// <param name="authorId">Author id of this element; 0 is server</param>
         /// <param name="isEnabled">If true, this element will be immediately streamed</param>
         /// <param name="sibling">Handy sibling element reference; for elements that are related</param>
-        /// <param name="meta">Element meta data--provides contextual data for the element; for server side processing only. </param>
+        /// <param name="meta">Element meta data--provides contextual data for the element; for server side processing only</param>
+        /// <param name="streamGroup">Stream group; used in filtering elements to clients</param>
         /// <returns></returns>
         INetElement CreateElement(string name, uint assetId, uint authorId = 0, bool isEnabled = true,
-            INetElement sibling = null, NetElementMeta meta = null);
+            INetElement sibling = null, NetElementMeta meta = null, NetStreamGroup streamGroup = NetStreamGroup.Default);
 
         /// <summary>
         /// Find a session given an id.
