@@ -3,7 +3,7 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">x64</Platform>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{BE633490-FBA4-41EB-80D4-EFA312592B8E};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <ProjectGuid>{98964FF7-CB02-45D1-9C7F-E0982B53890D}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -13,6 +13,20 @@
     <LangVersion>7.3</LangVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>portable</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Binaries\HeroCrabPluginEditorTarget\Windows\x64\Debug\</OutputPath>
+    <BaseIntermediateOutputPath>..\Cache/Intermediate\HeroCrabPluginEditorTarget\Windows\x64\Debug\CSharp\</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>..\Cache/Intermediate\HeroCrabPluginEditorTarget\Windows\x64\Debug\CSharp\</IntermediateOutputPath>
+    <DefineConstants>BUILD_DEBUG;PLATFORM_WINDOWS;FLAX_EDITOR;FLAX;FLAX_ASSERTIONS;FLAX_1;FLAX_1_2</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>..\Binaries\HeroCrabPluginEditorTarget\Windows\x64\Debug\HeroCrabPlugin.CSharp.xml</DocumentationFile>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Editor.Windows.Debug|x64' ">
     <DebugSymbols>true</DebugSymbols>
@@ -182,48 +196,6 @@
     <DocumentationFile>..\Binaries\HeroCrabPluginTarget\UWP\x64\Release\HeroCrabPlugin.CSharp.xml</DocumentationFile>
     <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Game.XboxOne.Debug|x64' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>portable</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>..\Binaries\HeroCrabPluginTarget\XboxOne\x64\Debug\</OutputPath>
-    <BaseIntermediateOutputPath>..\Cache/Intermediate\HeroCrabPluginTarget\XboxOne\x64\Debug\CSharp\</BaseIntermediateOutputPath>
-    <IntermediateOutputPath>..\Cache/Intermediate\HeroCrabPluginTarget\XboxOne\x64\Debug\CSharp\</IntermediateOutputPath>
-    <DefineConstants>BUILD_DEBUG;PLATFORM_XBOX_ONE;FLAX_GAME;FLAX;FLAX_ASSERTIONS;FLAX_1;FLAX_1_2</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DocumentationFile>..\Binaries\HeroCrabPluginTarget\XboxOne\x64\Debug\HeroCrabPlugin.CSharp.xml</DocumentationFile>
-    <UseVSHostingProcess>true</UseVSHostingProcess>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Game.XboxOne.Development|x64' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>portable</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>..\Binaries\HeroCrabPluginTarget\XboxOne\x64\Development\</OutputPath>
-    <BaseIntermediateOutputPath>..\Cache/Intermediate\HeroCrabPluginTarget\XboxOne\x64\Development\CSharp\</BaseIntermediateOutputPath>
-    <IntermediateOutputPath>..\Cache/Intermediate\HeroCrabPluginTarget\XboxOne\x64\Development\CSharp\</IntermediateOutputPath>
-    <DefineConstants>BUILD_DEVELOPMENT;PLATFORM_XBOX_ONE;FLAX_GAME;FLAX;FLAX_ASSERTIONS;FLAX_1;FLAX_1_2</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DocumentationFile>..\Binaries\HeroCrabPluginTarget\XboxOne\x64\Development\HeroCrabPlugin.CSharp.xml</DocumentationFile>
-    <UseVSHostingProcess>true</UseVSHostingProcess>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Game.XboxOne.Release|x64' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>portable</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>..\Binaries\HeroCrabPluginTarget\XboxOne\x64\Release\</OutputPath>
-    <BaseIntermediateOutputPath>..\Cache/Intermediate\HeroCrabPluginTarget\XboxOne\x64\Release\CSharp\</BaseIntermediateOutputPath>
-    <IntermediateOutputPath>..\Cache/Intermediate\HeroCrabPluginTarget\XboxOne\x64\Release\CSharp\</IntermediateOutputPath>
-    <DefineConstants>BUILD_RELEASE;PLATFORM_XBOX_ONE;FLAX_GAME;FLAX;FLAX_ASSERTIONS;FLAX_1;FLAX_1_2</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DocumentationFile>..\Binaries\HeroCrabPluginTarget\XboxOne\x64\Release\HeroCrabPlugin.CSharp.xml</DocumentationFile>
-    <UseVSHostingProcess>true</UseVSHostingProcess>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
@@ -232,7 +204,7 @@
       <HintPath>HeroCrabPlugin\..\..\Lib\ENet-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="FlaxEngine.CSharp">
-      <HintPath>..\..\..\..\Flax_1.2\Binaries/Editor/Win64/Development/FlaxEngine.CSharp.dll</HintPath>
+      <HintPath>..\..\..\..\Flax_master\Binaries/Editor/Win64/Development/FlaxEngine.CSharp.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -303,9 +275,6 @@
     <Compile Visible="false" Include="C:\Projects\Flax\FlaxWars\Plugins\HeroCrabPlugin\Cache/Intermediate\HeroCrabPluginTarget\UWP\x64\Debug\HeroCrabPlugin\HeroCrabPlugin.Bindings.Gen.cs" />
     <Compile Visible="false" Include="C:\Projects\Flax\FlaxWars\Plugins\HeroCrabPlugin\Cache/Intermediate\HeroCrabPluginTarget\UWP\x64\Development\HeroCrabPlugin\HeroCrabPlugin.Bindings.Gen.cs" />
     <Compile Visible="false" Include="C:\Projects\Flax\FlaxWars\Plugins\HeroCrabPlugin\Cache/Intermediate\HeroCrabPluginTarget\UWP\x64\Release\HeroCrabPlugin\HeroCrabPlugin.Bindings.Gen.cs" />
-    <Compile Visible="false" Include="C:\Projects\Flax\FlaxWars\Plugins\HeroCrabPlugin\Cache/Intermediate\HeroCrabPluginTarget\XboxOne\x64\Debug\HeroCrabPlugin\HeroCrabPlugin.Bindings.Gen.cs" />
-    <Compile Visible="false" Include="C:\Projects\Flax\FlaxWars\Plugins\HeroCrabPlugin\Cache/Intermediate\HeroCrabPluginTarget\XboxOne\x64\Development\HeroCrabPlugin\HeroCrabPlugin.Bindings.Gen.cs" />
-    <Compile Visible="false" Include="C:\Projects\Flax\FlaxWars\Plugins\HeroCrabPlugin\Cache/Intermediate\HeroCrabPluginTarget\XboxOne\x64\Release\HeroCrabPlugin\HeroCrabPlugin.Bindings.Gen.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
