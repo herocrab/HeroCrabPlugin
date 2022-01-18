@@ -168,7 +168,7 @@ Server.Start(config.ServerAddress, config.ServerPort);
 
 ### <a name="elements">Elements</a>
 
-Once the server is started and a client connects to the server the **SessionConnected** event will be invoked. It is then typical to create a "writable" network element so that the client can send to the server. Elements can only be created on the server and only those where the **AuthorId** match the **session.Id** can be written to by a client. Additionally, elements are streamed to all clients unless they have a non-zero **Recipient** property.
+Once the server is started and a client connects to the server the **SessionConnected** event will be invoked. It is then feasible to create a "writable" network element so that the client can send to the server. Elements can only be created on the server and only those where the **AuthorId** match the **session.Id** can be written to by a client. Additionally, elements are streamed to all clients unless they have a non-zero **Recipient** property.
 
 Network elements are RPC-like messaging tunnels which comprise added fields (RPC end-points) and typically have 1:1 parity with game scripts. When creating an element you can do so it _immediately_ or in the _disabled state_. By creating an element in the disabled state you can then take advantage of the **ElementCreated** event on the server and the AssetId field of the element description to spawn a corresponding game prefab, gaining the possibility to use the **OnStart()** method in the instantiated prefab object's script to declare fields.
 
@@ -249,7 +249,33 @@ private void OnElementDeleted(INetElement element)
 }
 ```
 
-After gaining an understanding of elements, there is one helpful property called **Sibling**. This property can be used to cache a reference on the server to a separate element from _this stream or another stream_. This can be leveraged in various design patterns, for coupling different streams together (registration and advertisement).
+After gaining an understanding of elements, there is one helpful property called **Sibling**. This property can be used to cache a reference on the server to a separate element from _this stream or another stream_. This can be leveraged in various design patterns, for coupling different streams together (registration and advertisement). A use case for this is that of a _player controller_. The _player controller_ can be an element which provides only user input, it can have a reference to a **sibling** element which is the player character. This way you can easily create player character elements that are streamed to all clients, while the _player controller_ is streamed to only a single, relevent client.
+
+An additional feature has been added to help facilitate the attachment of custom classes to elements on the server. These attached classes are referred to as **meta** and are not streamed to a client. A use case for **meta** would be if a _player selection_ script wanted to spawn a _player controller_, it could create the controller with any necessary included state. This way data can be retrieved by the _player controller_ script when it initializes on the server. Below is an example from a project developed with HeroCrabPlugin:
+
+```
+private void SpawnPlayer()
+        {
+            var spawnTransform = _teamManager.GetSpawnTransform(_unitSelection.Team);
+
+            var spawnMeta = new NetElementMeta();
+            spawnMeta.Add(spawnTransform);
+            spawnMeta.Add(_unitSelection);
+
+            // Spawn the player unit in a deferred state
+            var playerUnitElement = Server.CreateElement("PlayerUnit",
+                (uint)_unitSelection.ActorId, 0, false,
+                meta:spawnMeta, streamGroup: NetStreamGroup.Game);
+
+            // Spawn the player controller in a deferred state
+            var playerControllerElement = Server.CreateElement("PlayerController",
+                (uint)ActorDb.ActorId.PlayerController,
+                Element.Description.AuthorId, false, meta:spawnMeta, streamGroup: NetStreamGroup.Game);
+            playerControllerElement.Filter.Recipient = Element.Description.AuthorId;
+            playerControllerElement.Sibling = playerUnitElement;
+```
+
+The above example will attach "spawnMeta" game state to the player unit and player controller. This state will then be retrieved by the respective script on the server during Start() or initialization. Additionally, the player controller element has a cached reference to the player using the "Sibling" property. Coupling these together, any input received by the player controller script can be applied to the server player actor, and streamed (using the sibling element fields) to all clients.
 
 ---
 
