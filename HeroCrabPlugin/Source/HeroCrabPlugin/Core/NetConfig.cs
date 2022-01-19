@@ -18,7 +18,12 @@ namespace HeroCrabPlugin.Core
         /// <summary>
         /// Server ip address used as listener for joining a game server.
         /// </summary>
-        public string Address { get; set; }
+        public string LocalAddress { get; set; }
+
+        /// <summary>
+        /// Catalog server ip address used to register or subscribe to the catalog server.
+        /// </summary>
+        public string CatalogAddress { get; set; }
 
         /// <summary>
         /// Server name used to advertise a game server.
@@ -60,7 +65,7 @@ namespace HeroCrabPlugin.Core
         /// </summary>
         public NetConfig(
             string role = "client",
-            string address = "127.0.0.1",
+            string localAddress = "127.0.0.1",
             string name = "HeroCrabPlugin Network Server",
             string map = "DemoMap",
             ushort registerPort = 42056,
@@ -75,7 +80,7 @@ namespace HeroCrabPlugin.Core
             ServerPort = serverPort;
             Connections = connections;
             Log = log;
-            Address = address;
+            LocalAddress = localAddress;
             Name = name;
             Map = map;
         }

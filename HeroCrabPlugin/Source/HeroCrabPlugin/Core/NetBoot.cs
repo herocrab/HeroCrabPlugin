@@ -30,7 +30,8 @@ namespace HeroCrabPlugin.Core
             var helpFlag = commands.Any(a => a == "-h" || a == "--h" || a == "-help");
             var name = commands.FirstOrDefault(a => a.Contains("name:"))?.Split(':')[1];
             var role = commands.FirstOrDefault(a => a.Contains("role:"))?.Split(':')[1].ToLower();
-            var address = commands.FirstOrDefault(a => a.Contains("address:"))?.Split(':')[1].ToLower();
+            var localAddress = commands.FirstOrDefault(a => a.Contains("localAddress:"))?.Split(':')[1].ToLower();
+            var catalogAddress = commands.FirstOrDefault(a => a.Contains("catalogAddress:"))?.Split(':')[1].ToLower();
             var registerPort = commands.FirstOrDefault(a => a.Contains("registerPort:"))?.Split(':')[1];
             var catalogPort = commands.FirstOrDefault(a => a.Contains("catalogPort:"))?.Split(':')[1];
             var serverPort = commands.FirstOrDefault(a => a.Contains("serverPort:"))?.Split(':')[1];
@@ -52,8 +53,12 @@ namespace HeroCrabPlugin.Core
                     Config.Role = role;
                 }
 
-                if (address != null) {
-                    Config.Address = address;
+                if (localAddress != null) {
+                    Config.LocalAddress = localAddress;
+                }
+
+                if (catalogAddress != null) {
+                    Config.CatalogAddress = catalogAddress;
                 }
 
                 if (registerPort != null) {
@@ -96,7 +101,8 @@ namespace HeroCrabPlugin.Core
             manual.Append("\t \"role:catalog\"\n");
             manual.Append("\t \"role:server\"\n");
             manual.Append("\t \"role:client\"\n");
-            manual.Append("\t \"address:127.0.0.1\"\n");
+            manual.Append("\t \"localAddress:127.0.0.1\"\n");
+            manual.Append("\t \"catalogAddress:127.0.0.1\"\n");
             manual.Append("\t \"registerPort:42056\"\n");
             manual.Append("\t \"catalogPort:42057\"\n");
             manual.Append("\t \"serverPort:42058\"\n");
