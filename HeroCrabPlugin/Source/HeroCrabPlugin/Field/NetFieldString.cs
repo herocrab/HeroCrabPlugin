@@ -42,6 +42,13 @@ namespace HeroCrabPlugin.Field
         }
 
         /// <inheritdoc />
+        public void SetLastValue(string value)
+        {
+            LastQueue.Clear();
+            LastQueue.WriteString(value);
+        }
+
+        /// <inheritdoc />
         public override void Process()
         {
             // Only process one buffered item per tick

@@ -170,9 +170,8 @@ namespace HeroCrabPlugin.Stream
                 Sibling = sibling,
                 IsServer = true,
                 IsClient = false,
+                Filter = {StreamGroup = streamGroup}
             };
-
-            element.Filter.StreamGroup = streamGroup;
 
             Elements.Add(_elementIndex, element);
             _elementIndex++;

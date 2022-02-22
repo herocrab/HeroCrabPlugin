@@ -11,10 +11,16 @@ namespace HeroCrabPlugin.Field
     public interface INetField<in T>
     {
         /// <summary>
-        /// Set the network field.
+        /// Set the network field. This will be streamed.
         /// </summary>
         /// <param name="value">Value</param>
         void Set(T value);
+
+        /// <summary>
+        /// Set the most recent value, this is not streamed but will be sent to new sessions only.
+        /// </summary>
+        /// <param name="value">Last Value</param>
+        void SetLastValue(T value);
     }
 
     /// <summary>

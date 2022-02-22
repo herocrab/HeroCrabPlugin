@@ -42,6 +42,13 @@ namespace HeroCrabPlugin.Field
         }
 
         /// <inheritdoc />
+        public void SetLastValue(float value)
+        {
+            LastQueue.Clear();
+            LastQueue.WriteFloat(value);
+        }
+
+        /// <inheritdoc />
         public override void Process()
         {
             if (_buffer.Any()) {
