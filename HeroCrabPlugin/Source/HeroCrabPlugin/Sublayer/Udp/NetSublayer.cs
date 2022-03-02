@@ -20,6 +20,9 @@ namespace HeroCrabPlugin.Sublayer.Udp
         public string Ip => _peer.IP;
 
         /// <inheritdoc />
+        public uint RoundTripTime => _peer.RoundTripTime;
+
+        /// <inheritdoc />
         public Action<byte[]> ReceiveDataCallback { get; set; }
 
         /// <inheritdoc />

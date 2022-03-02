@@ -13,5 +13,11 @@ namespace HeroCrabPlugin.Sublayer
         /// Network Stream which contains all streamed elements and sessions.
         /// </summary>
         INetStreamClient Stream { get; }
+
+        /// <summary>
+        /// Round trip time for peer.
+        /// </summary>
+        /// <returns>Round trip time in </returns>
+        uint RoundTripTime { get; }
     }
 }

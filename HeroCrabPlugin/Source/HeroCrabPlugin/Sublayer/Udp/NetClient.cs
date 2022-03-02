@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Jeremy Buck "Jarmo" - HeroCrab Ltd. (https://github.com/herocrab). Distributed under the MIT license.
 
 using System;
+using System.Runtime.InteropServices;
 using ENet;
 using HeroCrabPlugin.Core;
 using HeroCrabPlugin.Stream;
@@ -14,6 +15,9 @@ namespace HeroCrabPlugin.Sublayer.Udp
     {
         /// <inheritdoc />
         public INetStreamClient Stream => _stream;
+
+        /// <inheritdoc />
+        public uint RoundTripTime{ get { return _sublayer?.RoundTripTime ?? 0; }}
 
         private readonly Host _client;
         private readonly NetStreamClient _stream;

@@ -20,6 +20,11 @@ namespace HeroCrabPlugin.Sublayer
         string Ip { get; }
 
         /// <summary>
+        /// Round trip time.
+        /// </summary>
+        uint RoundTripTime { get; }
+
+        /// <summary>
         /// Receive data call back; this method is invoked when data is received.
         /// </summary>
         Action<byte[]> ReceiveDataCallback { get; set; }

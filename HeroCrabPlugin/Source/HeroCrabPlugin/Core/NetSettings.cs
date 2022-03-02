@@ -48,7 +48,12 @@ namespace HeroCrabPlugin.Core
         /// <summary>
         /// Target rate of 30 packets per second.
         /// </summary>
-        Hz30 = 30
+        Hz30 = 30,
+
+        /// <summary>
+        /// Target rate of 60 packets per second.
+        /// </summary>
+        Hz60 = 60
     }
 
     /// <summary>

@@ -65,7 +65,8 @@ namespace HeroCrabPlugin.Core
         /// </summary>
         public NetConfig(
             string role = "client",
-            string localAddress = "127.0.0.1",
+            string localAddress = "10.0.0.33",
+            string catalogAddress = "10.0.0.33",
             string name = "HeroCrabPlugin Network Server",
             string map = "DemoMap",
             ushort registerPort = 42056,
@@ -81,6 +82,7 @@ namespace HeroCrabPlugin.Core
             Connections = connections;
             Log = log;
             LocalAddress = localAddress;
+            CatalogAddress = catalogAddress;
             Name = name;
             Map = map;
         }

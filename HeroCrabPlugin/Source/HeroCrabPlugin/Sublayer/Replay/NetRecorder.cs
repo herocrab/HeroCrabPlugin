@@ -19,6 +19,9 @@ namespace HeroCrabPlugin.Sublayer.Replay
         public string Ip { get; }
 
         /// <inheritdoc />
+        public uint RoundTripTime { get; } = 0;
+
+        /// <inheritdoc />
         public Action<byte[]> ReceiveDataCallback { get; set; }
 
         /// <inheritdoc />
