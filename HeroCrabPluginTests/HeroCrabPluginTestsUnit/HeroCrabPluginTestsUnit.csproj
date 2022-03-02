@@ -1,13 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net45</TargetFramework>
 
         <IsPackable>false</IsPackable>
 
         <Configurations>Release;Debug</Configurations>
 
         <Platforms>AnyCPU</Platforms>
+
+        <TargetFramework>net5.0-windows</TargetFramework>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
