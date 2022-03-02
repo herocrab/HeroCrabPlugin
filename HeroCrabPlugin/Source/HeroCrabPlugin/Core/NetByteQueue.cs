@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
@@ -25,7 +26,7 @@ namespace HeroCrabPlugin.Core
         /// </summary>
         public int Depth => _depth;
 
-        //private const int MaxBytesLength = 65535;
+        private const int MaxBytesLength = 65535;
 
         private readonly Queue<byte> _byteQueue;
         private int _depth;
@@ -86,9 +87,9 @@ namespace HeroCrabPlugin.Core
         /// <param name="bytes">Bytes</param>
         public void WriteBytes(byte[] bytes)
         {
-            // if (bytes.Length > MaxBytesLength) {
-            //     bytes = bytes.Take(MaxBytesLength).ToArray();
-            // }
+            if (bytes.Length > MaxBytesLength) {
+                return;
+            }
 
             var bytesLength = BitConverter.GetBytes(bytes.Length);
 
@@ -335,9 +336,9 @@ namespace HeroCrabPlugin.Core
         {
             var length = ReadInt();
 
-            // if (length > MaxBytesLength) {
-            //     length = MaxBytesLength;
-            // }
+            if (length > MaxBytesLength) {
+                return Array.Empty<byte>();
+            }
 
             for (var i = 0; i < length; i++) {
                 _longReadArray[i] = _byteQueue.Dequeue();

@@ -213,30 +213,17 @@ namespace HeroCrabPluginTestsUnit.Core
         }
 
         [Test]
-        public void WriteBytes_WriteTooManyBytes_VerifyReadBytesAreClamped()
-        {
-            var byteQueue = new NetByteQueue();
-            byteQueue.WriteBytes(new byte[600]);
-            var byteQueueLength = byteQueue.Length;
-
-            var bytes = byteQueue.ReadBytes();
-
-            Assert.That(byteQueueLength, Is.EqualTo(516));
-            Assert.That(bytes.Length, Is.EqualTo(512));
-        }
-
-        [Test]
         public void ReadBytes_WriteTooManYBytes_VerifyReadBytesAreClamped()
         {
             var byteQueue = new NetByteQueue();
-            byteQueue.WriteInt(1024);
+            byteQueue.WriteInt(65536);
 
-            for (var i = 0; i < 1024; i++) {
+            for (var i = 0; i < 65536; i++) {
                 byteQueue.WriteByte(0);
             }
 
             var bytes = byteQueue.ReadBytes();
-            Assert.That(bytes.Length, Is.EqualTo(512));
+            Assert.That(bytes.Length, Is.EqualTo(0));
         }
 
         [Test]
