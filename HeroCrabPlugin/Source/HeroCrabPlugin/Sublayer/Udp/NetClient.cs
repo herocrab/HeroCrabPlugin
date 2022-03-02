@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Jeremy Buck "Jarmo" - HeroCrab Ltd. (https://github.com/herocrab). Distributed under the MIT license.
 
 using System;
-using System.Runtime.InteropServices;
 using ENet;
 using HeroCrabPlugin.Core;
 using HeroCrabPlugin.Stream;
@@ -16,15 +15,21 @@ namespace HeroCrabPlugin.Sublayer.Udp
         /// <inheritdoc />
         public INetStreamClient Stream => _stream;
 
-        /// <inheritdoc />
-        public uint RoundTripTime{ get { return _sublayer?.RoundTripTime ?? 0; }}
-
         private readonly Host _client;
         private readonly NetStreamClient _stream;
         private NetSublayer _sublayer;
 
         private Event _netEvent;
         private bool _polled;
+
+        /// <inheritdoc />
+        public uint RoundTripTime
+        {
+            get
+            {
+                return _sublayer?.RoundTripTime ?? 0;
+            }
+        }
 
         /// <summary>
         /// Create a new network client (UDP) given the configuration.
