@@ -25,12 +25,12 @@ namespace HeroCrabPlugin.Core
         /// </summary>
         public int Depth => _depth;
 
-        private const int MaxBytesLength = 512;
+        //private const int MaxBytesLength = 65535;
 
         private readonly Queue<byte> _byteQueue;
         private int _depth;
 
-        private readonly byte[] _longReadArray = new byte[512];
+        private readonly byte[] _longReadArray = new byte[65535];
         private readonly byte[] _shortReadArray = new byte[8];
         private readonly StringBuilder _stringBuilder = new StringBuilder();
 
@@ -86,9 +86,9 @@ namespace HeroCrabPlugin.Core
         /// <param name="bytes">Bytes</param>
         public void WriteBytes(byte[] bytes)
         {
-            if (bytes.Length > MaxBytesLength) {
-                bytes = bytes.Take(MaxBytesLength).ToArray();
-            }
+            // if (bytes.Length > MaxBytesLength) {
+            //     bytes = bytes.Take(MaxBytesLength).ToArray();
+            // }
 
             var bytesLength = BitConverter.GetBytes(bytes.Length);
 
@@ -335,9 +335,9 @@ namespace HeroCrabPlugin.Core
         {
             var length = ReadInt();
 
-            if (length > MaxBytesLength) {
-                length = MaxBytesLength;
-            }
+            // if (length > MaxBytesLength) {
+            //     length = MaxBytesLength;
+            // }
 
             for (var i = 0; i < length; i++) {
                 _longReadArray[i] = _byteQueue.Dequeue();
