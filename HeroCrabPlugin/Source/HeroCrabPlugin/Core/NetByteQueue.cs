@@ -337,7 +337,7 @@ namespace HeroCrabPlugin.Core
             var length = ReadInt();
 
             if (length > MaxBytesLength) {
-                return Array.Empty<byte>();
+                return new byte[0];
             }
 
             for (var i = 0; i < length; i++) {
