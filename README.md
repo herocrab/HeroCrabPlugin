@@ -375,6 +375,35 @@ test.Set("Test 1, 2, 3");
 Element.SetAction("Test", OnCallBack);
 ```
 
+Using the .Set() method for setting a field, provided the Element is enabled and there is no StreamGroup filtering, will stream the update to all clients. This is desirable for things like analog input or vector based movement. However, depending on your multiplayer code design, you may wish to send only the most current value to a client upon it's joining. This is facilitated with **.SetLastValue()**. Using .SetLastValue() will update the field in the server element but will not send the value real-time, it will only be sent upon a new session being established -or- upon the change to the current Element's StreamGroup. This is great for multiplayer implementation where initial state is critical like joining the game, or changing from the Lobby, but after that the simulation may run with a level of desynchronization.
+
+```
+private INetField<byte[]> _positionField;
+
+public override void OnStart()
+{
+    if (Element.IsServer) {
+        _positionField = Element.AddBytes("Position", true);
+        Element.Enabled = true;    
+    } else {
+        Element.SetActionBytes("Position", OnPositionReceived);
+    }
+}
+
+public override void OnUpdate()
+{
+    // This will not be streamed, only sent once with the latest value
+    _positionField?.SetLastValue(Actor.Transform.Translation);
+}
+
+private void OnPositionReceived(byte[] bytes)
+{
+    // Called once with the latest value.
+    var position = new Vector3(bytes);
+    // Do something here
+}
+```
+
 ---
 
 ### <a name="filtering">Filtering</a>
